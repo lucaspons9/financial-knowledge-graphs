@@ -1,0 +1,19 @@
+entity_extraction:
+  description: "Extract company names and other entities from financial news."
+  template: |
+    Extract all company names, organizations, and relevant financial entities from the following text.
+    Return them as a comma-separated list. 
+
+    Text: {text}
+    
+    Response Format: [Entity1, Entity2, Entity3]
+
+relationship_extraction:
+  description: "Identify relationships between entities in financial texts."
+  template: |
+    Extract all business relationships in the text below.
+    Return the relationships in the format (Entity A, Relationship, Entity B).
+
+    Text: {text}
+    
+    Response Format: [(Entity A, Relationship, Entity B)]
