@@ -12,16 +12,16 @@ load_dotenv()
 
 class LLMHandler:
     def __init__(self, config_path: str = "config.yaml"):
-        # Load Config
-        with open(config_path, "r") as file:
-            self.config = yaml.safe_load(file)
-
+        # Load main configuration from config.yaml (or specified path)
+        self.config = load_yaml(config_path)
+        # Load models configuration from separate file (defaults to models.yaml)
+        self.models = load_yaml(self.config.get("models_path", "models.yaml"))
+        
         self.provider = self.config["llm_provider"]
-        self.models = self.config["models"]
         self.mode = self.config["mode"]  
         self.prompts = load_yaml(self.config.get("prompt_path", "prompts/prompts.yaml"))
         
-    def get_model(self, role: Optional[str] = None, content: Optional[str] = None) -> Any:
+    def get_model(self) -> Any:
         """Dynamically selects the LLM model based on config.yaml mode setting"""
         mode_key = "full_model" if self.mode == "full" else "light_model"
 
