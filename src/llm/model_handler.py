@@ -1,41 +1,38 @@
 import os
 import yaml
+from typing import Dict, Any, Optional, Union
 from dotenv import load_dotenv
-from langchain.llms import OpenAI, Anthropic, Cohere
-from langchain.chat_models import ChatOpenAI
-from langchain.llms.huggingface_pipeline import HuggingFacePipeline
+from langchain_community.llms import OpenAI, Anthropic, Cohere
+from langchain_openai import ChatOpenAI
+from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
+from src.utils.reading_files import load_yaml
 
 # Load environment variables from .env
 load_dotenv()
 
 class LLMHandler:
-    def __init__(self, config_path="config.yaml"):
+    def __init__(self, config_path: str = "config.yaml"):
         # Load Config
         with open(config_path, "r") as file:
             self.config = yaml.safe_load(file)
 
         self.provider = self.config["llm_provider"]
         self.models = self.config["models"]
-        self.mode = self.config["mode"]  # Choose between "full" and "light"
-
-    def get_model(self):
+        self.mode = self.config["mode"]  
+        self.prompts = load_yaml(self.config.get("prompt_path", "prompts/prompts.yaml"))
+        
+    def get_model(self, role: Optional[str] = None, content: Optional[str] = None) -> Any:
         """Dynamically selects the LLM model based on config.yaml mode setting"""
         mode_key = "full_model" if self.mode == "full" else "light_model"
 
-        # Load API keys from environment variables
-        api_key_env_mapping = {
-            "openai": os.getenv("OPENAI_API_KEY"),
-            "anthropic": os.getenv("ANTHROPIC_API_KEY"),
-            "cohere": os.getenv("COHERE_API_KEY"),
-            "mistral": os.getenv("MISTRAL_API_KEY"),
-        }
-        api_key = api_key_env_mapping.get(self.provider)
+        # Load API key for selected provider
+        api_key = os.getenv(f"{self.provider.upper()}_API_KEY")
 
         if self.provider == "openai":
             return ChatOpenAI(
-                model_name=self.models["openai"][mode_key],
                 openai_api_key=api_key,
                 temperature=self.models["openai"]["temperature"],
+                model_name=self.models["openai"][mode_key],
             )
         
         elif self.provider == "anthropic":
@@ -54,7 +51,7 @@ class LLMHandler:
         elif self.provider == "mistral":
             return Cohere(  # Mistral API works similarly to Cohere
                 model=self.models["mistral"][mode_key],
-                cohere_api_key=api_key
+                cohere_api_key=api_key,
             )
 
         elif self.provider == "local":

@@ -1,26 +1,34 @@
-from src.llm.prompt_manager import PromptManager
-from src.llm.model_handler import LLMHandler
+from src.utils.reading_files import load_yaml
+from src.llm.batch_processor import BatchProcessor
 
-class LLMProcessor:
-    def __init__(self):
-        self.llm_handler = LLMHandler()
-        self.prompt_manager = PromptManager()
+def main():
+    # Load sample news data
+    try:
+        sample_news = load_yaml("data/raw/sample_news.yaml")
+        
+        # Extract text from sample news
+        texts = list(sample_news.values())
+        
+        print(f"Loaded {len(texts)} sample news texts")
+        
+        # Initialize BatchProcessor
+        batch_processor = BatchProcessor()
+        
+        # Run batch entity extraction
+        print("Running batch entity extraction...")
+        entities_batch = batch_processor.run_batch("entity_extraction", texts)
+        
+        # Print results
+        for i, entity_result in enumerate(entities_batch, start=1):
+            print(f"\nEntities in news {i}:")
+            print(entity_result)
+            
+        print("\nBatch processing completed successfully!")
+        
+    except Exception as e:
+        print(f"Error during batch processing: {str(e)}")
+        import traceback
+        traceback.print_exc()
 
-    def run_task(self, task, text):
-        """Generate a prompt and pass it to the selected LLM"""
-        prompt = self.prompt_manager.get_prompt(task, text=text)
-        model = self.llm_handler.get_model()
-        return model(prompt)
-
-# Example Usage
-processor = LLMProcessor()
-
-text = "Google and Samsung announced a strategic partnership for AI development."
-
-# Extract Entities
-entities = processor.run_task("entity_extraction", text)
-print("Entities:", entities)
-
-# Extract Relationships
-relationships = processor.run_task("relationship_extraction", text)
-print("Relationships:", relationships)
+if __name__ == "__main__":
+    main()
