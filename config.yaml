@@ -1,27 +1,28 @@
-llm_provider: "openai"  # Change this to "anthropic", "cohere", "mistral", "local"
-mode: "full"  # Options: "full" for high-quality, "light" for efficiency
+llm_provider: "openai" # Change this to "anthropic", "cohere", "mistral", "local"
+mode: "light" # Options: "full" for high-quality, "light" for efficiency
+task: "entity_extraction"
 
 models:
   openai:
-    api_key: ${OPENAI_API_KEY}  # Reads from .env
-    full_model: "gpt-4"
-    light_model: "gpt-3.5-turbo"
+    api_key: ${OPENAI_API_KEY} # Reads from .env
+    full_model: "gpt-4o"
+    light_model: "gpt-4o-mini"
     temperature: 0.7
 
   anthropic:
-    api_key: ${ANTHROPIC_API_KEY}  # Reads from .env
+    api_key: ${ANTHROPIC_API_KEY} # Reads from .env
     full_model: "claude-2"
     light_model: "claude-instant-1"
     temperature: 0.6
 
   cohere:
-    api_key: ${COHERE_API_KEY}  # Reads from .env
+    api_key: ${COHERE_API_KEY} # Reads from .env
     full_model: "command-r"
     light_model: "command-light"
     temperature: 0.5
 
   mistral:
-    api_key: ${MISTRAL_API_KEY}  # Reads from .env
+    api_key: ${MISTRAL_API_KEY} # Reads from .env
     full_model: "mistral-7b"
     light_model: "mistral-small"
     temperature: 0.7
@@ -30,3 +31,5 @@ models:
     full_model_path: "/models/llama-2-13b"
     light_model_path: "/models/llama-2-7b"
     temperature: 0.8
+
+prompt_path: "prompts/prompts.yaml" # Path to the prompt YAML file chosen

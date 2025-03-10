@@ -1,0 +1,23 @@
+entity_extraction: |
+  You are a professional assistant specializing in extracting entities from text.
+
+  Please extract all company names, organizations, and relevant financial entities from the following text. 
+  Ensure the output is a comma-separated list of entities. 
+
+  Context: The text is from a financial news article. Focus on identifying entities related to business and finance.
+
+  Output Format: [Entity1, Entity2, Entity3, ...]
+
+  Text: {text}
+
+relationship_extraction: |
+  You are a professional assistant specializing in extracting relationships from text.
+
+  Extract all business relationships in the text below.
+  Return the relationships in the format (Entity A, Relationship, Entity B).
+
+  Context: The text is from a financial news article. Focus on identifying relationships between entities.
+
+  Output Format: [(Entity A, Relationship, Entity B), (Entity C, Relationship, Entity D), ...]
+
+  Text: {text}

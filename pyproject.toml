@@ -3,7 +3,7 @@ name = "financial-knowledge-graphs"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12.4"
 dependencies = [
     "annotated-types==0.7.0",
     "anyio==4.8.0",
@@ -21,6 +21,7 @@ dependencies = [
     "jsonpatch==1.33",
     "jsonpointer==3.0.0",
     "langchain==0.3.20",
+    "langchain-community>=0.3.19",
     "langchain-core==0.3.41",
     "langchain-text-splitters==0.3.6",
     "langsmith==0.3.12",
