@@ -4,6 +4,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
 
+
 class BatchProcessor:
     def __init__(self):
         self.llm_handler = LLMHandler()

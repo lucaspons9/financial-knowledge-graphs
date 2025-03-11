@@ -1,5 +1,8 @@
+from dotenv import load_dotenv
+load_dotenv()
 from src.utils.reading_files import load_yaml
 from src.llm.batch_processor import BatchProcessor
+
 
 def main():
     # Load sample news data
@@ -20,8 +23,7 @@ def main():
         
         # Print results
         for i, entity_result in enumerate(entities_batch, start=1):
-            print(f"\nEntities in news {i}:")
-            print(entity_result)
+            print(f"Entities in news {i}: {entity_result.content}")
             
         print("\nBatch processing completed successfully!")
         
