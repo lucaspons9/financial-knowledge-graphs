@@ -1,6 +1,5 @@
 from neo4j import GraphDatabase
 from owlready2 import get_ontology
-import os
 import csv
 
 class Neo4jHandler:
@@ -11,11 +10,6 @@ class Neo4jHandler:
     def close(self):
         """Close the Neo4j connection"""
         self.driver.close()
-
-    def create_constraints(self):
-        """Ensure uniqueness of nodes"""
-        with self.driver.session() as session:
-            session.run("CREATE CONSTRAINT IF NOT EXISTS ON (e:Entity) ASSERT e.name IS UNIQUE;")
 
     def insert_triplet(self, subject, relationship, object_):
         """Insert a relationship triplet (Entity A)-[:RELATION]->(Entity B)"""
@@ -83,9 +77,6 @@ class Neo4jHandler:
 # Example Usage
 if __name__ == "__main__":
     neo4j_handler = Neo4jHandler()
-
-    # Create constraints
-    neo4j_handler.create_constraints()
 
     # Load Ontology from OWL
     neo4j_handler.insert_ontology_from_owl("ontology/market_ontology.owl")
