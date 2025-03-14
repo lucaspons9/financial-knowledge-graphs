@@ -1,6 +1,5 @@
 from typing import List, Dict, Any
 from src.llm.model_handler import LLMHandler
-from langchain.prompts import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
 

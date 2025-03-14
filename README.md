@@ -4,12 +4,13 @@ A powerful tool for extracting financial entities and relationships from financi
 
 ## Overview
 
-Financial Knowledge Graphs is a Python-based application that leverages Large Language Models (LLMs) to extract financial entities and relationships from news articles. The extracted information is then stored in a Neo4j graph database, creating a queryable knowledge graph of financial information.
+Financial Knowledge Graphs is a Python-based application that leverages Large Language Models (LLMs) to extract financial entities and relationships from news articles. The extracted information is then stored in a Neo4j graph database, creating a queryable knowledge graph of financial information. The project also includes Stanford OpenIE integration for ground truth extraction.
 
 ## Features
 
 - **Entity Extraction**: Automatically identify companies, organizations, and financial entities in text
 - **Relationship Extraction**: Discover connections between entities (acquisitions, partnerships, investments)
+- **Ground Truth Extraction**: Use Stanford OpenIE to extract triples as ground truth
 - **Flexible LLM Integration**: Support for multiple LLM providers (OpenAI, Anthropic, Cohere, Mistral, local models)
 - **Neo4j Integration**: Store and query extracted information in a graph database
 - **Batch Processing**: Process multiple texts efficiently
@@ -23,6 +24,7 @@ Financial Knowledge Graphs is a Python-based application that leverages Large La
    git clone https://github.com/yourusername/financial-knowledge-graphs.git
    cd financial-knowledge-graphs
    ```
+
 2. Create a virtual environment and sync dependencies:
 
    ```bash
@@ -47,9 +49,14 @@ Financial Knowledge Graphs is a Python-based application that leverages Large La
 
 ## Configuration
 
-The application is configured through `config.yaml` in the root directory. This file controls which LLM provider to use, model selection, and other settings. Model definitions are located in `models.yaml`.
+The application is configured through YAML files in the `configs` directory:
 
-### Configuration Options
+- `config_llm_execution.yaml`: Configuration for LLM-based entity extraction
+- `config_stanford_openie.yaml`: Configuration for Stanford OpenIE extraction
+- `models.yaml`: Configuration for LLM models
+- `prompts/`: Directory containing prompt templates
+
+### LLM Configuration Options
 
 ```yaml
 llm_provider: "openai" # Options: "openai", "anthropic", "cohere", "mistral", "local"
@@ -57,22 +64,60 @@ mode: "light" # Options: "full" for high-quality, "light" for efficiency
 task: "entity_extraction" # Default task to run
 ```
 
+### Stanford OpenIE Configuration Options
+
+```yaml
+# Properties for Stanford OpenIE
+openie_properties:
+  openie.affinity_probability_cap: 0.6667 # 2/3
+  openie.max_clauses_per_sentence: 10
+  openie.resolve_coref: true
+
+# Output directory for extracted triples
+output_directory: "data/ground_truth"
+
+# Whether to generate visualization graphs
+generate_graphs: true
+```
 
 ## Usage
 
-To run the application with the default configuration:
+The application can run in different modes:
+
+### LLM-based Entity Extraction
 
 ```bash
-python src/main.py
+python -m src.main llm
 ```
 
 This will:
 
-1. Load sample news data from `data/raw/sample_news.yaml`
+1. Load sample news data from the configured data path
 2. Extract entities from each news article using the configured LLM
 3. Print the extracted entities to the console
 
-<!-- 
+### Stanford OpenIE Ground Truth Extraction
+
+```bash
+python -m src.main openie
+```
+
+This will:
+
+1. Load sample news data from the configured data path
+2. Extract triples from each news article using Stanford OpenIE
+3. Save the extracted triples to JSON files in the configured output directory
+4. Generate visualization graphs if enabled
+
+### Running Both Tasks
+
+```bash
+python -m src.main both
+```
+
+This will run both the LLM-based entity extraction and the Stanford OpenIE ground truth extraction sequentially.
+
+<!--
 
 ## Advanced Usage
 
@@ -86,13 +131,16 @@ This will:
 ## Project Structure
 
 ```
-├── config.yaml                # Main configuration file
+├── configs/                   # Configuration directory
+│   ├── config_llm_execution.yaml  # LLM configuration
+│   ├── config_stanford_openie.yaml  # Stanford OpenIE configuration
+│   ├── models.yaml            # LLM models configuration
+│   └── prompts/               # LLM prompt templates
 ├── data/
+│   ├── ground_truth/          # Ground truth data from Stanford OpenIE
 │   └── raw/                   # Raw data files
 │       └── sample_news.yaml   # Sample news articles
 ├── docs/                      # Documentation
-├── prompts/
-│   └── prompts.yaml           # LLM prompt templates
 ├── src/
 │   ├── db/                    # Database handlers
 │   │   └── neo4j_handler.py   # Neo4j integration
@@ -100,6 +148,8 @@ This will:
 │   │   ├── batch_processor.py # Process multiple texts
 │   │   └── model_handler.py   # LLM provider management
 │   ├── utils/                 # Utility functions
-│   └── main.py                # Main application entry point
+│   │   └── ground_truth.py    # Stanford OpenIE ground truth extractor
+│   ├── main.py                # Main application entry point
+│   ├── run_llm_task.py        # LLM task runner
+│   └── run_stanford_openie.py # Stanford OpenIE runner
 ```
-
