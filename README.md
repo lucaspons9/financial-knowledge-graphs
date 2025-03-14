@@ -56,7 +56,7 @@ The application is configured through YAML files in the `configs` directory:
 - `config_llm_execution.yaml`: Configuration for LLM-based entity extraction
 - `config_stanford_openie.yaml`: Configuration for Stanford OpenIE extraction
 - `models.yaml`: Configuration for LLM models
-- `prompts/`: Directory containing prompt templates
+- `prompts.yaml`: Prompt templates for different extraction tasks
 
 ### LLM Configuration Options
 
@@ -121,7 +121,7 @@ To run triplet extraction on sample sentences and store the results:
    task: "triplet_extraction"
    data_path: "data/raw/your_sample_file.yaml"
    store_results: true
-   results_dir: "data/processed/results"
+   results_dir: "runs"
    test_name: "test_llm_prompt"
    ```
 
@@ -131,7 +131,18 @@ To run triplet extraction on sample sentences and store the results:
    python -m src.main llm
    ```
 
-3. Results will be stored in sequentially numbered directories (`test_llm_prompt_1`, `test_llm_prompt_2`, etc.) in the specified results directory, with each test result in a JSON file named after the sentence ID.
+3. Results will be stored in sequentially numbered directories (`test_llm_prompt_1`, `test_llm_prompt_2`, etc.) in the `runs` directory, with each test result in a JSON file named after the sentence ID.
+
+### Test Results Storage
+
+All LLM test runs are stored in the `runs` directory by default. The system automatically:
+
+- Creates a new folder for each test run with an incremented index (e.g., `test_llm_prompt_1`, `test_llm_prompt_2`)
+- Stores individual test results as JSON files named after the sentence/document ID
+- Creates a summary.json file with metadata about the test configuration and timestamp
+- Maintains a clear, versioned history of all test runs for easy comparison and analysis
+
+You can customize the storage location by modifying the `results_dir` parameter in the configuration file.
 
 ### Running Both Tasks
 
@@ -159,7 +170,7 @@ This will run both the LLM-based entity extraction and the Stanford OpenIE groun
 │   ├── config_llm_execution.yaml  # LLM configuration
 │   ├── config_stanford_openie.yaml  # Stanford OpenIE configuration
 │   ├── models.yaml            # LLM models configuration
-│   └── prompts/               # LLM prompt templates
+│   └── prompts.yaml           # LLM prompt templates
 ├── data/
 │   ├── ground_truth/          # Ground truth data from Stanford OpenIE
 │   └── raw/                   # Raw data files

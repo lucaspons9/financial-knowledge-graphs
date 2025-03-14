@@ -18,7 +18,7 @@ class LLMHandler:
         
         self.provider = self.config["llm_provider"]
         self.mode = self.config["mode"]  
-        self.prompts = load_yaml(self.config.get("prompt_path", "configs/prompts/prompts.yaml"))
+        self.prompts = load_yaml(self.config.get("prompt_path", "configs/prompts.yaml"))
         
     def get_model(self) -> Any:
         """Dynamically selects the LLM model based on config_llm_execution.yaml mode setting"""
