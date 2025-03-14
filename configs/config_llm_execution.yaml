@@ -4,7 +4,7 @@ task: "triplet_extraction"
 
 data_path: "data/raw/sample_for_openie.yaml"
 models_path: "configs/models.yaml" # Path to the models configuration file
-prompt_path: "configs/prompts/prompts.yaml" # Path to the prompt YAML file chosen
+prompt_path: "configs/prompts.yaml" # Path to the prompt YAML file
 
 # Results storage configuration
 store_results: true
