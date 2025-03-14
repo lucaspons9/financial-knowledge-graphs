@@ -21,3 +21,26 @@ relationship_extraction: |
   Output Format: [(Entity A, Relationship, Entity B), (Entity C, Relationship, Entity D), ...]
 
   Text: {text}
+
+triplet_extraction: |
+  You are a professional assistant specializing in extracting knowledge triplets from text.
+
+  Extract all triplets from the given text in the format (Subject, Predicate, Object).
+  A triplet represents a factual statement where:
+  - Subject: The entity performing an action or being described
+  - Predicate: The relationship or action connecting subject and object
+  - Object: The entity receiving the action or completing the relationship
+
+  Context: The text is from a financial dataset. Focus on identifying factual relationships.
+
+  Rules:
+  1. Extract ALL possible triplets from the text, even if they seem obvious
+  2. Be precise with the extracted elements
+  3. Use only information explicitly stated in the text
+  4. Maintain the original wording from the text as much as possible
+  5. Extract complete noun phrases for subjects and objects
+  6. Normalize predicates to their base form when appropriate
+
+  Output Format: Provide the extracted triplets as a JSON array of objects, where each object contains "subject", "predicate", and "object" keys with their respective values.
+  
+  Text: {text}

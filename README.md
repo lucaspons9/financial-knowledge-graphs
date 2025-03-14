@@ -10,10 +10,12 @@ Financial Knowledge Graphs is a Python-based application that leverages Large La
 
 - **Entity Extraction**: Automatically identify companies, organizations, and financial entities in text
 - **Relationship Extraction**: Discover connections between entities (acquisitions, partnerships, investments)
+- **Triplet Extraction**: Extract knowledge triplets (Subject, Predicate, Object) from financial text
 - **Ground Truth Extraction**: Use Stanford OpenIE to extract triples as ground truth
 - **Flexible LLM Integration**: Support for multiple LLM providers (OpenAI, Anthropic, Cohere, Mistral, local models)
 - **Neo4j Integration**: Store and query extracted information in a graph database
 - **Batch Processing**: Process multiple texts efficiently
+- **Test Result Storage**: Automatically store test results in versioned directories
 - **Configurable**: Easy configuration through YAML files
 
 ## Installation
@@ -108,6 +110,28 @@ This will:
 2. Extract triples from each news article using Stanford OpenIE
 3. Save the extracted triples to JSON files in the configured output directory
 4. Generate visualization graphs if enabled
+
+### Running Triplet Extraction Tests
+
+To run triplet extraction on sample sentences and store the results:
+
+1. Configure the test in `configs/config_llm_execution.yaml`:
+
+   ```yaml
+   task: "triplet_extraction"
+   data_path: "data/raw/your_sample_file.yaml"
+   store_results: true
+   results_dir: "data/processed/results"
+   test_name: "test_llm_prompt"
+   ```
+
+2. Run the LLM-based triplet extraction:
+
+   ```bash
+   python -m src.main llm
+   ```
+
+3. Results will be stored in sequentially numbered directories (`test_llm_prompt_1`, `test_llm_prompt_2`, etc.) in the specified results directory, with each test result in a JSON file named after the sentence ID.
 
 ### Running Both Tasks
 
