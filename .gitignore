@@ -11,3 +11,5 @@ data.processed/
 data/ground_truth/
 # Ignore all contents of data.raw folder
 data/raw/
+# Ignore all contents of runs folder
+runs/

@@ -45,6 +45,6 @@ if __name__ == "__main__":
         "Google and Samsung announced a strategic partnership for AI development.",
         "Microsoft acquired Activision Blizzard."
     ]
-    responses = processor.run_batch("entity_extraction", texts)
+    responses = processor.run_task("entity_extraction", texts[0])
     for i, response in enumerate(responses):
         print(f"Response {i+1}:", response)
