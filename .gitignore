@@ -4,3 +4,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Ignore all contents of data.processed folder
+data.processed/
+# Ignore ground truth data
+data/ground_truth/
+# Ignore all contents of data.raw folder
+data/raw/

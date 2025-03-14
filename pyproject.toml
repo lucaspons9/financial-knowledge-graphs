@@ -1,7 +1,7 @@
 [project]
 name = "financial-knowledge-graphs"
 version = "0.1.0"
-description = "Add your description here"
+description = "Financial Knowledge Graphs"
 readme = "README.md"
 requires-python = ">=3.12.4"
 dependencies = [
@@ -42,6 +42,7 @@ dependencies = [
     "six==1.17.0",
     "sniffio==1.3.1",
     "sqlalchemy==2.0.38",
+    "stanford-openie>=1.3.2",
     "tenacity==9.0.0",
     "tqdm==4.67.1",
     "typing-extensions==4.12.2",

@@ -1,8 +1,7 @@
 import os
-import yaml
-from typing import Dict, Any, Optional, Union
+from typing import Any
 from dotenv import load_dotenv
-from langchain_community.llms import OpenAI, Anthropic, Cohere
+from langchain_community.llms import Anthropic, Cohere
 from langchain_openai import ChatOpenAI
 from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 from src.utils.reading_files import load_yaml
@@ -11,18 +10,18 @@ from src.utils.reading_files import load_yaml
 load_dotenv()
 
 class LLMHandler:
-    def __init__(self, config_path: str = "config.yaml"):
-        # Load main configuration from config.yaml (or specified path)
+    def __init__(self, config_path: str = "configs/config_llm_execution.yaml"):
+        # Load main configuration from config_llm_execution.yaml (or specified path)
         self.config = load_yaml(config_path)
-        # Load models configuration from separate file (defaults to models.yaml)
-        self.models = load_yaml(self.config.get("models_path", "models.yaml"))
+        # Load models configuration from separate file (defaults to configs/models.yaml)
+        self.models = load_yaml(self.config.get("models_path", "configs/models.yaml"))
         
         self.provider = self.config["llm_provider"]
         self.mode = self.config["mode"]  
-        self.prompts = load_yaml(self.config.get("prompt_path", "prompts/prompts.yaml"))
+        self.prompts = load_yaml(self.config.get("prompt_path", "configs/prompts/prompts.yaml"))
         
     def get_model(self) -> Any:
-        """Dynamically selects the LLM model based on config.yaml mode setting"""
+        """Dynamically selects the LLM model based on config_llm_execution.yaml mode setting"""
         mode_key = "full_model" if self.mode == "full" else "light_model"
 
         # Load API key for selected provider
@@ -64,4 +63,4 @@ class LLMHandler:
             return HuggingFacePipeline(pipeline=hf_pipeline)
 
         else:
-            raise ValueError("Invalid LLM provider in config.yaml")
+            raise ValueError("Invalid LLM provider in config_llm_execution.yaml")
