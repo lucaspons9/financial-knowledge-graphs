@@ -104,8 +104,8 @@ def main():
         sample_data = load_yaml(config["data_path"])
         
         # Extract text from sample data
-        texts = list(sample_data.values())[:1]
-        sentence_ids = list(sample_data.keys())[:1]
+        texts = list(sample_data.values())
+        sentence_ids = list(sample_data.keys())
         
         print(f"Loaded {len(texts)} sample texts")
         
