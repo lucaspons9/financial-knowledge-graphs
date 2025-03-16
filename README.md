@@ -100,16 +100,24 @@ This will:
 
 ### Stanford OpenIE Ground Truth Extraction
 
+The system now stores ground truth data from Stanford OpenIE in versioned directories:
+
 ```bash
 python -m src.main openie
 ```
 
 This will:
 
-1. Load sample news data from the configured data path
-2. Extract triples from each news article using Stanford OpenIE
-3. Save the extracted triples to JSON files in the configured output directory
-4. Generate visualization graphs if enabled
+1. Load sample data from the configured data path
+2. Extract triples using Stanford OpenIE
+3. Store results in a versioned directory structure:
+   - Base directory: `data/ground_truth/`
+   - Run directories: `openie_test_1`, `openie_test_2`, etc.
+   - Each run contains:
+     - Extracted triples for each sentence in JSON format
+     - A summary.json file with metadata about the run
+
+You can configure the test name and other extraction parameters in `configs/config_stanford_openie.yaml`.
 
 ### Running Triplet Extraction Tests
 
@@ -151,6 +159,33 @@ python -m src.main both
 ```
 
 This will run both the LLM-based entity extraction and the Stanford OpenIE ground truth extraction sequentially.
+
+### Evaluating Triplet Extraction Results
+
+To evaluate the latest triplet extraction results against ground truth:
+
+1. Configure the evaluation in `configs/config_evaluation.yaml`:
+
+   ```yaml
+   # Ground truth directory
+   ground_truth_dir: "data/ground_truth/triplets"
+
+   # Results settings
+   results_dir: "runs"
+   test_name: "test_llm_prompt"
+   ```
+
+2. Run the evaluation:
+
+   ```bash
+   python -m src.main evaluate
+   ```
+
+3. The evaluation results will be:
+   - Displayed in the console
+   - Saved to a timestamped JSON file in the `evaluations` directory (if configured)
+
+The evaluation compares triplets using fuzzy matching to handle slight variations in wording. It calculates precision, recall, and F1 score for each file and overall.
 
 <!--
 

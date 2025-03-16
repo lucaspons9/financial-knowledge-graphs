@@ -41,6 +41,6 @@ triplet_extraction: |
   5. Extract complete noun phrases for subjects and objects
   6. Normalize predicates to their base form when appropriate
 
-  Output Format: Provide the extracted triplets as a JSON array of objects, where each object contains "subject", "predicate", and "object" keys with their respective values.
+  Output Format: Provide the extracted triplets as a JSON array of objects, where each object contains "subject", "relation", and "object" keys with their respective values.
   
   Text: {text}

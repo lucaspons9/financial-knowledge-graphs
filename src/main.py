@@ -8,6 +8,7 @@ Usage:
     python -m src.main llm        # Run the LLM-based entity extraction
     python -m src.main openie     # Run the Stanford OpenIE extraction
     python -m src.main both       # Run both tasks sequentially
+    python -m src.main evaluate   # Evaluate the latest triplet extraction results
 """
 
 import sys
@@ -16,8 +17,8 @@ import sys
 def main():
     # Check command-line arguments
     if len(sys.argv) < 2:
-        print("Please specify a task to run: llm, openie, or both")
-        print("Usage: python -m src.main [llm|openie|both]")
+        print("Please specify a task to run: llm, openie, both, or evaluate")
+        print("Usage: python -m src.main [llm|openie|both|evaluate]")
         return
     
     task = sys.argv[1].lower()
@@ -48,10 +49,16 @@ def main():
         from src.run_stanford_openie import main as run_openie
         run_openie()
     
+    elif task == "evaluate":
+        # Run evaluation
+        print("Evaluating triplet extraction results...")
+        from src.run_evaluation import main as run_evaluation
+        run_evaluation()
+    
     else:
         print(f"Unknown task: {task}")
-        print("Please specify a valid task: llm, openie, or both")
-        print("Usage: python -m src.main [llm|openie|both]")
+        print("Please specify a valid task: llm, openie, both, or evaluate")
+        print("Usage: python -m src.main [llm|openie|both|evaluate]")
 
 
 if __name__ == "__main__":
