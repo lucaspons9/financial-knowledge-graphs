@@ -9,8 +9,12 @@ import json
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 from src.utils.reading_files import load_yaml
+from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary
+from src.utils.logging_utils import get_logger
 from openie import StanfordOpenIE
 
+# Initialize logger
+logger = get_logger(__name__)
 
 class StanfordOpenIEExtractor:
     """
@@ -27,46 +31,35 @@ class StanfordOpenIEExtractor:
         Args:
             config_path: Path to the configuration file.
         """
-        self.config = self._load_config(config_path)
+        # Load configuration
+        self.config = load_yaml(config_path)
+
+        # Setup output configuration
+        output_config = self.config.get("output", {})
+        self.base_dir = output_config.get("base_dir", "data/ground_truth")
+        self.test_name = output_config.get("test_name", "openie_test")
+        self.store_results = output_config.get("store_results", True)
+        
+        # Setup OpenIE properties
         self.properties = self.config.get("openie_properties", {})
-        self.output_dir = self.config.get("output_directory", "data/ground_truth")
         self.generate_graphs = self.config.get("generate_graphs", False)
-        self.graphs_dir = os.path.join(self.output_dir, "graphs")
         
-        # Create output directories if they don't exist
-        os.makedirs(self.output_dir, exist_ok=True)
-        if self.generate_graphs:
-            os.makedirs(self.graphs_dir, exist_ok=True)
-    
-    def _load_config(self, config_path: str) -> Dict[str, Any]:
-        """
-        Load configuration from a YAML file.
-        
-        Args:
-            config_path: Path to the configuration file.
+        # Create output directory with versioning first
+        if self.store_results:
+            self.output_dir = find_next_versioned_dir(self.base_dir, self.test_name)
+            logger.info(f"Ground truth results will be stored in: {self.output_dir}")
             
-        Returns:
-            Dictionary containing configuration parameters.
-        """
-        try:
-            return load_yaml(config_path)
-        except Exception as e:
-            print(f"Error loading configuration: {str(e)}")
-            # Return default configuration
-            return {
-                "openie_properties": {
-                    "openie.affinity_probability_cap": 2/3,
-                },
-                "output_directory": "data/ground_truth",
-                "generate_graphs": False
-            }
+            # Create graphs directory after output_dir is created
+            if self.generate_graphs:
+                self.graphs_dir = os.path.join(self.output_dir, "graphs")
+                os.makedirs(self.graphs_dir, exist_ok=True)
     
     def extract_triples(self, text: str) -> List[Dict[str, str]]:
         """
         Extract triples from text using Stanford OpenIE.
         
         Args:
-            text: The text to extract triples from.
+            text: Text to extract triples from
             
         Returns:
             List of dictionaries containing subject, relation, and object.
@@ -108,33 +101,58 @@ class StanfordOpenIEExtractor:
         
         return triples
     
-    def batch_extract(self, texts: List[str], base_file_name: str = "batch") -> List[List[Dict[str, str]]]:
+    def batch_extract(self, texts: List[str], sentence_ids: Optional[List[str]] = None) -> List[List[Dict[str, str]]]:
         """
         Extract triples from a batch of texts.
         
         Args:
-            texts: List of texts to extract triples from.
-            base_file_name: Base name for the output files.
+            texts: List of texts to extract triples from
+            sentence_ids: List of sentence IDs (used for file naming)
             
         Returns:
-            List of lists of dictionaries containing subject, relation, and object.
+            List[List[Dict[str, str]]]: List of lists of extracted triples
         """
-        results = []
+        all_triples = []
+        results_files = {}        
         
-        for i, text in enumerate(texts):
-            file_name = f"{base_file_name}_{i+1}.json"
-            triples = self.extract_and_save(text, file_name)
-            results.append(triples)
+        for i, (sentence_id, text) in enumerate(zip(sentence_ids, texts)):
+            # Use sentence_id for file naming
+            file_name = f"{sentence_id}.json"
+            logger.info(f"Processing {file_name} ({i+1}/{len(texts)})")
+            
+            try:
+                # Extract triples from text
+                triples = self.extract_triples(text)
+                all_triples.append(triples)
+                
+                # Save results if configured
+                if self.store_results:
+                    file_path = os.path.join(self.output_dir, file_name)
+                    save_json(triples, file_path)
+                    results_files[sentence_id] = file_path
+                    
+                    logger.info(f"Saved {len(triples)} triples to {file_path}")
+                
+            except Exception as e:
+                logger.error(f"Error processing text {file_name}: {str(e)}")
+                all_triples.append([])  # Add empty list for failed extraction
         
-        # Save batch summary
-        summary = {
-            "batch_size": len(texts),
-            "timestamp": datetime.now().isoformat(),
-            "total_triples": sum(len(triples) for triples in results)
-        }
+        # Save summary if configured
+        if self.store_results:
+            total_triples = sum(len(triples) for triples in all_triples)
+            
+            summary = create_run_summary(
+                config=self.config,
+                stats={
+                    "num_texts": len(texts),
+                    "num_triples": total_triples,
+                    "results_files": results_files
+                }
+            )
+            
+            summary_path = os.path.join(self.output_dir, "summary.json")
+            save_json(summary, summary_path)
+            
+            logger.info(f"Saved summary to {summary_path}")
         
-        summary_path = os.path.join(self.output_dir, f"{base_file_name}_summary.json")
-        with open(summary_path, 'w') as file:
-            json.dump(summary, file, indent=2)
-        
-        return results 
+        return all_triples 

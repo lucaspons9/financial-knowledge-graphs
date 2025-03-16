@@ -9,4 +9,4 @@ prompt_path: "configs/prompts.yaml" # Path to the prompt YAML file
 # Results storage configuration
 store_results: true
 results_dir: "runs"
-test_name: "test_llm_prompt"
+test_name: "triplet_extraction"
