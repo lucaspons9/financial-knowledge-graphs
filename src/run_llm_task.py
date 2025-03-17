@@ -87,7 +87,7 @@ def main():
         batch_processor = BatchProcessor()
         
         # Run batch processing
-        logger.info(f"Running batch {config['task']}...")
+        logger.info(f"Running batch {config['prompt']}...")
         
         # Process each text individually to handle different sentence IDs
         results_files = {}
@@ -95,14 +95,14 @@ def main():
             logger.info(f"Processing {sentence_id}...")
             
             # Run the LLM task on the text
-            response = batch_processor.run_task(config["task"], text)
+            response = batch_processor.run_task(config["prompt"], text)
             
             # Print the result
             logger.info(f"Results for {sentence_id}: {response.content}")
             
             # Save results if configured
             if store_results and test_dir:
-                if config["task"] == "triplet_extraction":
+                if config["prompt"] == "triplet_extraction":
                     # For triplet extraction, parse the JSON output
                     triplets = extract_json_from_output(response.content)
                     results_file = save_results(triplets, test_dir, sentence_id)

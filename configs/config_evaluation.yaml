@@ -4,11 +4,11 @@
 similarity_threshold: 80 # Threshold for fuzzy matching triplets (0-100)
 
 # Ground truth directory
-ground_truth_dir: "data/ground_truth/sample_sentences_1" # Path to specific OpenIE test run
+ground_truth_dir: "data/ground_truth/sample_news_1" # Path to specific OpenIE test run
 
 # Results settings
 results_dir: "runs" # Base directory containing results
-test_name: "triplet_extraction" # Test name prefix for finding the latest run
+test_name: "triplet_extraction_sample_news" # Test name prefix for finding the latest run
 
 # Output settings
 save_evaluation: true # Whether to save evaluation results
