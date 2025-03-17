@@ -1,22 +1,27 @@
 # Path to the data file containing texts to process
-data_path: "data/raw/sample_news.yaml"
+data_path: "data/raw/sample_sentences.yaml"
 # Output settings
 output:
   base_dir: "data/ground_truth"
-  test_name: "sample_news" # or "sample_sentences"
+  test_name: "sample_sentences" # or "sample_sentences"
   store_results: true
 
+# Whether to generate visualization graphs
+generate_graphs: false
 
 # Properties for Stanford OpenIE - See https://stanfordnlp.github.io/CoreNLP/openie.html#api for more details
 openie_properties:
   #  Higher values will extract more triples but may be less accurate
-  openie.affinity_probability_cap: 0.6667 # 2/3
-
-  # Higher values will extract more triples but may be slower
-  #openie.max_clauses_per_sentence: 10
-
-  # Whether to resolve coreferences - This can improve the quality of extractions but may be slower
-  #openie.resolve_coref: true
-
-# Whether to generate visualization graphs
-generate_graphs: true
+  openie.affinity_probability_cap: 1.0 # 2/3
+  # # Whether to resolve coreferences - This can improve the quality of extractions but may be slower
+  # openie.resolve_coref: true  # Replace pronouns with their original entity
+  # Whether to ignore the affinity model for prepositional attachments
+  # openie.ignore_affinity: false  # Keep affinity model to capture more relations
+  # # Whether to extract triples only if they consume the entire fragment
+  # openie.triple.strict: false  # Allow partial triplet extractions for more recall
+  # # Whether to disable clause splitting entirely
+  # openie.splitter.disable: false  # Allow clause splitting for better extractions
+  # # Higher values will extract more triples but may be slower
+  # openie.max_entailments_per_clause: 10000  # Extract as many entailments per clause as possible
+  # # Required CoreNLP pipeline components (ensure coref is included)
+  # annotators: "tokenize,pos,lemma,depparse,natlog,coref,openie"

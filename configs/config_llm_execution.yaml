@@ -1,12 +1,12 @@
 llm_provider: "openai" # Change this to "anthropic", "cohere", "mistral", "local"
 mode: "light" # Options: "full" for high-quality, "light" for efficiency
-task: "triplet_extraction"
+prompt: "triplet_extraction"
 
-data_path: "data/raw/sample_for_openie.yaml"
+data_path: "data/raw/sample_news.yaml"
 models_path: "configs/models.yaml" # Path to the models configuration file
 prompt_path: "configs/prompts.yaml" # Path to the prompt YAML file
 
 # Results storage configuration
 store_results: true
 results_dir: "runs"
-test_name: "triplet_extraction"
+test_name: "triplet_extraction_sample_news"
