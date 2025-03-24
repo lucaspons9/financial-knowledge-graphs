@@ -5,6 +5,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 uv.lock
+.DS_Store
 
 # Ignore all contents of data
 data/
