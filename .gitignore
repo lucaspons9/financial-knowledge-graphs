@@ -4,12 +4,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
+uv.lock
 
-# Ignore all contents of data.processed folder
-data.processed/
-# Ignore ground truth data
-data/ground_truth/
-# Ignore all contents of data.raw folder
-data/raw/
+# Ignore all contents of data
+data/
 # Ignore all contents of runs folder
 runs/
