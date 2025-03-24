@@ -208,6 +208,7 @@ The evaluation compares triplets using fuzzy matching to handle slight variation
 │   └── prompts.yaml           # LLM prompt templates
 ├── data/
 │   ├── ground_truth/          # Ground truth data from Stanford OpenIE
+│   ├── processed/             # Processed data files
 │   └── raw/                   # Raw data files
 │       └── sample_news.yaml   # Sample news articles
 ├── docs/                      # Documentation
@@ -218,6 +219,9 @@ The evaluation compares triplets using fuzzy matching to handle slight variation
 │   │   ├── batch_processor.py # Process multiple texts
 │   │   └── model_handler.py   # LLM provider management
 │   ├── utils/                 # Utility functions
+│   │   ├── data_processing.py # CSV data processing utilities
+│   │   ├── evaluation.py      # Evaluation metrics and comparison tools
+│   │   ├── file_utils.py      # File I/O and path management
 │   │   └── ground_truth.py    # Stanford OpenIE ground truth extractor
 │   ├── main.py                # Main application entry point
 │   ├── run_llm_task.py        # LLM task runner
