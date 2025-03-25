@@ -1,27 +1,3 @@
-entity_extraction: |
-  You are a professional assistant specializing in extracting entities from text.
-
-  Please extract all company names, organizations, and relevant financial entities from the following text. 
-  Ensure the output is a comma-separated list of entities. 
-
-  Context: The text is from a financial news article. Focus on identifying entities related to business and finance.
-
-  Output Format: [Entity1, Entity2, Entity3, ...]
-
-  Text: {text}
-
-relationship_extraction: |
-  You are a professional assistant specializing in extracting relationships from text.
-
-  Extract all business relationships in the text below.
-  Return the relationships in the format (Entity A, Relationship, Entity B).
-
-  Context: The text is from a financial news article. Focus on identifying relationships between entities.
-
-  Output Format: [(Entity A, Relationship, Entity B), (Entity C, Relationship, Entity D), ...]
-
-  Text: {text}
-
 triplet_extraction: |
   You are a professional assistant specializing in extracting knowledge triplets from text.
 
@@ -44,3 +20,99 @@ triplet_extraction: |
   Output Format: Provide the extracted triplets as a JSON array of objects, where each object contains "subject", "relation", and "object" keys with their respective values.
   
   Text: {text}
+
+
+ground_truth_generation: |
+  ## Task Description
+
+  You are a financial analyst specializing in extracting structured relationship information from unstructured financial texts. Your task is to identify and extract all relationships between companies mentioned in the provided text according to a predefined financial ontology.
+
+  ## Relationship Ontology
+
+  Extract the following relationship types between companies:
+
+  1. **Debt Relationships**:
+    - `hasDebtHolder`: Company A has Company B as a debt holder
+    - `isDebtHolderOf`: Company A is a debt holder of Company B
+
+  2. **Equity Relationships**:
+    - `hasEquityStakeIn`: Company A has an equity stake in Company B
+    - `hasEquityStakeHolder`: Company A has Company B as an equity stakeholder
+
+  3. **Merger Relationships**:
+    - `mergedWith`: Company A merged with Company B (symmetric)
+
+  4. **Acquisition Relationships**:
+    - `acquired`: Company A acquired Company B
+    - `wasAcquiredBy`: Company A was acquired by Company B
+
+  ## Instructions
+
+  1. Read the provided financial text carefully.
+  2. Identify all companies mentioned in the text.
+  3. Extract all relationships between these companies that match the relationship types in our ontology.
+  4. For each relationship, create a JSON dictionary with three fields:
+    - `subject`: The source company in the relationship
+    - `relation`: The relationship type from our ontology
+    - `object`: The target company in the relationship
+  5. Be comprehensive - extract all possible relationships, even if they are mentioned multiple times or in different ways.
+  6. Include relevant contextual information when it's mentioned (e.g., acquisition dates, stake percentages).
+  7. Return the results as a list of JSON dictionaries.
+
+  ## Output Format
+
+  ```json
+  [
+    {
+      "subject": "CompanyA",
+      "relation": "acquired",
+      "object": "CompanyB"
+    },
+    {
+      "subject": "CompanyB",
+      "relation": "wasAcquiredBy",
+      "object": "CompanyA"
+    },
+    ...
+  ]
+  ```
+
+  ## Reasoning Process
+
+  For each potential relationship:
+  1. Identify the two companies involved
+  2. Determine if there is a clear relationship between them that matches our ontology
+  3. Classify the relationship type according to the predefined categories
+  4. Structure as a subject-relation-object triplet
+  5. Consider bidirectional relationships where appropriate (create both directions)
+
+  ## Example
+
+  For text: "GlobalTech Inc. acquired SmartSolutions Ltd. for $500 million in February 2025. After the acquisition, SmartSolutions will continue to operate as a subsidiary."
+
+  Expected output:
+  ```json
+  [
+    {
+      "subject": "GlobalTech Inc.",
+      "relation": "acquired",
+      "object": "SmartSolutions Ltd."
+    },
+    {
+      "subject": "SmartSolutions Ltd.",
+      "relation": "wasAcquiredBy",
+      "object": "GlobalTech Inc."
+    }
+  ]
+  ```
+
+  ## Additional Guidance
+
+  - Be precise with company names, using the full name as it appears in the text.
+  - Capture implied relationships if they are clearly indicated in the text.
+  - When monetary values, percentages, or dates are mentioned in relation to a transaction, include them in the relation or object field.
+  - If the same relationship is mentioned multiple times in different ways, extract each mention as a separate triplet.
+  - If uncertain about a relationship, prioritize precision over recall.
+  - Focus only on company-to-company relationships, not relationships between people and companies.
+
+  Now, please carefully analyze the following financial text and extract all relevant relationship triplets according to the instructions above.

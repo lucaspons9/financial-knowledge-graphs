@@ -29,6 +29,7 @@ dependencies = [
     "langsmith==0.3.12",
     "neo4j>=5.28.1",
     "openai==1.65.4",
+    "openpyxl>=3.1.5",
     "orjson==3.10.15",
     "owlready2>=0.47",
     "packaging==24.2",
