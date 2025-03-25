@@ -18,13 +18,10 @@ triplet_extraction: |
   6. Normalize predicates to their base form when appropriate
 
   Output Format: Provide the extracted triplets as a JSON array of objects, where each object contains "subject", "relation", and "object" keys with their respective values.
-  
+
   Text: {text}
 
-
 ground_truth_generation: |
-  ## Task Description
-
   You are a financial analyst specializing in extracting structured relationship information from unstructured financial texts. Your task is to identify and extract all relationships between companies mentioned in the provided text according to a predefined financial ontology.
 
   ## Relationship Ontology
@@ -33,18 +30,15 @@ ground_truth_generation: |
 
   1. **Debt Relationships**:
     - `hasDebtHolder`: Company A has Company B as a debt holder
-    - `isDebtHolderOf`: Company A is a debt holder of Company B
 
   2. **Equity Relationships**:
     - `hasEquityStakeIn`: Company A has an equity stake in Company B
-    - `hasEquityStakeHolder`: Company A has Company B as an equity stakeholder
 
   3. **Merger Relationships**:
     - `mergedWith`: Company A merged with Company B (symmetric)
 
   4. **Acquisition Relationships**:
     - `acquired`: Company A acquired Company B
-    - `wasAcquiredBy`: Company A was acquired by Company B
 
   ## Instructions
 
@@ -69,9 +63,9 @@ ground_truth_generation: |
       "object": "CompanyB"
     },
     {
-      "subject": "CompanyB",
-      "relation": "wasAcquiredBy",
-      "object": "CompanyA"
+      "subject": "CompanyC",
+      "relation": "mergedWith",
+      "object": "CompanyD"
     },
     ...
   ]
@@ -84,7 +78,7 @@ ground_truth_generation: |
   2. Determine if there is a clear relationship between them that matches our ontology
   3. Classify the relationship type according to the predefined categories
   4. Structure as a subject-relation-object triplet
-  5. Consider bidirectional relationships where appropriate (create both directions)
+  5. For symmetric relationships like `mergedWith`, create only one triplet
 
   ## Example
 
@@ -97,11 +91,6 @@ ground_truth_generation: |
       "subject": "GlobalTech Inc.",
       "relation": "acquired",
       "object": "SmartSolutions Ltd."
-    },
-    {
-      "subject": "SmartSolutions Ltd.",
-      "relation": "wasAcquiredBy",
-      "object": "GlobalTech Inc."
     }
   ]
   ```

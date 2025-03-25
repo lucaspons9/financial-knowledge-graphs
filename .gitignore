@@ -7,7 +7,7 @@ __pycache__/
 uv.lock
 .DS_Store
 
-# Ignore all contents of data
-data/
+data/processed/
+data/raw/
 # Ignore all contents of runs folder
 runs/
