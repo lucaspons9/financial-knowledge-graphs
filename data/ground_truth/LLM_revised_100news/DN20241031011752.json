@@ -1,0 +1,12 @@
+[
+  {
+    "subject": "ONEOK, Inc.",
+    "relation": "acquired",
+    "object": "Medallion Midstream"
+  },
+  {
+    "subject": "Medallion Midstream",
+    "relation": "hasEquityStakeIn",
+    "object": "Global Infrastructure Partners"
+  }
+]

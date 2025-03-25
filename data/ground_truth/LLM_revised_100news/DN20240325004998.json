@@ -1,0 +1,12 @@
+[
+  {
+    "subject": "Atlantic BidCo GmbH",
+    "relation": "hasEquityStakeIn",
+    "object": "Aareal Bank AG"
+  },
+  {
+    "subject": "Atlantic BidCo GmbH",
+    "relation": "acquired",
+    "object": "Aareal Bank AG"
+  }
+]

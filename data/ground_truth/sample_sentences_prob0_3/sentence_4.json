@@ -1,0 +1,67 @@
+[
+  {
+    "subject": "Federal Reserve",
+    "relation": "signaling",
+    "object": "aggressive approach"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "signaling",
+    "object": "approach to combat inflation"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "signaling",
+    "object": "approach"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised",
+    "object": "interest rates"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised by",
+    "object": "0.25 %"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised interest rates in",
+    "object": "its latest meeting"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "signaling",
+    "object": "more aggressive approach"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised interest rates by",
+    "object": "0.25 %"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "signaling",
+    "object": "aggressive approach to combat inflation"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised in",
+    "object": "its meeting"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "signaling",
+    "object": "more aggressive approach to combat inflation"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised interest rates in",
+    "object": "its meeting"
+  },
+  {
+    "subject": "Federal Reserve",
+    "relation": "raised in",
+    "object": "its latest meeting"
+  }
+]

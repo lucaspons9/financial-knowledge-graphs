@@ -1,0 +1,37 @@
+[
+  {
+    "subject": "Wheels Up Experience Inc.",
+    "relation": "acquired",
+    "object": "GrandView Aviation"
+  },
+  {
+    "subject": "Wheels Up Experience Inc.",
+    "relation": "acquired",
+    "object": "GrandView Aviation's fleet of 17 Embraer Phenom 300 and Phenom 300E aircraft"
+  },
+  {
+    "subject": "Wheels Up Experience Inc.",
+    "relation": "hasDebtHolder",
+    "object": "Bank of America"
+  },
+  {
+    "subject": "Delta Air Lines",
+    "relation": "hasEquityStakeIn",
+    "object": "Wheels Up Experience Inc."
+  },
+  {
+    "subject": "Delta Air Lines",
+    "relation": "hasDebtHolder",
+    "object": "Wheels Up Experience Inc."
+  },
+  {
+    "subject": "Wheels Up Experience Inc.",
+    "relation": "acquired",
+    "object": "GrandView Aviation's customer programs and pilot group"
+  },
+  {
+    "subject": "Wheels Up Experience Inc.",
+    "relation": "mergedWith",
+    "object": "GrandView Aviation (short-term operational integration under Transition Services Agreement)"
+  }
+]

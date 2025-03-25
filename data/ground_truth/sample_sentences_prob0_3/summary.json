@@ -1,0 +1,39 @@
+{
+  "timestamp": "2025-03-16T18:13:55.003040",
+  "config": {
+    "data_path": "data/raw/sample_for_openie.yaml",
+    "batch_name": "financial_sentences",
+    "openie_properties": {
+      "openie.affinity_probability_cap": 0.6667
+    },
+    "output": {
+      "base_dir": "data/ground_truth",
+      "test_name": "openie_test",
+      "store_results": true,
+      "format": "json"
+    },
+    "generate_graphs": true,
+    "batch_processing": {
+      "max_batch_size": 100,
+      "parallel_processing": false,
+      "num_workers": 4
+    }
+  },
+  "stats": {
+    "num_texts": 11,
+    "num_triples": 87,
+    "results_files": {
+      "sentence_1": "data/ground_truth/openie_test_10/sentence_1.json",
+      "sentence_2": "data/ground_truth/openie_test_10/sentence_2.json",
+      "sentence_3": "data/ground_truth/openie_test_10/sentence_3.json",
+      "sentence_4": "data/ground_truth/openie_test_10/sentence_4.json",
+      "sentence_5": "data/ground_truth/openie_test_10/sentence_5.json",
+      "sentence_6": "data/ground_truth/openie_test_10/sentence_6.json",
+      "sentence_7": "data/ground_truth/openie_test_10/sentence_7.json",
+      "sentence_8": "data/ground_truth/openie_test_10/sentence_8.json",
+      "sentence_9": "data/ground_truth/openie_test_10/sentence_9.json",
+      "sentence_10": "data/ground_truth/openie_test_10/sentence_10.json",
+      "sentence_11": "data/ground_truth/openie_test_10/sentence_11.json"
+    }
+  }
+}

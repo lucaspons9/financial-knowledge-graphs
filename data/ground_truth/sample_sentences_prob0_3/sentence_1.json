@@ -1,0 +1,17 @@
+[
+  {
+    "subject": "Barack Obama",
+    "relation": "was",
+    "object": "born"
+  },
+  {
+    "subject": "Barack Obama",
+    "relation": "was born in",
+    "object": "Hawaii"
+  },
+  {
+    "subject": "Richard Manning",
+    "relation": "wrote",
+    "object": "sentence"
+  }
+]

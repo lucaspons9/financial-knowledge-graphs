@@ -1,0 +1,17 @@
+[
+  {
+    "subject": "Reverence Capital Partners",
+    "relation": "hasEquityStakeIn",
+    "object": "Transact Campus Inc."
+  },
+  {
+    "subject": "Roper Technologies, Inc.",
+    "relation": "acquired",
+    "object": "Transact Campus Inc."
+  },
+  {
+    "subject": "Transact Campus Inc.",
+    "relation": "mergedWith",
+    "object": "Roper's CBORD business"
+  }
+]

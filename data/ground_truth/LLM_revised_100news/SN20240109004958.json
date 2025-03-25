@@ -1,0 +1,12 @@
+[
+  {
+    "subject": "Siris",
+    "relation": "acquired",
+    "object": "BearCom"
+  },
+  {
+    "subject": "Bertram Capital",
+    "relation": "hasEquityStakeIn",
+    "object": "BearCom"
+  }
+]

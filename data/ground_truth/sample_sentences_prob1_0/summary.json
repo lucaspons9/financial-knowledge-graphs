@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-03-16T22:10:42.284779",
+  "config": {
+    "data_path": "data/raw/sample_sentences.yaml",
+    "output": {
+      "base_dir": "data/ground_truth",
+      "test_name": "sample_sentences",
+      "store_results": true
+    },
+    "generate_graphs": false,
+    "openie_properties": {
+      "openie.affinity_probability_cap": 1.0,
+      "openie.ignore_affinity": false,
+      "openie.triple.strict": false,
+      "openie.splitter.disable": false,
+      "openie.max_entailments_per_clause": 10000,
+      "annotators": "tokenize,pos,lemma,depparse,natlog,coref,openie"
+    }
+  },
+  "stats": {
+    "num_texts": 11,
+    "num_triples": 124,
+    "results_files": {
+      "sentence_1": "data/ground_truth/sample_sentences_2/sentence_1.json",
+      "sentence_2": "data/ground_truth/sample_sentences_2/sentence_2.json",
+      "sentence_3": "data/ground_truth/sample_sentences_2/sentence_3.json",
+      "sentence_4": "data/ground_truth/sample_sentences_2/sentence_4.json",
+      "sentence_5": "data/ground_truth/sample_sentences_2/sentence_5.json",
+      "sentence_6": "data/ground_truth/sample_sentences_2/sentence_6.json",
+      "sentence_7": "data/ground_truth/sample_sentences_2/sentence_7.json",
+      "sentence_8": "data/ground_truth/sample_sentences_2/sentence_8.json",
+      "sentence_9": "data/ground_truth/sample_sentences_2/sentence_9.json",
+      "sentence_10": "data/ground_truth/sample_sentences_2/sentence_10.json",
+      "sentence_11": "data/ground_truth/sample_sentences_2/sentence_11.json"
+    }
+  }
+}

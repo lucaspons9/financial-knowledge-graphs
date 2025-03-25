@@ -1,0 +1,12 @@
+[
+  {
+    "subject": "Francotyp-Postalia Holding AG",
+    "relation": "hasEquityStakeIn",
+    "object": "freesort GmbH"
+  },
+  {
+    "subject": "Francotyp-Postalia Holding AG",
+    "relation": "acquired",
+    "object": "Austrian Investor"
+  }
+]

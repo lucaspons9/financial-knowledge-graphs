@@ -1,0 +1,12 @@
+[
+  {
+    "subject": "Choice Hotels International, Inc.",
+    "relation": "hasEquityStakeIn",
+    "object": "Wyndham Hotels & Resorts"
+  },
+  {
+    "subject": "Choice Hotels International, Inc.",
+    "relation": "acquired",
+    "object": "Wyndham Hotels & Resorts"
+  }
+]

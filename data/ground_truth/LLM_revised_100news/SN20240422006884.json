@@ -1,0 +1,127 @@
+[
+  {
+    "subject": "The Kroger Co.",
+    "relation": "mergedWith",
+    "object": "Albertsons Companies Inc."
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "acquired",
+    "object": "Albertsons Companies Inc."
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "C&S Wholesale Grocers, LLC"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "acquired",
+    "object": "QFC banner"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "acquired",
+    "object": "Mariano's banner"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "acquired",
+    "object": "Carrs banner"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "acquired",
+    "object": "Haggen banner"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "Debi Lilly Design private label"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "Primo Taglio private label"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "Open Nature private label"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "ReadyMeals private label"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "Waterfront Bistro private label"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "Signature private label"
+  },
+  {
+    "subject": "The Kroger Co.",
+    "relation": "hasEquityStakeIn",
+    "object": "O Organics private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "QFC banner"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Mariano's banner"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Carrs banner"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Haggen banner"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Debi Lilly Design private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Primo Taglio private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Open Nature private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "ReadyMeals private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "acquired",
+    "object": "Waterfront Bistro private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "hasEquityStakeIn",
+    "object": "Signature private label"
+  },
+  {
+    "subject": "C&S Wholesale Grocers, LLC",
+    "relation": "hasEquityStakeIn",
+    "object": "O Organics private label"
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "subject": "Bitcoin",
+    "relation": "has",
+    "object": "price"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "subject": "Apple Inc.",
+    "relation": "reported",
+    "object": "record revenue of"
+  },
+  {
+    "subject": "first quarter",
+    "relation": "in $ is",
+    "object": "exceeding analyst expectations by 7 %"
+  },
+  {
+    "subject": "Apple Inc.",
+    "relation": "reported",
+    "object": "record revenue"
+  }
+]
