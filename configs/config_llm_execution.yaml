@@ -1,12 +1,13 @@
-llm_provider: "openai" # Change this to "anthropic", "cohere", "mistral", "local"
-mode: "light" # Options: "full" for high-quality, "light" for efficiency
-prompt: "triplet_extraction"
+llm_provider: "openai" # Options: openai, anthropic, cohere, mistral, local
+mode: "full" # Options: full, light
+prompt: "triplet_extraction_with_schema" # Prompt to use from prompts.yaml
+models_path: "configs/models.yaml" # Path to the models config file
 
-data_path: "data/raw/sample_news.yaml"
-models_path: "configs/models.yaml" # Path to the models configuration file
 prompt_path: "configs/prompts.yaml" # Path to the prompt YAML file
+data_path: "data/processed/ground_truth_sample100.csv" # Path to the data file (YAML or CSV)
+id_column: "newsID" # Column name for news IDs when using CSV
+text_column: "story" # Column name for text content when using CSV
 
-# Results storage configuration
 store_results: true
 results_dir: "runs"
-test_name: "triplet_extraction_sample_news"
+test_name: "triplet_extraction_sample100"
