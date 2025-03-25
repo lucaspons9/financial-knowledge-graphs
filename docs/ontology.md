@@ -16,7 +16,7 @@ python src/neo4j/neo4j_handler.py
 	•	Connect using bolt://localhost:7687
 	•	Run query:
 
-MATCH (n) RETURN n LIMIT 10;
+---MATCH (n) RETURN n LIMIT 10;
 
 
 
