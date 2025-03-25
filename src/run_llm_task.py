@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Any, Union, Optional
 
-from src.utils.reading_files import load_yaml
+from src.utils.reading_files import load_yaml, load_csv_news
 from src.utils.file_utils import ensure_dir, find_next_versioned_dir, save_json, create_run_summary
 from src.utils.logging_utils import setup_logging, get_logger
 from src.llm.batch_processor import BatchProcessor
@@ -74,8 +74,22 @@ def main():
             test_dir = find_next_versioned_dir(results_dir, test_name)
             logger.info(f"Results will be stored in: {test_dir}")
         
-        # Load sample data
-        sample_data = load_yaml(config["data_path"])
+        # Load sample data based on file extension
+        data_path = config["data_path"]
+        file_extension = os.path.splitext(data_path)[1].lower()
+        
+        if file_extension == '.yaml' or file_extension == '.yml':
+            # Load from YAML (original behavior)
+            sample_data = load_yaml(data_path)
+        elif file_extension == '.csv':
+            # Load from CSV using the new function
+            sample_data = load_csv_news(
+                data_path, 
+                id_column=config.get("id_column", "newsID"), 
+                text_column=config.get("text_column", "story")
+            )
+        else:
+            raise ValueError(f"Unsupported file extension: {file_extension}")
         
         # Extract text from sample data
         texts = list(sample_data.values())

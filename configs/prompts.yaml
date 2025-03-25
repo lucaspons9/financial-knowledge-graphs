@@ -21,7 +21,7 @@ triplet_extraction: |
 
   Text: {text}
 
-ground_truth_generation: |
+triplet_extraction_with_schema: |
   You are a financial analyst specializing in extracting structured relationship information from unstructured financial texts. Your task is to identify and extract all relationships between companies mentioned in the provided text according to a predefined financial ontology.
 
   ## Relationship Ontology
@@ -57,16 +57,14 @@ ground_truth_generation: |
 
   ```json
   [
-    {
       "subject": "CompanyA",
       "relation": "acquired",
       "object": "CompanyB"
-    },
-    {
+    ,
       "subject": "CompanyC",
       "relation": "mergedWith",
       "object": "CompanyD"
-    },
+    ,
     ...
   ]
   ```
@@ -86,13 +84,9 @@ ground_truth_generation: |
 
   Expected output:
   ```json
-  [
-    {
       "subject": "GlobalTech Inc.",
       "relation": "acquired",
       "object": "SmartSolutions Ltd."
-    }
-  ]
   ```
 
   ## Additional Guidance
@@ -103,5 +97,11 @@ ground_truth_generation: |
   - If the same relationship is mentioned multiple times in different ways, extract each mention as a separate triplet.
   - If uncertain about a relationship, prioritize precision over recall.
   - Focus only on company-to-company relationships, not relationships between people and companies.
+  - If no relationships matching our ontology are found, return an empty JSON array [].
 
   Now, please carefully analyze the following financial text and extract all relevant relationship triplets according to the instructions above.
+
+  {text}
+
+
+
