@@ -1,9 +1,8 @@
 import os
 from typing import Any
 from dotenv import load_dotenv
-from langchain_community.llms import Anthropic, Cohere
 from langchain_openai import ChatOpenAI
-from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
+from langchain_ollama import OllamaLLM
 from src.utils.reading_files import load_yaml
 
 # Load environment variables from .env
@@ -14,11 +13,11 @@ class LLMHandler:
         # Load main configuration from config_llm_execution.yaml (or specified path)
         self.config = load_yaml(config_path)
         # Load models configuration from separate file (defaults to configs/models.yaml)
-        self.models = load_yaml(self.config.get("models_path", "configs/models.yaml"))
+        self.models = load_yaml("configs/models.yaml")
         
         self.provider = self.config["llm_provider"]
         self.mode = self.config["mode"]  
-        self.prompts = load_yaml(self.config.get("prompt_path", "configs/prompts.yaml"))
+        self.prompts = load_yaml("configs/prompts.yaml")
         
     def get_model(self) -> Any:
         """Dynamically selects the LLM model based on config_llm_execution.yaml mode setting"""
@@ -33,34 +32,11 @@ class LLMHandler:
                 temperature=self.models["openai"]["temperature"],
                 model_name=self.models["openai"][mode_key],
             )
-        
-        elif self.provider == "anthropic":
-            return Anthropic(
-                model=self.models["anthropic"][mode_key],
-                anthropic_api_key=api_key,
-                temperature=self.models["anthropic"]["temperature"],
+        elif self.provider == "llama3":
+            # Ollama doesn't need an API key as it's locally hosted
+            return OllamaLLM(
+                model=self.models["llama3"][mode_key],
+                temperature=self.models["llama3"]["temperature"],
             )
-
-        elif self.provider == "cohere":
-            return Cohere(
-                model=self.models["cohere"][mode_key],
-                cohere_api_key=api_key
-            )
-
-        elif self.provider == "mistral":
-            return Cohere(  # Mistral API works similarly to Cohere
-                model=self.models["mistral"][mode_key],
-                cohere_api_key=api_key,
-            )
-
-        elif self.provider == "local":
-            from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
-            model_key = "full_model_path" if self.mode == "full" else "light_model_path"
-            model_name = self.models["local"][model_key]
-            tokenizer = AutoTokenizer.from_pretrained(model_name)
-            model = AutoModelForCausalLM.from_pretrained(model_name)
-            hf_pipeline = pipeline("text-generation", model=model, tokenizer=tokenizer)
-            return HuggingFacePipeline(pipeline=hf_pipeline)
-
         else:
             raise ValueError("Invalid LLM provider in config_llm_execution.yaml")

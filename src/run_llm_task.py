@@ -6,15 +6,12 @@ processes results, and stores them in versioned directories.
 """
 
 import os
-import re
 import json
-import glob
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Any, Union, Optional
+import time
+from typing import Dict, List, Union
 
 from src.utils.reading_files import load_yaml, load_csv_news
-from src.utils.file_utils import ensure_dir, find_next_versioned_dir, save_json, create_run_summary
+from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary
 from src.utils.logging_utils import setup_logging, get_logger
 from src.llm.batch_processor import BatchProcessor
 
@@ -59,6 +56,8 @@ def main():
     setup_logging(log_level="INFO")
     logger.info("Starting LLM task execution")
     
+    start_time = time.time()
+    
     try:
         # Load configuration
         config = load_yaml("configs/config_llm_execution.yaml")
@@ -85,8 +84,8 @@ def main():
             # Load from CSV using the new function
             sample_data = load_csv_news(
                 data_path, 
-                id_column=config.get("id_column", "newsID"), 
-                text_column=config.get("text_column", "story")
+                id_column="newsID",
+                text_column="story"
             )
         else:
             raise ValueError(f"Unsupported file extension: {file_extension}")
@@ -111,12 +110,21 @@ def main():
             # Run the LLM task on the text
             response = batch_processor.run_task(config["prompt"], text)
             
-            # Print the result
-            logger.info(f"Results for {sentence_id}: {response.content}")
-            
             # Save results if configured
             if store_results and test_dir:
-                if config["prompt"] == "triplet_extraction":
+                # Get the model provider from the batch processor
+                provider = batch_processor.llm_handler.provider
+
+                if provider == "llama3":
+                    # For Llama3 models, try to extract JSON content 
+                    # but also accept raw text if extraction fails
+                    try:
+                        json_content = extract_json_from_output(response)
+                        results_file = save_results(json_content, test_dir, sentence_id)
+                    except Exception:
+                        # If JSON extraction fails, save the raw content
+                        results_file = save_results(response, test_dir, sentence_id)
+                elif config["prompt"] == "triplet_extraction" or config["prompt"] == "triplet_extraction_with_schema":
                     # For triplet extraction, parse the JSON output
                     triplets = extract_json_from_output(response.content)
                     results_file = save_results(triplets, test_dir, sentence_id)
@@ -147,6 +155,9 @@ def main():
         logger.error(f"Error during batch processing: {str(e)}")
         import traceback
         traceback.print_exc()
+    finally:
+        execution_time = time.time() - start_time
+        logger.info(f"Total execution time: {execution_time:.2f} seconds")
 
 if __name__ == "__main__":
     main() 

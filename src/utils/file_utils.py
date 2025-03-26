@@ -6,7 +6,7 @@ import os
 import re
 import glob
 from pathlib import Path
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Any, TypeVar, Union
 import json
 from datetime import datetime
 
@@ -14,6 +14,9 @@ from src.utils.logging_utils import get_logger
 
 # Initialize logger
 logger = get_logger(__name__)
+
+# Type variables for better typing
+T = TypeVar('T')
 
 def ensure_dir(directory: str) -> str:
     """
@@ -53,7 +56,7 @@ def find_next_versioned_dir(base_dir: str, prefix: str) -> str:
         output_dir = os.path.join(base_dir, f"{prefix}_1")
     else:
         # Extract indices from folder names
-        indices = []
+        indices: List[int] = []
         for folder in existing_folders:
             match = re.search(rf"{prefix}_(\d+)$", folder)
             if match:
@@ -95,7 +98,7 @@ def find_latest_dir(base_dir: str, prefix: str) -> Optional[str]:
     logger.info(f"Found latest directory: {latest_dir}")
     return latest_dir
 
-def save_json(data: any, file_path: str, indent: int = 2) -> None:
+def save_json(data: Dict[str, Any], file_path: str, indent: int = 2) -> None:
     """
     Save data to a JSON file.
     
@@ -114,7 +117,7 @@ def save_json(data: any, file_path: str, indent: int = 2) -> None:
     
     logger.info(f"Saved JSON file: {file_path}")
 
-def load_json(file_path: str) -> any:
+def load_json(file_path: str) -> Dict[str, Any]:
     """
     Load data from a JSON file.
     
@@ -122,7 +125,7 @@ def load_json(file_path: str) -> any:
         file_path: Path to the JSON file
     
     Returns:
-        any: The loaded data
+        Dict[str, Any]: The loaded data
     """
     with open(file_path, 'r') as f:
         data = json.load(f)
@@ -130,7 +133,7 @@ def load_json(file_path: str) -> any:
     logger.info(f"Loaded JSON file: {file_path}")
     return data
 
-def create_run_summary(config: dict, stats: dict) -> dict:
+def create_run_summary(config: Dict[str, Any], stats: Dict[str, Any]) -> Dict[str, Any]:
     """
     Create a summary object for a run.
     
@@ -139,7 +142,7 @@ def create_run_summary(config: dict, stats: dict) -> dict:
         stats: Statistics about the run
     
     Returns:
-        dict: Summary object
+        Dict[str, Any]: Summary object
     """
     return {
         "timestamp": datetime.now().isoformat(),
@@ -171,7 +174,7 @@ def load_triplets_from_directory(directory: str) -> Dict[str, List[Dict[str, str
     Returns:
         Dict[str, List[Dict[str, str]]]: Dictionary mapping file names to lists of triplets
     """
-    triplets_by_file = {}
+    triplets_by_file: Dict[str, List[Dict[str, str]]] = {}
     json_files = glob.glob(os.path.join(directory, "*.json"))
     
     for json_file in json_files:
@@ -183,4 +186,68 @@ def load_triplets_from_directory(directory: str) -> Dict[str, List[Dict[str, str
         triplets_by_file[file_id] = triplets
     
     logger.info(f"Loaded triplets from {len(triplets_by_file)} files in {directory}")
-    return triplets_by_file 
+    return triplets_by_file
+
+def load_evaluation_files(directory: str) -> Dict[str, Dict[str, Any]]:
+    """
+    Load evaluation files from a directory.
+    
+    Args:
+        directory: Directory containing evaluation JSON files
+    
+    Returns:
+        Dict[str, Dict[str, Any]]: Dictionary mapping file IDs to their contents
+    """
+    results: Dict[str, Dict[str, Any]] = {}
+    json_files: List[str] = []
+    
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.json'):
+                file_path = os.path.join(root, file)
+                if os.path.getsize(file_path) > 0:
+                    json_files.append(file_path)
+    
+    logger.info(f"Found {len(json_files)} non-empty JSON files in {directory}")
+    
+    for file_path in json_files:
+        file_id = os.path.basename(file_path).split('.')[0]
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                if isinstance(data, dict) and 'entities' in data and 'relationships' in data:
+                    results[file_id] = data
+                else:
+                    logger.warning(f"File {file_path} doesn't have the expected structure")
+        except Exception as e:
+            logger.error(f"Error loading {file_path}: {str(e)}")
+    
+    return results
+
+def save_evaluation_results(results: Dict[str, Any], llm_run_path: str, gt_path: str, 
+                          config: Dict[str, Any], output_dir: str = "runs/evaluations") -> str:
+    """
+    Save evaluation results to a file.
+    
+    Args:
+        results: Evaluation results to save
+        llm_run_path: Path to the LLM run directory
+        gt_path: Path to the ground truth directory
+        config: Configuration used for evaluation
+        output_dir: Directory to save results in
+    
+    Returns:
+        str: Path to the saved results file
+    """
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    llm_run_info = os.path.basename(llm_run_path)
+    gt_info = os.path.basename(gt_path)
+    
+    filename = f"eval_{llm_run_info}_vs_{gt_info}_{timestamp}.json"
+    file_path = os.path.join(output_dir, filename)
+    
+    ensure_dir(output_dir)
+    save_json(results, file_path)
+    logger.info(f"Evaluation results saved to: {file_path}")
+    
+    return file_path 
