@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-03-16T18:17:46.789137",
+  "config": {
+    "data_path": "data/raw/sample_news.yaml",
+    "openie_properties": {
+      "openie.affinity_probability_cap": 0.6667
+    },
+    "output": {
+      "base_dir": "data/ground_truth",
+      "test_name": "sample_news",
+      "store_results": true,
+      "format": "json"
+    },
+    "generate_graphs": true,
+    "batch_processing": {
+      "max_batch_size": 100,
+      "parallel_processing": false,
+      "num_workers": 4
+    }
+  },
+  "stats": {
+    "num_texts": 3,
+    "num_triples": 615,
+    "results_files": {
+      "news1": "data/ground_truth/sample_news_1/news1.json",
+      "news2": "data/ground_truth/sample_news_1/news2.json",
+      "news3": "data/ground_truth/sample_news_1/news3.json"
+    }
+  }
+}

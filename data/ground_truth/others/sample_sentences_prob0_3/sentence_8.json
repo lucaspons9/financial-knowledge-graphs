@@ -1,0 +1,27 @@
+[
+  {
+    "subject": "division",
+    "relation": "grew by",
+    "object": "46 % year over-year"
+  },
+  {
+    "subject": "company",
+    "relation": "has",
+    "object": "fastest growing business segment"
+  },
+  {
+    "subject": "Microsoft",
+    "relation": "has",
+    "object": "cloud"
+  },
+  {
+    "subject": "Microsoft 's cloud",
+    "relation": "grew by",
+    "object": "46 % year over-year"
+  },
+  {
+    "subject": "computing division",
+    "relation": "grew by",
+    "object": "46 % year over-year"
+  }
+]

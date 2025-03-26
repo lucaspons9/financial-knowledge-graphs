@@ -1,0 +1,17 @@
+[
+  {
+    "subject": "Applied Graphite Technologies Corporation",
+    "relation": "mergedWith",
+    "object": "1445056 B.C. Ltd."
+  },
+  {
+    "subject": "Applied Graphite Technologies Corporation",
+    "relation": "hasEquityStakeIn",
+    "object": "C-Tech Ceylon (Private) Limited"
+  },
+  {
+    "subject": "C-Tech Ceylon (Private) Limited",
+    "relation": "hasEquityStakeIn",
+    "object": "Dodangaslanda Graphite Properties"
+  }
+]
