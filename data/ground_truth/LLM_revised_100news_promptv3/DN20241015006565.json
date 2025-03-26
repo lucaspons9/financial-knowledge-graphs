@@ -1,0 +1,63 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Nemesia S.a.r.l.",
+        "attributes": {
+          "companyName": "Nemesia S.a.r.l.",
+          "country": "Luxembourg"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Zebra Holdings and Investments S.a.r.l",
+        "attributes": {
+          "companyName": "Zebra Holdings and Investments S.a.r.l",
+          "country": "Luxembourg"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Faraday Copper Corp",
+        "attributes": {
+          "companyName": "Faraday Copper Corp",
+          "ticker": "FDY",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "percentage": 11.75,
+          "transactionDate": "2024-10-14"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "percentage": 12.23,
+          "transactionDate": "2024-10-14"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-10-14"
+        }
+      }
+    ]
+  }

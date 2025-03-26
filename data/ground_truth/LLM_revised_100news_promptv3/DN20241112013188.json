@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Sodexo",
+        "attributes": {
+          "companyName": "Sodexo",
+          "industry": "Food and Facilities Management Services",
+          "country": "France"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "CRH Catering",
+        "attributes": {
+          "companyName": "CRH Catering",
+          "industry": "Industrial catering and food service",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2025"
+        }
+      }
+    ]
+  }w

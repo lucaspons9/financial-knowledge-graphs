@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "McGranahan Architects",
+        "attributes": {
+          "companyName": "McGranahan Architects",
+          "industry": "Architecture",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "PBK",
+        "attributes": {
+          "companyName": "PBK",
+          "industry": "Architectural planning and design",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-05-15"
+        }
+      }
+    ]
+  }

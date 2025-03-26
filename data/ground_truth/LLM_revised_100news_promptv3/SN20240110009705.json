@@ -1,0 +1,21 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Pulse Technologies",
+        "attributes": {
+          "companyName": "Pulse Technologies"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "Unknown",
+        "target": "C1",
+        "attributes": {}
+      }
+    ]
+  }

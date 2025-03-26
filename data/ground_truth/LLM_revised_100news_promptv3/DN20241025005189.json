@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "PetIQ, Inc.",
+        "attributes": {
+          "companyName": "PetIQ, Inc.",
+          "ticker": "PETQ",
+          "industry": "Pet medication, health and wellness",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Bansk Group",
+        "attributes": {
+          "companyName": "Bansk Group",
+          "industry": "Private investment",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 1500000000,
+          "transactionDate": "2024-10-25"
+        }
+      }
+    ]
+  }

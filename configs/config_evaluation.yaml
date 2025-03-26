@@ -1,15 +1,10 @@
-# Configuration for evaluating triplet extraction
+save_evaluation: true
+
+test_name: "v3_subsample_groundTruth_openai" # Name of the test run to evaluate (will use latest run with this name)
+ground_truth_dir: "data/ground_truth" # Directory containing ground truth files
+ground_truth_subdir: "LLM_revised_100news_promptv3" # Optional subdirectory within ground_truth_dir to use
+output_dir: "runs/evaluations" # Directory to save evaluation results
 
 # Evaluation settings
-similarity_threshold: 80 # Threshold for fuzzy matching triplets (0-100)
-
-# Ground truth directory
-ground_truth_dir: "data/ground_truth/LLM_revised_100news" # Path to specific OpenIE test run
-
-# Results settings
-results_dir: "runs" # Base directory containing results
-test_name: "triplet_extraction_sample100" # Test name prefix for finding the latest run
-
-# Output settings
-save_evaluation: true # Whether to save evaluation results
-evaluation_dir: "runs/evaluations" # Directory to save evaluation results
+entity_similarity_threshold: 80 # Threshold for entity matching (0-100)
+relationship_similarity_threshold: 80 # Threshold for relationship matching (0-100)
