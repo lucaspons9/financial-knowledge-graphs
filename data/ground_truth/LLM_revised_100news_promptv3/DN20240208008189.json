@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Ubiquitech Software Corp.",
+        "attributes": {
+          "companyName": "Ubiquitech Software Corp.",
+          "ticker": "UBQU",
+          "industry": "Marketing and Software Services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Innovative Outcomes, Inc.",
+        "attributes": {
+          "companyName": "Innovative Outcomes, Inc.",
+          "industry": "Healthcare and Medical Logistics",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-02-08"
+        }
+      }
+    ]
+  }

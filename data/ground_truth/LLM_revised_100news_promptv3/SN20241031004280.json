@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Gran Tierra Energy",
+        "attributes": {
+          "companyName": "Gran Tierra Energy",
+          "industry": "Oil and Gas",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "i3 Energy",
+        "attributes": {
+          "companyName": "i3 Energy",
+          "industry": "Oil and Gas",
+          "country": "UK"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 100.0,
+          "transactionDate": "2024-10-31"
+        }
+      }
+    ]
+  }

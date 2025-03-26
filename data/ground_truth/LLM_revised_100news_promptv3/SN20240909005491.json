@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Patrick Industries, Inc.",
+        "attributes": {
+          "companyName": "Patrick Industries, Inc.",
+          "ticker": "PATK",
+          "industry": "Component solutions for RV, Marine, Powersports and Housing markets",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "RecPro",
+        "attributes": {
+          "companyName": "RecPro",
+          "industry": "Aftermarket e-commerce for RV and marine markets",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-09-09",
+          "valueAmount": 80000000
+        }
+      }
+    ]
+  }

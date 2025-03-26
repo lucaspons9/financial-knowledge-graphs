@@ -1,0 +1,38 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Eli Lilly and Company",
+        "attributes": {
+          "companyName": "Eli Lilly and Company",
+          "ticker": "LLY",
+          "industry": "Pharmaceuticals",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Morphic Holding, Inc.",
+        "attributes": {
+          "companyName": "Morphic Holding, Inc.",
+          "ticker": "MORF",
+          "industry": "Biopharmaceuticals",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3200000000,
+          "transactionDate": "2024-07-08"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,78 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Fortune Bay Corp.",
+        "attributes": {
+          "companyName": "Fortune Bay Corp.",
+          "ticker": "FOR",
+          "industry": "Mining",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Codexis, Inc.",
+        "attributes": {
+          "companyName": "Codexis, Inc.",
+          "ticker": "CDXS",
+          "industry": "Biotechnology",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "1443904 B.C. Ltd.",
+        "attributes": {
+          "companyName": "1443904 B.C. Ltd.",
+          "ticker": null,
+          "industry": "Mining/Exploration",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Aero Energy Limited",
+        "attributes": {
+          "companyName": "Aero Energy Limited",
+          "ticker": "AERO",
+          "industry": "Mining/Exploration",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-10"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C1",
+        "attributes": {
+          "percentage": 70.0,
+          "transactionDate": "2023-12-18"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "acquired",
+        "source": "C4",
+        "target": "C3",
+        "attributes": {
+          "transactionDate": "2024-02-08"
+        }
+      }
+    ]
+  }

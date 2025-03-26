@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Hub International Limited",
+        "attributes": {
+          "companyName": "Hub International Limited",
+          "industry": "insurance",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Wade Associates, LLC",
+        "attributes": {
+          "companyName": "Wade Associates, LLC",
+          "industry": "insurance",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-22"
+        }
+      }
+    ]
+  }

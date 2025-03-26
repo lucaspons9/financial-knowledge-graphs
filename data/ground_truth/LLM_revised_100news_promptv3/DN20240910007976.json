@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "enGene Holdings Inc.",
+        "attributes": {
+          "companyName": "enGene Holdings Inc.",
+          "ticker": "ENGN",
+          "industry": "Biotechnology",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": []
+  }

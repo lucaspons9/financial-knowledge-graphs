@@ -1,0 +1,71 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Transact Campus Inc.",
+        "attributes": {
+          "companyName": "Transact Campus Inc.",
+          "industry": "Campus Technology and Payment Solutions",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Roper Technologies, Inc.",
+        "attributes": {
+          "companyName": "Roper Technologies, Inc.",
+          "ticker": "ROP",
+          "industry": "Vertical Software and Technology-Enabled Products",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Reverence Capital Partners",
+        "attributes": {
+          "companyName": "Reverence Capital Partners",
+          "industry": "Private Equity / Investment",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "CBORD",
+        "attributes": {
+          "companyName": "CBORD",
+          "industry": "Access & Security and Campus Commerce Solutions",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 1600000000,
+          "transactionDate": "2024-08-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {}
+      },
+      {
+        "id": "R3",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C4",
+        "attributes": {}
+      }
+    ]
+  }

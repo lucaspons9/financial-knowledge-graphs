@@ -1,0 +1,38 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Synopsys",
+        "attributes": {
+          "companyName": "Synopsys",
+          "ticker": "SNPS",
+          "industry": "Semiconductor Design and EDA",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Ansys",
+        "attributes": {
+          "companyName": "Ansys",
+          "ticker": "ANSS",
+          "industry": "Simulation and Analysis Software",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 35000000000,
+          "transactionDate": "2024-01-16"
+        }
+      }
+    ]
+  }

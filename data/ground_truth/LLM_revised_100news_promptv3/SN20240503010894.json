@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Territorial Bancorp Inc.",
+        "attributes": {
+          "companyName": "Territorial Bancorp Inc.",
+          "ticker": "TBNK",
+          "industry": "Banking",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Hope Bancorp, Inc.",
+        "attributes": {
+          "companyName": "Hope Bancorp, Inc.",
+          "ticker": "HOPE",
+          "industry": "Banking",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 78600000,
+          "percentage": 100.0,
+          "transactionDate": "2024-04-29"
+        }
+      }
+    ]
+  }

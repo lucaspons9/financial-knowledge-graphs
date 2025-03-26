@@ -1,0 +1,163 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "G Mining Ventures Corp.",
+        "attributes": {
+          "companyName": "G Mining Ventures Corp.",
+          "ticker": "GMIN",
+          "industry": "Gold Mining",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Renaissance Gold Development",
+        "attributes": {
+          "companyName": "Renaissance Gold Development",
+          "ticker": "RGD",
+          "industry": "Gold Mining",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "La Mancha",
+        "attributes": {
+          "companyName": "La Mancha",
+          "industry": "Private Equity / Mining Investment",
+          "country": ""
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Franco-Nevada",
+        "attributes": {
+          "companyName": "Franco-Nevada",
+          "industry": "Gold Royalty and Streaming",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C5",
+        "type": "Company",
+        "name": "SpinCo",
+        "attributes": {
+          "companyName": "SpinCo",
+          "industry": "Gold Exploration",
+          "country": "Guyana"
+        }
+      },
+      {
+        "id": "C6",
+        "type": "Company",
+        "name": "New GMIN",
+        "attributes": {
+          "companyName": "New GMIN",
+          "industry": "Gold Mining",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-Q3"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "percentage": 25.0,
+          "transactionDate": "2022-07"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C6",
+        "attributes": {
+          "percentage": 18.7,
+          "transactionDate": "2024-Q3"
+        }
+      },
+      {
+        "id": "R4",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C1",
+        "attributes": {
+          "percentage": 9.9
+        }
+      },
+      {
+        "id": "R5",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C6",
+        "attributes": {
+          "percentage": 7.2,
+          "transactionDate": "2024-Q3"
+        }
+      },
+      {
+        "id": "R6",
+        "type": "hasEquityStakeIn",
+        "source": "C6",
+        "target": "C5",
+        "attributes": {
+          "percentage": 19.9
+        }
+      },
+      {
+        "id": "R7",
+        "type": "acquired",
+        "source": "C6",
+        "target": "C1",
+        "attributes": {
+          "transactionDate": "2024-Q3"
+        }
+      },
+      {
+        "id": "R8",
+        "type": "acquired",
+        "source": "C6",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-Q3"
+        }
+      },
+      {
+        "id": "R9",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C6",
+        "attributes": {
+          "valueAmount": 35000000,
+          "transactionDate": "2024-Q3"
+        }
+      },
+      {
+        "id": "R10",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C6",
+        "attributes": {
+          "valueAmount": 25000000,
+          "transactionDate": "2024-Q3"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,52 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Arklyz AG",
+        "attributes": {
+          "companyName": "Arklyz AG",
+          "industry": "sports and lifestyle",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "LLOYD Shoes GmbH",
+        "attributes": {
+          "companyName": "LLOYD Shoes GmbH",
+          "industry": "footwear",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Ara AG",
+        "attributes": {
+          "companyName": "Ara AG",
+          "industry": "footwear",
+          "country": "Germany"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-05-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

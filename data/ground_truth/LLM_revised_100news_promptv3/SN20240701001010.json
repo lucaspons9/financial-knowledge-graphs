@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Partners Group",
+        "attributes": {
+          "companyName": "Partners Group",
+          "ticker": "",
+          "industry": "Private Equity",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "FairJourney Biologics",
+        "attributes": {
+          "companyName": "FairJourney Biologics",
+          "ticker": "",
+          "industry": "Biotechnology / Contract Research Organization",
+          "country": "Portugal"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "GHO Capital Partners",
+        "attributes": {
+          "companyName": "GHO Capital Partners",
+          "ticker": "",
+          "industry": "Private Equity / Healthcare",
+          "country": ""
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 72.2,
+          "transactionDate": "2024-07-01"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {
+          "percentage": 27.8,
+          "transactionDate": "2024-07-01"
+        }
+      }
+    ]
+  }

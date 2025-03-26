@@ -1,0 +1,33 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Liberty Capital Group, Inc.",
+        "attributes": {
+          "companyName": "Liberty Capital Group, Inc.",
+          "industry": "Small Business Lending / Equipment Financing",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Hawaiian Restaurant Association",
+        "attributes": {
+          "companyName": "Hawaiian Restaurant Association",
+          "industry": "Restaurant Association / Trade Organization",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "KCI Technologies Inc.",
+        "attributes": {
+          "companyName": "KCI Technologies Inc.",
+          "industry": "Engineering, Consulting, and Construction",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "McLaren Engineering Group",
+        "attributes": {
+          "companyName": "McLaren Engineering Group",
+          "industry": "Engineering and Surveying",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-10-18"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "YuppTV",
+        "attributes": {
+          "companyName": "YuppTV",
+          "industry": "Internet-based TV and on-demand content",
+          "country": null
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "TATA IPL",
+        "attributes": {
+          "companyName": "TATA Indian Premier League",
+          "industry": "Sports - Cricket",
+          "country": "India"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasRightsTo",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": null,
+          "transactionDate": "2024-03-19"
+        }
+      }
+    ]
+  }

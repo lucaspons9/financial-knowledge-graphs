@@ -1,0 +1,38 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "CleanSpark, Inc.",
+        "attributes": {
+          "companyName": "CleanSpark, Inc.",
+          "ticker": null,
+          "industry": null,
+          "country": null
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "GRIID Infrastructure",
+        "attributes": {
+          "companyName": "GRIID Infrastructure",
+          "ticker": null,
+          "industry": null,
+          "country": null
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 155000000,
+          "transactionDate": "2024-06-27"
+        }
+      }
+    ]
+  }

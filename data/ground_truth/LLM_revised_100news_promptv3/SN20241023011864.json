@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Aldel Financial II Inc.",
+        "attributes": {
+          "companyName": "Aldel Financial II Inc.",
+          "industry": "Special Purpose Acquisition Company (SPAC)",
+          "country": "Cayman Islands",
+          "ticker": "ALDFU"
+        }
+      }
+    ],
+    "relationships": []
+  }

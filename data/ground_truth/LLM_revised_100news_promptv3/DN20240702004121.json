@@ -1,0 +1,77 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Dow Jones",
+        "attributes": {
+          "companyName": "Dow Jones",
+          "industry": "news and business information",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "A2i Systems",
+        "attributes": {
+          "companyName": "A2i Systems",
+          "industry": "AI-powered fuel pricing solutions",
+          "country": "Denmark"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "OPIS",
+        "attributes": {
+          "companyName": "OPIS",
+          "industry": "energy data and analysis",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "News Corp",
+        "attributes": {
+          "companyName": "News Corp",
+          "ticker": "NWS",
+          "industry": "media",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-02"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C1",
+        "attributes": {}
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {}
+      },
+      {
+        "id": "R4",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

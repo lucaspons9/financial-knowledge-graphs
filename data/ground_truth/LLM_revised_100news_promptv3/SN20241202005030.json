@@ -1,0 +1,88 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Blue Sky Uranium Corp.",
+        "attributes": {
+          "companyName": "Blue Sky Uranium Corp.",
+          "ticker": "BSK",
+          "industry": "Mining (Uranium and Vanadium)",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Abatare Spain, S.L.U.",
+        "attributes": {
+          "companyName": "Abatare Spain, S.L.U.",
+          "industry": "Energy",
+          "country": "Spain"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "ACI Capital S.a r.l.",
+        "attributes": {
+          "companyName": "ACI Capital S.a r.l.",
+          "industry": "Investment",
+          "country": "Luxembourg"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Minera Cielo Azul S.A.",
+        "attributes": {
+          "companyName": "Minera Cielo Azul S.A.",
+          "industry": "Mining",
+          "country": "Argentina"
+        }
+      },
+      {
+        "id": "C5",
+        "type": "Company",
+        "name": "Ivana Minerals S.A.",
+        "attributes": {
+          "companyName": "Ivana Minerals S.A.",
+          "industry": "Mining",
+          "country": "Argentina"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C5",
+        "attributes": {
+          "percentage": 80.0,
+          "transactionDate": "2025-02"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C5",
+        "attributes": {
+          "percentage": 49.9,
+          "valueAmount": 35000000,
+          "transactionDate": "2024-11-29"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C5",
+        "attributes": {
+          "percentage": 80.0,
+          "valueAmount": 160000000
+        }
+      }
+    ]
+  }

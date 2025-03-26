@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Encavis AG",
+        "attributes": {
+          "companyName": "Encavis AG",
+          "ticker": "ECV",
+          "industry": "Renewable Energy",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "ENERTRAG SE",
+        "attributes": {
+          "companyName": "ENERTRAG SE",
+          "industry": "Renewable Energy",
+          "country": "Germany"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": null,
+          "transactionDate": "2024-12-20"
+        }
+      }
+    ]
+  }

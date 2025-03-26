@@ -1,0 +1,120 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Rexall Canada",
+        "attributes": {
+          "companyName": "Rexall Canada",
+          "industry": "Retail Pharmacy",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Earth Fare",
+        "attributes": {
+          "companyName": "Earth Fare",
+          "industry": "Health and Wellness Supermarket",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "SaskTel",
+        "attributes": {
+          "companyName": "SaskTel",
+          "industry": "Telecommunications",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "HealthHub Patient Engagement Solutions Inc.",
+        "attributes": {
+          "companyName": "HealthHub Patient Engagement Solutions Inc.",
+          "industry": "Healthcare Technology",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C5",
+        "type": "Company",
+        "name": "Hospitality Network Canada Inc.",
+        "attributes": {
+          "companyName": "Hospitality Network Canada Inc.",
+          "industry": "Healthcare Technology",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C6",
+        "type": "Company",
+        "name": "Regina's Pet Depot",
+        "attributes": {
+          "companyName": "Regina's Pet Depot",
+          "industry": "Retail (Pet Supplies)",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C7",
+        "type": "Company",
+        "name": "Regina Humane Society",
+        "attributes": {
+          "companyName": "Regina Humane Society",
+          "industry": "Nonprofit/Animal Welfare",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C8",
+        "type": "Company",
+        "name": "Proton Capital Corp.",
+        "attributes": {
+          "companyName": "Proton Capital Corp.",
+          "industry": "Capital Pool Company",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C9",
+        "type": "Company",
+        "name": "The Target Pharmacy",
+        "attributes": {
+          "companyName": "The Target Pharmacy",
+          "industry": "Retail Pharmacy",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C10",
+        "type": "Company",
+        "name": "PharmaChoice Canada Inc.",
+        "attributes": {
+          "companyName": "PharmaChoice Canada Inc.",
+          "industry": "Pharmacy Buying Group",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C8",
+        "target": "C9",
+        "attributes": {}
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C9",
+        "target": "C10",
+        "attributes": {}
+      }
+    ]
+  }

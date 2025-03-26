@@ -1,0 +1,27 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Landsea Homes Corporation",
+        "attributes": {
+          "companyName": "Landsea Homes Corporation",
+          "ticker": "LSEA",
+          "industry": "Residential Homebuilding",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": null,
+          "transactionDate": "2024-01-23"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,45 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Francotyp-Postalia Holding AG",
+        "attributes": {
+          "companyName": "Francotyp-Postalia Holding AG",
+          "ticker": "FPH900",
+          "industry": "Mailing and Digital Business Solutions",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "freesort GmbH",
+        "attributes": {
+          "companyName": "freesort GmbH",
+          "industry": "Mail Services",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Austrian Investor",
+        "attributes": {
+          "companyName": "Austrian Investor",
+          "country": "Austria"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-09-30"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Sekisui House, Ltd.",
+        "attributes": {
+          "companyName": "Sekisui House, Ltd.",
+          "industry": "Homebuilding",
+          "country": "Japan"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "MDC Holdings, Inc.",
+        "attributes": {
+          "companyName": "MDC Holdings, Inc.",
+          "ticker": "MDC",
+          "industry": "Homebuilding",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-01-18"
+        }
+      }
+    ]
+  }

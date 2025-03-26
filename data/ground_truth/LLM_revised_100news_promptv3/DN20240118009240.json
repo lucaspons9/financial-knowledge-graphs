@@ -1,0 +1,54 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Bowen Acquisition Corp",
+        "attributes": {
+          "companyName": "Bowen Acquisition Corp",
+          "ticker": "BOWN",
+          "industry": "Special Purpose Acquisition Company (SPAC)",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Shenzhen Qianzhi BioTechnology Co., Ltd",
+        "attributes": {
+          "companyName": "Shenzhen Qianzhi BioTechnology Co., Ltd",
+          "industry": "Biotechnology / Health and Wellness",
+          "country": "China"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Qianzhi Group Holding (Cayman) Limited",
+        "attributes": {
+          "companyName": "Qianzhi Group Holding (Cayman) Limited",
+          "industry": "Biotechnology",
+          "country": "Cayman Islands"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": null,
+          "transactionDate": "2024-Q2 or Q3"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

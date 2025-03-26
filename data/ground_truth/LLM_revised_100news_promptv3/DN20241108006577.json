@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "AltaGas Ltd.",
+        "attributes": {
+          "companyName": "AltaGas Ltd.",
+          "ticker": null,
+          "industry": "Energy Infrastructure",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": []
+  }

@@ -1,0 +1,26 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "DHC",
+        "attributes": {
+          "companyName": "DHC",
+          "industry": "Unknown",
+          "country": "Unknown"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Brand Engagement Network",
+        "attributes": {
+          "companyName": "Brand Engagement Network",
+          "ticker": "BEN",
+          "industry": "Technology / Digital Marketing",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": []
+  }

@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "VSee Health, Inc.",
+        "attributes": {
+          "companyName": "VSee Health, Inc.",
+          "ticker": "VSEE",
+          "industry": "telehealth",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "STAR-TIDES",
+        "attributes": {
+          "companyName": "STAR-TIDES",
+          "industry": "resilience and knowledge-sharing",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Silicon Valley Forum",
+        "attributes": {
+          "companyName": "Silicon Valley Forum",
+          "industry": "nonprofit innovation and entrepreneurship",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": []
+  }

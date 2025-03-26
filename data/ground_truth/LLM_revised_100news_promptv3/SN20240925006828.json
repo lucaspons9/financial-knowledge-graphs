@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Mako Networks",
+        "attributes": {
+          "companyName": "Mako Networks",
+          "ticker": null,
+          "industry": "Networking / Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Traverse Technologies",
+        "attributes": {
+          "companyName": "Traverse Technologies",
+          "ticker": null,
+          "industry": "Hardware / Technology",
+          "country": "Australia"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-09-25"
+        }
+      }
+    ]
+  }

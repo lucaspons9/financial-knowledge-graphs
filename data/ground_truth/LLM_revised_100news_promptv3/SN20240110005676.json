@@ -1,0 +1,55 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Choice Hotels International, Inc.",
+        "attributes": {
+          "companyName": "Choice Hotels International, Inc.",
+          "ticker": null,
+          "industry": "Hospitality",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Wyndham Hotels & Resorts",
+        "attributes": {
+          "companyName": "Wyndham Hotels & Resorts",
+          "ticker": null,
+          "industry": "Hospitality",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "WH Acquisition Corp.",
+        "attributes": {
+          "companyName": "WH Acquisition Corp.",
+          "ticker": null,
+          "industry": "",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {}
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2023-12-12"
+        }
+      }
+    ]
+  }

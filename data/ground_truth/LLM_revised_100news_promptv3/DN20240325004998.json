@@ -1,0 +1,69 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Aareal Bank AG",
+        "attributes": {
+          "companyName": "Aareal Bank AG",
+          "ticker": null,
+          "industry": "Property Financing and Digital Solutions",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Atlantic BidCo GmbH",
+        "attributes": {
+          "companyName": "Atlantic BidCo GmbH",
+          "ticker": null,
+          "industry": null,
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "ValueTrust Financial Advisors Deutschland GmbH",
+        "attributes": {
+          "companyName": "ValueTrust Financial Advisors Deutschland GmbH",
+          "ticker": null,
+          "industry": "Financial Advisory",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "RSM Ebner Stolz GmbH & Co. KG",
+        "attributes": {
+          "companyName": "RSM Ebner Stolz GmbH & Co. KG",
+          "ticker": null,
+          "industry": "Audit and Consulting",
+          "country": "Germany"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "percentage": 95.5
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 33.20,
+          "transactionDate": "2024-05-03"
+        }
+      }
+    ]
+  }

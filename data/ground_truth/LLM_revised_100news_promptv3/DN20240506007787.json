@@ -1,0 +1,32 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Globalink Investment Inc.",
+        "attributes": {
+          "companyName": "Globalink Investment Inc.",
+          "ticker": "GLLI",
+          "industry": "Special Purpose Acquisition Company (SPAC)",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Continental Stock Transfer and Trust Company",
+        "attributes": {
+          "companyName": "Continental Stock Transfer and Trust Company"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

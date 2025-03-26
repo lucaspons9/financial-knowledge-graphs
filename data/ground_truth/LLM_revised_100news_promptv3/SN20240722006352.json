@@ -1,0 +1,69 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "The Yurconic Agency",
+        "attributes": {
+          "companyName": "The Yurconic Agency",
+          "industry": "insurance",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Strausser Insurance",
+        "attributes": {
+          "companyName": "Strausser Insurance",
+          "industry": "insurance",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Keystone Agency Partners",
+        "attributes": {
+          "companyName": "Keystone Agency Partners",
+          "industry": "insurance",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Bain Capital, LP",
+        "attributes": {
+          "companyName": "Bain Capital, LP",
+          "industry": "investment",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C3",
+        "attributes": {}
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {}
+      }
+    ]
+  }

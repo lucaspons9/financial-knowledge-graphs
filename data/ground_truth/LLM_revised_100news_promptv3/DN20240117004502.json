@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Bluegreen Vacations Holding Corporation",
+        "attributes": {
+          "companyName": "Bluegreen Vacations Holding Corporation",
+          "ticker": "BVH",
+          "industry": "vacation ownership",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Hilton Grand Vacations Inc.",
+        "attributes": {
+          "companyName": "Hilton Grand Vacations Inc.",
+          "industry": "hospitality",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 75.00,
+          "transactionDate": "2024-01-17"
+        }
+      }
+    ]
+  }

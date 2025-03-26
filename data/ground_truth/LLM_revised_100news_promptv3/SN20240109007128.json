@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Sphera",
+        "attributes": {
+          "companyName": "Sphera",
+          "industry": "ESG Performance and Risk Management Software",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "SupplyShift",
+        "attributes": {
+          "companyName": "SupplyShift",
+          "industry": "Supply Chain Sustainability Software",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-01-09"
+        }
+      }
+    ]
+  }

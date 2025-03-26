@@ -1,0 +1,55 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "The Kroger Co.",
+        "attributes": {
+          "companyName": "The Kroger Co.",
+          "ticker": "KR",
+          "industry": "Retail - Grocery",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Albertsons Companies Inc.",
+        "attributes": {
+          "companyName": "Albertsons Companies Inc.",
+          "ticker": "ACI",
+          "industry": "Retail - Grocery",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "C&S Wholesale Grocers, LLC",
+        "attributes": {
+          "companyName": "C&S Wholesale Grocers, LLC",
+          "industry": "Wholesale - Grocery",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 2900000000,
+          "transactionDate": "2024-04-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

@@ -1,0 +1,55 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Mantengu Mining Limited",
+        "attributes": {
+          "companyName": "Mantengu Mining Limited",
+          "ticker": "MTU",
+          "industry": "Mining Services",
+          "country": "South Africa"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Sublime Technologies Proprietary Limited",
+        "attributes": {
+          "companyName": "Sublime Technologies Proprietary Limited",
+          "industry": "Silicon Carbide Manufacturing",
+          "country": "South Africa"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Sintex Minerals and Services Incorporated",
+        "attributes": {
+          "companyName": "Sintex Minerals and Services Incorporated",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 100000,
+          "transactionDate": "2024-10-28"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {
+          "percentage": 100
+        }
+      }
+    ]
+  }

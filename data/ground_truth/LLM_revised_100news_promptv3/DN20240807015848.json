@@ -1,0 +1,55 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "ATS Corporation",
+        "attributes": {
+          "companyName": "ATS Corporation",
+          "ticker": "ATS",
+          "industry": "Automation Solutions",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Heidolph Instruments GmbH & Co. KG",
+        "attributes": {
+          "companyName": "Heidolph Instruments GmbH & Co. KG",
+          "industry": "Laboratory Equipment",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Hans Heidolph GmbH",
+        "attributes": {
+          "companyName": "Hans Heidolph GmbH",
+          "industry": "Laboratory Equipment",
+          "country": "Germany"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-08-07"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "transactionDate": "2024-08-07"
+        }
+      }
+    ]
+  }

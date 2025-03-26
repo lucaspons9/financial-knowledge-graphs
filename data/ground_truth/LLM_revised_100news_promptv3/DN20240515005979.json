@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Tyfon",
+        "attributes": {
+          "companyName": "Tyfon",
+          "industry": "Art Marketplace",
+          "country": "China"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Global Technology Acquisition Corp. I",
+        "attributes": {
+          "companyName": "Global Technology Acquisition Corp. I",
+          "ticker": "GTAC",
+          "industry": "Special Purpose Acquisition Company (SPAC)",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "transactionDate": "2024-05-15"
+        }
+      }
+    ]
+  }

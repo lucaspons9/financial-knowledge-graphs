@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Deloitte Consulting LLP",
+        "attributes": {
+          "companyName": "Deloitte Consulting LLP",
+          "industry": "Consulting",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Gryphon Scientific, LLC",
+        "attributes": {
+          "companyName": "Gryphon Scientific, LLC",
+          "industry": "Biosecurity and Public Health",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-04-29"
+        }
+      }
+    ]
+  }

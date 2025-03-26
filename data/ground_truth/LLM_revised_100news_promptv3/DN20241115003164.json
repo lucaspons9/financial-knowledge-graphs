@@ -1,0 +1,44 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Numinus Wellness Inc.",
+        "attributes": {
+          "companyName": "Numinus Wellness Inc.",
+          "ticker": "NUMI",
+          "industry": "Mental Healthcare / Psychedelic Therapies",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Stella MSO LLC",
+        "attributes": {
+          "companyName": "Stella MSO LLC",
+          "industry": "Interventional Psychiatry",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 3530000,
+          "transactionDate": "2024-11-30"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

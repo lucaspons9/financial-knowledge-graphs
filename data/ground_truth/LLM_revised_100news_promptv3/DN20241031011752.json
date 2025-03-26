@@ -1,0 +1,54 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "ONEOK, Inc.",
+        "attributes": {
+          "companyName": "ONEOK, Inc.",
+          "ticker": "OKE",
+          "industry": "Energy Infrastructure",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Medallion Midstream",
+        "attributes": {
+          "companyName": "Medallion Midstream",
+          "industry": "Crude Oil Gathering and Transportation",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Global Infrastructure Partners",
+        "attributes": {
+          "companyName": "Global Infrastructure Partners",
+          "industry": "Private Equity / Infrastructure Investment",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2600000000,
+          "transactionDate": "2024-10-31"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

@@ -1,0 +1,58 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Arrow Financial Corporation",
+        "attributes": {
+          "companyName": "Arrow Financial Corporation",
+          "ticker": "AROW",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Glens Falls National Bank and Trust Company",
+        "attributes": {
+          "companyName": "Glens Falls National Bank and Trust Company",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Berkshire Bank",
+        "attributes": {
+          "companyName": "Berkshire Bank",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Berkshire Hills Bancorp, Inc.",
+        "attributes": {
+          "companyName": "Berkshire Hills Bancorp, Inc.",
+          "ticker": "BHLB",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": null,
+          "transactionDate": "2024-Q3"
+        }
+      }
+    ]
+  }

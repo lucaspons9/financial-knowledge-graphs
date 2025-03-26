@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Boise Cascade Company",
+        "attributes": {
+          "companyName": "Boise Cascade Company",
+          "ticker": "BCC",
+          "industry": "Building Materials",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Parksite",
+        "attributes": {
+          "companyName": "Parksite",
+          "industry": "Building Materials Distribution",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-12-10"
+        }
+      }
+    ]
+  }

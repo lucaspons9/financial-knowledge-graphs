@@ -1,0 +1,55 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "New York Life Investment Management",
+        "attributes": {
+          "companyName": "New York Life Investment Management",
+          "ticker": null,
+          "industry": "Asset Management",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Aquila Investment Management",
+        "attributes": {
+          "companyName": "Aquila Investment Management",
+          "ticker": null,
+          "industry": "Asset Management",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "MacKay Shields LLC",
+        "attributes": {
+          "companyName": "MacKay Shields LLC",
+          "ticker": null,
+          "industry": "Asset Management",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {}
+      }
+    ]
+  }

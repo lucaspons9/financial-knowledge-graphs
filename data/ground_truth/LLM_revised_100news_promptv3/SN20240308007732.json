@@ -1,0 +1,72 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Applied Graphite Technologies Corporation",
+        "attributes": {
+          "companyName": "Applied Graphite Technologies Corporation",
+          "ticker": "AGT",
+          "industry": "mining",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "AGT Resources Corporation",
+        "attributes": {
+          "companyName": "AGT Resources Corporation",
+          "industry": "mining",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "1445056 B.C. Ltd.",
+        "attributes": {
+          "companyName": "1445056 B.C. Ltd.",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "C-Tech Ceylon (Private) Limited",
+        "attributes": {
+          "companyName": "C-Tech Ceylon (Private) Limited",
+          "country": "Sri Lanka"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-03-08"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "transactionDate": "2024-03-08"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C4",
+        "attributes": {
+          "percentage": 90.0
+        }
+      }
+    ]
+  }

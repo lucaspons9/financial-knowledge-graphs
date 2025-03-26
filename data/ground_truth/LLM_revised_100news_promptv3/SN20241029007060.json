@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Truworths International Limited",
+        "attributes": {
+          "companyName": "Truworths International Limited",
+          "ticker": "TRU",
+          "industry": "Retail",
+          "country": "South Africa"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "JP Morgan Chase & Co.",
+        "attributes": {
+          "companyName": "JP Morgan Chase & Co.",
+          "ticker": null,
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "percentage": 4.09
+        }
+      }
+    ]
+  }

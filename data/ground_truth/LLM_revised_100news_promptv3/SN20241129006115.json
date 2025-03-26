@@ -1,0 +1,55 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "STEMMER IMAGING AG",
+        "attributes": {
+          "companyName": "STEMMER IMAGING AG",
+          "ticker": "DE000A2G9MZ9",
+          "industry": null,
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Ventrifossa BidCo AG",
+        "attributes": {
+          "companyName": "Ventrifossa BidCo AG",
+          "ticker": null,
+          "industry": null,
+          "country": null
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "MiddleGround Capital",
+        "attributes": {
+          "companyName": "MiddleGround Capital",
+          "ticker": null,
+          "industry": "Private Equity",
+          "country": null
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "percentage": 83.5
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {}
+      }
+    ]
+  }

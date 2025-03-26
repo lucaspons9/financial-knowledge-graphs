@@ -1,0 +1,15 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Ault Disruptive Technologies Corporation",
+        "attributes": {
+          "companyName": "Ault Disruptive Technologies Corporation",
+          "industry": "Special Purpose Acquisition Company (SPAC)",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": []
+  }

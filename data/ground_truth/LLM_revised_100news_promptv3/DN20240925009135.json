@@ -1,0 +1,83 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Republic of Turkiye",
+        "attributes": {
+          "companyName": "Republic of Turkiye",
+          "country": "TR"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Banco Bilbao Vizcaya Argentaria, S.A.",
+        "attributes": {
+          "companyName": "Banco Bilbao Vizcaya Argentaria, S.A."
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "J.P. Morgan Securities plc",
+        "attributes": {
+          "companyName": "J.P. Morgan Securities plc"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "BofA Securities, Inc.",
+        "attributes": {
+          "companyName": "BofA Securities, Inc."
+        }
+      },
+      {
+        "id": "C5",
+        "type": "Company",
+        "name": "Citigroup Global Markets Inc.",
+        "attributes": {
+          "companyName": "Citigroup Global Markets Inc."
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-09-25"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "transactionDate": "2024-09-25"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C4",
+        "attributes": {
+          "transactionDate": "2024-09-25"
+        }
+      },
+      {
+        "id": "R4",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C5",
+        "attributes": {
+          "transactionDate": "2024-09-25"
+        }
+      }
+    ]
+  }

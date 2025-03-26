@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "the COOL company",
+        "attributes": {
+          "companyName": "the COOL company",
+          "industry": "Advertising Technology",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "ADventori",
+        "attributes": {
+          "companyName": "ADventori",
+          "industry": "Dynamic Creative Optimization (DCO)",
+          "country": "France"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-08-01"
+        }
+      }
+    ]
+  }

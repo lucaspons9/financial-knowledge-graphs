@@ -1,0 +1,34 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Destination XL Group, Inc.",
+        "attributes": {
+          "companyName": "Destination XL Group, Inc.",
+          "ticker": "DXLG",
+          "industry": "Retail (Men's Big + Tall Apparel)",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Fund 1 Investments, LLC",
+        "attributes": {
+          "companyName": "Fund 1 Investments, LLC"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "transactionDate": "2024-12-23"
+        }
+      }
+    ]
+  }

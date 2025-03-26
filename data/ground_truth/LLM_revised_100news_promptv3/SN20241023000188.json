@@ -1,0 +1,79 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Nampak Limited",
+        "attributes": {
+          "companyName": "Nampak Limited",
+          "ticker": "ZAE000322095",
+          "industry": "Packaging",
+          "country": "South Africa"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Nampak Southern Africa Holdings Limited",
+        "attributes": {
+          "companyName": "Nampak Southern Africa Holdings Limited",
+          "ticker": null,
+          "industry": "Packaging",
+          "country": null
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "TSL Limited",
+        "attributes": {
+          "companyName": "TSL Limited",
+          "ticker": null,
+          "industry": null,
+          "country": "Zimbabwe"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Nampak Zimbabwe Limited",
+        "attributes": {
+          "companyName": "Nampak Zimbabwe Limited",
+          "ticker": null,
+          "industry": "Packaging",
+          "country": "Zimbabwe"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C3",
+        "target": "C4",
+        "attributes": {
+          "valueAmount": 25000000,
+          "percentage": 51.43,
+          "transactionDate": "2024-10-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C4",
+        "attributes": {
+          "percentage": 51.43
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 100.0
+        }
+      }
+    ]
+  }

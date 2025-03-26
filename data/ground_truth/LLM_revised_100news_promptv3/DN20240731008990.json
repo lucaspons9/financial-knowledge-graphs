@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "LPL Financial LLC",
+        "attributes": {
+          "companyName": "LPL Financial LLC",
+          "ticker": "LPLA",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Englert Financial",
+        "attributes": {
+          "companyName": "Englert Financial",
+          "industry": "Financial Advisory",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Avantax",
+        "attributes": {
+          "companyName": "Avantax",
+          "industry": "Financial Services"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Cetera",
+        "attributes": {
+          "companyName": "Cetera",
+          "industry": "Financial Services"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C4",
+        "target": "C3",
+        "attributes": {}
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-31"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "AMD",
+        "attributes": {
+          "companyName": "Advanced Micro Devices, Inc.",
+          "ticker": "AMD",
+          "industry": "Semiconductors",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": []
+  }

@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Outbrain",
+        "attributes": {
+          "companyName": "Outbrain",
+          "ticker": "OB",
+          "industry": "Ad Tech / Digital Advertising",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Teads",
+        "attributes": {
+          "companyName": "Teads",
+          "industry": "Ad Tech / Digital Advertising",
+          "country": "Global"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-08-01"
+        }
+      }
+    ]
+  }

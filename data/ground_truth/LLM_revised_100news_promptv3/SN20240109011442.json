@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Tellwell Publishing",
+        "attributes": {
+          "companyName": "Tellwell Publishing",
+          "ticker": null,
+          "industry": "Publishing",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "IndieMosh",
+        "attributes": {
+          "companyName": "IndieMosh",
+          "ticker": null,
+          "industry": "Publishing",
+          "country": "Australia"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2023-11"
+        }
+      }
+    ]
+  }

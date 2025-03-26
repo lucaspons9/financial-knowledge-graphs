@@ -1,0 +1,15 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Metals Acquisition Limited",
+        "attributes": {
+          "companyName": "Metals Acquisition Limited",
+          "industry": "Mining and Exploration",
+          "country": "Unknown"
+        }
+      }
+    ],
+    "relationships": []
+  }
