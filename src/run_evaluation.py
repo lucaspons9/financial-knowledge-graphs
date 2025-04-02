@@ -69,7 +69,7 @@ def main():
             output_dir = config.get('output_dir', 'runs/evaluations')
             os.makedirs(output_dir, exist_ok=True)
             
-            results_file = evaluator.save_results(results, run_dir, gt_dir, config, output_dir)
+            results_file = evaluator.save_results(results, run_dir, config, output_dir)
             logger.info(f"Evaluation results saved to: {results_file}")
         
         logger.info("Evaluation completed successfully")

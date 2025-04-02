@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Polarion Technologies",
+        "attributes": {
+          "companyName": "Polarion Technologies AB",
+          "ticker": "PLR",
+          "industry": "CleanTech",
+          "country": "Sweden"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "NeuroVolt Energy",
+        "attributes": {
+          "companyName": "NeuroVolt Energy Inc.",
+          "ticker": "NVE",
+          "industry": "Battery Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "NordStream Ventures",
+        "attributes": {
+          "companyName": "NordStream Ventures",
+          "ticker": "NSV",
+          "industry": "Venture Capital",
+          "country": "Sweden"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 30000000,
+          "percentage": 9.8,
+          "transactionDate": "2023-04-19"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 270000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-10-11"
+        }
+      }
+    ]
+  }

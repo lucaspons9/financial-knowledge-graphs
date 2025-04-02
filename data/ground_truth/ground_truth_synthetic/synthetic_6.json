@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "IronPeak Mining",
+        "attributes": {
+          "companyName": "IronPeak Mining Corp.",
+          "ticker": "IPM",
+          "industry": "Metals & Mining",
+          "country": "Australia"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Lodestone Resources",
+        "attributes": {
+          "companyName": "Lodestone Resources Ltd.",
+          "ticker": "LDR",
+          "industry": "Metals & Mining",
+          "country": "Australia"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Orion Capital",
+        "attributes": {
+          "companyName": "Orion Capital Partners",
+          "ticker": "OCP",
+          "industry": "Investment Management",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 80000000,
+          "percentage": 10.5,
+          "transactionDate": "2024-06-09"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 220000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-12-01"
+        }
+      }
+    ]
+  }

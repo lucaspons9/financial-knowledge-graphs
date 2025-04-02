@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Everion Logistics",
+        "attributes": {
+          "companyName": "Everion Logistics Group",
+          "ticker": "EVL",
+          "industry": "Logistics",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "TrackFleet Inc.",
+        "attributes": {
+          "companyName": "TrackFleet Inc.",
+          "ticker": "TFI",
+          "industry": "Telematics",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Marlin Strategic Partners",
+        "attributes": {
+          "companyName": "Marlin Strategic Partners",
+          "ticker": "MSP",
+          "industry": "Private Equity",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 125000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-08-14"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 50000000,
+          "percentage": 8.7,
+          "transactionDate": "2023-11-03"
+        }
+      }
+    ]
+  }

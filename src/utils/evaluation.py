@@ -49,14 +49,14 @@ class Evaluator:
             'false_negatives': fn
         }
     
-    def save_results(self, results: Dict[str, Any], llm_run_path: str, gt_path: str, 
+    def save_results(self, results: Dict[str, Any], llm_run_path: str,
                      config: Dict[str, Any], output_dir: str = "runs/evaluations") -> str:
         """Save evaluation results to a file."""
         # If detailed results are not needed, remove the files section
         if not config.get('save_detailed_results', True):
             results = {k: v for k, v in results.items() if k != 'files'}
         
-        return save_evaluation_results(results, llm_run_path, gt_path, config, output_dir)
+        return save_evaluation_results(results, llm_run_path, output_dir)
     
     def entity_similarity(self, entity1: Dict[str, Any], entity2: Dict[str, Any]) -> float:
         """Calculate similarity between two entities."""

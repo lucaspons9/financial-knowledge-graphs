@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Vireon Media Group",
+        "attributes": {
+          "companyName": "Vireon Media Group Inc.",
+          "ticker": "VMG",
+          "industry": "Media & Entertainment",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "EchoStage Studios",
+        "attributes": {
+          "companyName": "EchoStage Studios LLC",
+          "ticker": "ECS",
+          "industry": "Film & Television",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "SummitOak Partners",
+        "attributes": {
+          "companyName": "SummitOak Partners",
+          "ticker": "SOP",
+          "industry": "Private Equity",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 42000000,
+          "percentage": 12.5,
+          "transactionDate": "2023-09-30"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 97000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-07-18"
+        }
+      }
+    ]
+  }

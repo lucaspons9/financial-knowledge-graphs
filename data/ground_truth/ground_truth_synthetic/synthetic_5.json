@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Aether Biotech",
+        "attributes": {
+          "companyName": "Aether Biotech Inc.",
+          "ticker": "AETH",
+          "industry": "Biotechnology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Genovia Life Sciences",
+        "attributes": {
+          "companyName": "Genovia Life Sciences Ltd.",
+          "ticker": "GNV",
+          "industry": "Pharmaceuticals",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Helios Growth Fund",
+        "attributes": {
+          "companyName": "Helios Growth Fund",
+          "ticker": "HGF",
+          "industry": "Venture Capital",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 450000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-09-05"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 55000000,
+          "percentage": 15.0,
+          "transactionDate": "2023-10-12"
+        }
+      }
+    ]
+  }

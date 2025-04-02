@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Orion Semiconductor",
+        "attributes": {
+          "companyName": "Orion Semiconductor Corp.",
+          "ticker": "ORN",
+          "industry": "Semiconductors",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "NexGen Circuits",
+        "attributes": {
+          "companyName": "NexGen Circuits Inc.",
+          "ticker": "NGC",
+          "industry": "Electronics Manufacturing",
+          "country": "Taiwan"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Zenith Global Fund",
+        "attributes": {
+          "companyName": "Zenith Global Fund LP",
+          "ticker": "ZGF",
+          "industry": "Hedge Fund",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 90000000,
+          "percentage": 12.0,
+          "transactionDate": "2024-07-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 310000000,
+          "percentage": 100.0,
+          "transactionDate": "2025-01-15"
+        }
+      }
+    ]
+  }

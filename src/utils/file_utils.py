@@ -220,26 +220,23 @@ def load_evaluation_files(directory: str) -> Dict[str, Dict[str, Any]]:
     
     return results
 
-def save_evaluation_results(results: Dict[str, Any], llm_run_path: str, gt_path: str, 
-                          config: Dict[str, Any], output_dir: str = "runs/evaluations") -> str:
+def save_evaluation_results(results: Dict[str, Any], llm_run_path: str, 
+                            output_dir: str = "runs/evaluations") -> str:
     """
     Save evaluation results to a file.
     
     Args:
         results: Evaluation results to save
         llm_run_path: Path to the LLM run directory
-        gt_path: Path to the ground truth directory
-        config: Configuration used for evaluation
         output_dir: Directory to save results in
     
     Returns:
         str: Path to the saved results file
     """
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    llm_run_info = os.path.basename(llm_run_path)
-    gt_info = os.path.basename(gt_path)
     
-    filename = f"eval_{llm_run_info}_vs_{gt_info}_{timestamp}.json"
+    llm_run_info = os.path.basename(llm_run_path)
+    
+    filename = f"prompt_{llm_run_info}.json"
     file_path = os.path.join(output_dir, filename)
     
     ensure_dir(output_dir)

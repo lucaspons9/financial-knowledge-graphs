@@ -256,3 +256,79 @@ v3: |
   ```
   {text}
   ```
+
+generate_synthetic_data: |
+  Please generate 10 sets of financial knowledge graph relationships and their corresponding news articles. For each set:
+
+  1. First, generate 1-3 relationships between companies following this structure:
+    {
+      "entities": [
+        {
+          "id": "C1",
+          "type": "Company",
+          "name": "CompanyName",
+          "attributes": {
+            "companyName": "Full Company Name",
+            "ticker": "TICK",
+            "industry": "Industry",
+            "country": "Country"
+          }
+        },
+        // Other companies involved
+      ],
+      "relationships": [
+        {
+          "id": "R1",
+          "type": "relationshipType",
+          "source": "C1",
+          "target": "C2",
+          "attributes": {
+            "valueAmount": 1000000,
+            "percentage": 25.5,
+            "transactionDate": "2023-04-15"
+          }
+        }
+      ]
+    }
+
+  Relationship types to use:
+  - hasDebtHolder: Company A has Company B as a debt holder
+  - hasEquityStakeIn: Company A has an equity stake in Company B
+  - mergedWith: Company A merged with Company B (symmetric)
+  - acquired: Company A acquired Company B
+
+  2. Then, write a realistic financial news article (300-500 words) that:
+    - Naturally incorporates all the relationships from step 1
+    - Provides context for the companies involved
+    - Includes relevant financial details from the relationships
+    - Uses proper financial terminology
+    - Maintains a professional news article tone
+    - Includes market implications and industry context
+
+  Please format your response as follows:
+
+  Set 1:
+  Relationships:
+  [JSON object with entities and relationships]
+
+  Article:
+  [Title]
+  [Full article text that incorporates the above relationships]
+
+  Set 2:
+  Relationships:
+  [JSON object with entities and relationships]
+
+  Article:
+  [Title]
+  [Full article text that incorporates the above relationships]
+
+  And so on for all 10 sets.
+
+  Guidelines:
+  - Each set should have 1-3 clear relationships between companies
+  - Include specific values, percentages, and dates in the relationships
+  - Ensure company names are realistic and consistent
+  - Make the article flow naturally while including all relationship information
+  - Include ticker symbols and industry information when possible
+  - The article should read like a real financial news piece, not just a list of facts

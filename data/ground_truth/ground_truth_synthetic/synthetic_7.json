@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Stratus Fintech",
+        "attributes": {
+          "companyName": "Stratus Fintech Ltd.",
+          "ticker": "SFT",
+          "industry": "Fintech",
+          "country": "Singapore"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "PayNova Systems",
+        "attributes": {
+          "companyName": "PayNova Systems Inc.",
+          "ticker": "PNV",
+          "industry": "Digital Payments",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "EastBridge Ventures",
+        "attributes": {
+          "companyName": "EastBridge Ventures",
+          "ticker": "EBV",
+          "industry": "Venture Capital",
+          "country": "Singapore"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 35000000,
+          "percentage": 10.0,
+          "transactionDate": "2024-05-01"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 500000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-11-20"
+        }
+      }
+    ]
+  }

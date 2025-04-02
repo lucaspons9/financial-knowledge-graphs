@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "NovaTech Solutions",
+        "attributes": {
+          "companyName": "NovaTech Solutions Inc.",
+          "ticker": "NTS",
+          "industry": "Software",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Cresta Capital",
+        "attributes": {
+          "companyName": "Cresta Capital Partners",
+          "ticker": "CCP",
+          "industry": "Private Equity",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "BrightLayer Analytics",
+        "attributes": {
+          "companyName": "BrightLayer Analytics Inc.",
+          "ticker": "BLA",
+          "industry": "Data Analytics",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 175000000,
+          "percentage": 100.0,
+          "transactionDate": "2024-12-10"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 60000000,
+          "percentage": 22.5,
+          "transactionDate": "2023-06-01"
+        }
+      }
+    ]
+  }
