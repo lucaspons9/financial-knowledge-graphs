@@ -1,4 +1,4 @@
-llm_provider: "openai" # Options: openai, llama3, anthropic, cohere, mistral
+llm_provider: "llama3" # Options: openai, llama3, anthropic, cohere, mistral
 mode: "light" # Options: full, light
 
 prompt: "v3" # Prompt to use from prompts.yaml
@@ -6,4 +6,4 @@ data_path: "data/processed/ground_truth_sample100.csv" # Path to the data file (
 
 store_results: true
 results_dir: "runs"
-test_name: "v3_subsampleGroundTruth_openai" # convention: <version_of_prompt>_<data>_<model_name>
+test_name: "v3_groundTruth_openai" # convention: <version_of_prompt>_<data>_<model_name>
