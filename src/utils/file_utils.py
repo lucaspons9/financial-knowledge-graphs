@@ -199,28 +199,24 @@ def load_evaluation_files(directory: str) -> Dict[str, Dict[str, Any]]:
         Dict[str, Dict[str, Any]]: Dictionary mapping file IDs to their contents
     """
     results: Dict[str, Dict[str, Any]] = {}
-    json_files: List[str] = []
     
-    for root, _, files in os.walk(directory):
-        for file in files:
-            if file.endswith('.json'):
-                file_path = os.path.join(root, file)
-                if os.path.getsize(file_path) > 0:
-                    json_files.append(file_path)
+    if not os.path.exists(directory):
+        logger.error(f"Directory {directory} does not exist")
+        return results
     
+    json_files = [f for f in os.listdir(directory) if f.endswith('.json') and f != 'summary.json']
     logger.info(f"Found {len(json_files)} non-empty JSON files in {directory}")
     
-    for file_path in json_files:
-        file_id = os.path.basename(file_path).split('.')[0]
+    for file_name in json_files:
+        file_path = os.path.join(directory, file_name)
         try:
-            with open(file_path, 'r') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                if isinstance(data, dict) and 'entities' in data and 'relationships' in data:
-                    results[file_id] = data
-                else:
-                    logger.warning(f"File {file_path} doesn't have the expected structure")
+                if data:  # Only add non-empty files
+                    results[file_name.replace('.json', '')] = data
         except Exception as e:
             logger.error(f"Error loading {file_path}: {str(e)}")
+            continue
     
     return results
 
