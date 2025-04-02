@@ -31,4 +31,30 @@ def load_csv_news(file_path: str, id_column: str = "newsID", text_column: str = 
     # Convert to dictionary format {newsID: story}
     news_dict = {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
     
+    return news_dict
+
+def load_excel_news(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
+    """
+    Load news texts from an Excel file.
+    
+    Args:
+        file_path: Path to the Excel file
+        id_column: Column name containing news article IDs
+        text_column: Column name containing news article texts
+        
+    Returns:
+        Dictionary mapping news IDs to their text content
+    """
+    # Read Excel file
+    df = pd.read_excel(file_path)
+    
+    # Check if required columns exist
+    if id_column not in df.columns:
+        raise ValueError(f"Excel file does not contain column '{id_column}'")
+    if text_column not in df.columns:
+        raise ValueError(f"Excel file does not contain column '{text_column}'")
+    
+    # Convert to dictionary format {newsID: story}
+    news_dict = {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
+    
     return news_dict 

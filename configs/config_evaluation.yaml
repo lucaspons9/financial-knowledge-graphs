@@ -1,8 +1,8 @@
 save_evaluation: true
 save_detailed_results: false # Whether to save detailed results for each file or just the overview
 
-test_name: "v3_groundTruth_llama3" # Name of the test run to evaluate (will use latest run with this name)
-ground_truth_dir: "data/ground_truth/LLM_revised_100news_promptv3" # Directory containing ground truth files
+test_name: "v3_GroundTruthSynthetic_openai" # Name of the test run to evaluate (will use latest run with this name)
+ground_truth_dir: "data/ground_truth/ground_truth_synthetic" # Directory containing ground truth files
 output_dir: "runs/evaluations" # Directory to save evaluation results
 
 # Evaluation settings

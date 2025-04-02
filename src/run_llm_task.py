@@ -10,7 +10,7 @@ import json
 import time
 from typing import Dict, List, Union
 
-from src.utils.reading_files import load_yaml, load_csv_news
+from src.utils.reading_files import load_yaml, load_csv_news, load_excel_news
 from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary
 from src.utils.logging_utils import setup_logging, get_logger
 from src.llm.batch_processor import BatchProcessor
@@ -84,6 +84,13 @@ def main():
             # Load from CSV using the new function
             sample_data = load_csv_news(
                 data_path, 
+                id_column="newsID",
+                text_column="story"
+            )
+        elif file_extension in ['.xlsx', '.xls']:
+            # Load from Excel file
+            sample_data = load_excel_news(
+                data_path,
                 id_column="newsID",
                 text_column="story"
             )
