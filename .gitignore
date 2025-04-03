@@ -11,3 +11,4 @@ data/processed/
 data/raw/
 # Ignore all contents of runs folder
 runs/
+src/llm/models/

@@ -1,5 +1,5 @@
 import os
-from typing import Any
+from typing import Any, Tuple
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
@@ -38,5 +38,27 @@ class LLMHandler:
                 model=self.models["llama3"][mode_key],
                 temperature=self.models["llama3"]["temperature"],
             )
+        elif self.provider == "t5":
+            # Import T5 components only when needed
+            from transformers import T5ForConditionalGeneration, T5Tokenizer
+            
+            # Get model name from config
+            model_name = self.models["t5"][mode_key]
+            model_path = os.path.join("src/llm/models", model_name)
+            
+            # Check if model exists locally, otherwise download
+            if os.path.exists(model_path):
+                tokenizer = T5Tokenizer.from_pretrained(model_path)
+                model = T5ForConditionalGeneration.from_pretrained(model_path)
+            else:
+                tokenizer = T5Tokenizer.from_pretrained(model_name)
+                model = T5ForConditionalGeneration.from_pretrained(model_name)
+                
+                # Save model locally for future use
+                os.makedirs(model_path, exist_ok=True)
+                tokenizer.save_pretrained(model_path)
+                model.save_pretrained(model_path)
+            
+            return model, tokenizer
         else:
-            raise ValueError("Invalid LLM provider in config_llm_execution.yaml")
+            raise ValueError(f"Invalid LLM provider in config_llm_execution.yaml: {self.provider}")
