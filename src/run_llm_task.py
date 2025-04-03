@@ -8,7 +8,7 @@ processes results, and stores them in versioned directories.
 import os
 import json
 import time
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Any
 
 from src.utils.reading_files import load_yaml, load_csv_news, load_excel_news
 from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary
@@ -34,7 +34,7 @@ def extract_json_from_output(output_content: str) -> List[Dict[str, str]]:
         # Try to handle other formats here if needed
         return []
 
-def save_results(results: Union[List[Dict[str, str]], str], test_dir: str, sentence_id: str) -> str:
+def save_results(results: Union[List[Dict[str, str]], str, Dict[str, Any]], test_dir: str, sentence_id: str) -> str:
     """Save results to a JSON file and return the file path."""
     # If results is a string, try to parse it as JSON
     if isinstance(results, str):
@@ -111,7 +111,7 @@ def main():
         
         # Process each text individually to handle different sentence IDs
         results_files = {}
-        for i, (sentence_id, text) in enumerate(zip(sentence_ids, texts), start=1):
+        for sentence_id, text in zip(sentence_ids, texts):
             logger.info(f"Processing {sentence_id}...")
             
             # Run the LLM task on the text
@@ -131,6 +131,9 @@ def main():
                     except Exception:
                         # If JSON extraction fails, save the raw content
                         results_file = save_results(response, test_dir, sentence_id)
+                elif provider == "t5":
+                    # For T5 models, the response is already formatted as JSON
+                    results_file = save_results(response, test_dir, sentence_id)
                 elif config["prompt"] == "triplet_extraction" or config["prompt"] == "triplet_extraction_with_schema":
                     # For triplet extraction, parse the JSON output
                     triplets = extract_json_from_output(response.content)

@@ -11,6 +11,12 @@ llama3:
   temperature: 0.1
   max_tokens: 1024
 
+# T5 models for information extraction
+t5:
+  light_model: "t5-large"
+  full_model: "t5-3B"
+  temperature: 0.1
+  max_length: 128
 # anthropic:
 #   api_key: ${ANTHROPIC_API_KEY}
 #   full_model: "claude-2"
