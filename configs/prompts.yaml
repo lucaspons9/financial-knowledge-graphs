@@ -257,6 +257,149 @@ v3: |
   {text}
   ```
 
+v4:
+  | # like v4 but using XML style tags; Also, no role assigned to the LLM at the beginning
+  <context>
+  The text delimited by triple backticks below contains financial information that needs to be parsed into entities (primarily companies) with their attributes, and the relationships between these entities with their attributes.
+  </context>
+
+  <ontology>
+  <entity_types>
+  - **Company**: Business organizations mentioned in the text
+  </entity_types>
+
+  <entity_attributes>
+  - **companyName**: Full name of the company (string)
+  - **ticker**: Stock market ticker symbol (string)
+  - **industry**: Company's business sector (string)
+  - **country**: Country where the company is headquartered (string)
+  </entity_attributes>
+
+  <relationship_types>
+  - **hasDebtHolder**: Company A has Company B as a debt holder
+  - **hasEquityStakeIn**: Company A has an equity stake in Company B
+  - **mergedWith**: Company A merged with Company B (symmetric relationship)
+  - **acquired**: Company A acquired Company B
+  </relationship_types>
+
+  <relationship_attributes>
+  - **valueAmount**: Monetary value of the transaction (float)
+  - **percentage**: Percentage stake in equity relationships (float)
+  - **transactionDate**: Date when the transaction occurred (date)
+  </relationship_attributes>
+  </ontology>
+
+  <instructions>
+  Perform the following actions in sequence:
+
+  1. **Detect Companies**: Identify all companies mentioned in the text and assign each a unique index (C1, C2, etc.)
+  2. **Extract Company Attributes**: For each company, extract any mentioned attributes
+  3. **Detect Relationships**: Identify all relationships between pairs of companies
+  4. **Extract Relationship Attributes**: For each relationship, extract any relevant attributes
+  </instructions>
+
+  <output_format>
+  Provide your output as a JSON object with two main sections:
+
+  ```json
+  {{
+    "entities": [
+      {{
+        "id": "C1",
+        "type": "Company",
+        "name": "CompanyNameHere",
+        "attributes": {{
+          "companyName": "Full Company Name",
+          "ticker": "TCK",
+          "industry": "Industry if mentioned",
+          "country": "Country if mentioned"
+        }}
+      }},
+      // More entities as needed
+    ],
+    "relationships": [
+      {{
+        "id": "R1",
+        "type": "relationshipType",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {{
+          "valueAmount": 1000000,
+          "percentage": 25.5,
+          "transactionDate": "2023-04-15"
+        }}
+      }},
+      // More relationships as needed
+    ]
+  }}
+  ```
+  </output_format>
+
+  <example>
+  For the text: "GlobalTech Inc. (NYSE: GTI), a US technology firm, acquired SmartSolutions Ltd. for $500 million in February 2025. After the acquisition, SmartSolutions will continue to operate as a subsidiary."
+
+  Expected output:
+  ```json
+  {{
+    "entities": [
+      {{
+        "id": "C1",
+        "type": "Company",
+        "name": "GlobalTech Inc.",
+        "attributes": {{
+          "companyName": "GlobalTech Inc.",
+          "ticker": "GTI",
+          "industry": "technology",
+          "country": "US"
+        }}
+      }},
+      {{
+        "id": "C2",
+        "type": "Company",
+        "name": "SmartSolutions Ltd.",
+        "attributes": {{
+          "companyName": "SmartSolutions Ltd."
+        }}
+      }}
+    ],
+    "relationships": [
+      {{
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {{
+          "valueAmount": 500000000,
+          "transactionDate": "2025-02"
+        }}
+      }}
+    ]
+  }}
+  ```
+  </example>
+
+  <guidelines>
+  - If no attributes are mentioned for an entity or relationship, include an empty attributes object
+  - If you're uncertain about an entity or relationship, do not include it
+  - For symmetric relationships like `mergedWith`, the source and target can be assigned arbitrarily
+  - If no entities or relationships are found, return empty arrays for those sections
+  - Ensure all IDs are consistent throughout the output
+  - Do not extract relationships between entities that aren't companies
+  - Prioritize precision over recall
+  - Numeric values should be standardized (remove currency symbols, commas, etc.)
+  - Dates should be normalized to YYYY-MM-DD format when possible, or partial dates like YYYY-MM if the day isn't specified
+  </guidelines>
+
+  <important_note>
+  YOUR RESPONSE MUST ONLY CONTAIN THE JSON OBJECT DESCRIBED IN THE OUTPUT FORMAT SECTION.
+  DO NOT INCLUDE ANY EXPLANATORY TEXT, INTRODUCTION, OR CONCLUSION.
+  ONLY OUTPUT THE JSON OBJECT ITSELF.
+  </important_note>
+
+  <input>
+  {text}
+  </input>
+
 generate_synthetic_data: |
   Please generate 10 sets of financial knowledge graph relationships and their corresponding news articles. For each set:
 
