@@ -28,6 +28,7 @@ dependencies = [
     "langchain-openai>=0.3.7",
     "langchain-text-splitters==0.3.6",
     "langsmith==0.3.12",
+    "matplotlib>=3.10.1",
     "neo4j>=5.28.1",
     "openai==1.65.4",
     "openpyxl>=3.1.5",
