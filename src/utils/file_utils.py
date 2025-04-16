@@ -6,11 +6,12 @@ import os
 import re
 import glob
 from pathlib import Path
-from typing import Optional, Dict, List, Any, TypeVar, Union
+from typing import Optional, Dict, List, Any, TypeVar, Union, Set
 import json
 from datetime import datetime
 
 from src.utils.logging_utils import get_logger
+from src.utils.text_processing import extract_json_from_output
 
 # Initialize logger
 logger = get_logger(__name__)
@@ -98,12 +99,12 @@ def find_latest_dir(base_dir: str, prefix: str) -> Optional[str]:
     logger.info(f"Found latest directory: {latest_dir}")
     return latest_dir
 
-def save_json(data: Dict[str, Any], file_path: str, indent: int = 2) -> None:
+def save_json(data: Union[Dict[str, Any], List[Dict[str, Any]]], file_path: str, indent: int = 2) -> None:
     """
     Save data to a JSON file.
     
     Args:
-        data: Data to save
+        data: Data to save (dict or list of dicts)
         file_path: Path to save the file to
         indent: JSON indentation level
     """
@@ -132,6 +133,52 @@ def load_json(file_path: str) -> Dict[str, Any]:
     
     logger.info(f"Loaded JSON file: {file_path}")
     return data
+
+def get_processed_item_ids(parent_batch_dir: str) -> Set[str]:
+    """
+    Get all processed item IDs (newsIDs) from a parent batch directory.
+    This function scans through all batch subdirectories and retrieves the keys
+    from the 'original_texts' dictionary in each batch's metadata.json file.
+    
+    Args:
+        parent_batch_dir: Path to the parent batch directory
+            
+    Returns:
+        Set[str]: Set of all processed item IDs across all batches
+    """
+    if not os.path.exists(parent_batch_dir):
+        logger.warning(f"Parent batch directory not found: {parent_batch_dir}")
+        return set()
+    
+    processed_ids: Set[str] = set()
+    
+    # Find all batch directories in the parent directory
+    batch_dirs = [d for d in os.listdir(parent_batch_dir) 
+                  if os.path.isdir(os.path.join(parent_batch_dir, d)) 
+                  and d.startswith('batch_')]
+    
+    for batch_dir in batch_dirs:
+        batch_path = os.path.join(parent_batch_dir, batch_dir)
+        metadata_path = os.path.join(batch_path, "metadata.json")
+        
+        if not os.path.exists(metadata_path):
+            logger.warning(f"Metadata file not found for batch: {batch_dir}")
+            continue
+        
+        try:
+            # Load metadata and extract keys from original_texts
+            with open(metadata_path, 'r') as f:
+                metadata = json.load(f)
+            
+            # Get keys from original_texts (newsIDs)
+            original_texts = metadata.get("original_texts", {})
+            processed_ids.update(original_texts.keys())
+            
+        except Exception as e:
+            logger.error(f"Error reading metadata from batch {batch_dir}: {str(e)}")
+    
+    logger.info(f"Found {len(processed_ids)} processed item IDs across all batches in {parent_batch_dir}")
+    return processed_ids
 
 def create_run_summary(config: Dict[str, Any], stats: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -242,5 +289,36 @@ def save_evaluation_results(results: Dict[str, Any], llm_run_path: str,
     ensure_dir(output_dir)
     save_json(results, file_path)
     logger.info(f"Evaluation results saved to: {file_path}")
+    
+    return file_path
+
+def save_results(results: Union[List[Dict[str, Any]], str, Dict[str, Any]], test_dir: str, sentence_id: str) -> str:
+    """
+    Save results to a file.
+    
+    Args:
+        results: Results to save (can be a list of triplets, raw string or dictionary)
+        test_dir: Directory to save results in
+        sentence_id: ID of the sentence/document to use in the filename
+        
+    Returns:
+        str: Path to the saved results file
+    """
+    file_path = os.path.join(test_dir, f"{sentence_id}.json")
+    
+    # If results is a string, try to extract JSON if it's in the format
+    # that LLMs typically output (with JSON inside markdown code blocks)
+    if isinstance(results, str):
+        try:
+            # Try to extract JSON from a code block in the string
+            json_content = extract_json_from_output(results)
+            if json_content:
+                results = json_content
+        except Exception:
+            # If extraction fails, keep as string
+            pass
+    
+    # Save the results
+    save_json(results, file_path)
     
     return file_path 

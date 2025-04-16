@@ -8,6 +8,7 @@ uv.lock
 .DS_Store
 
 data/processed/
+data/batch_processing/
 data/raw/
 # Ignore all contents of runs folder
 runs/

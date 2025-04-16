@@ -6,49 +6,17 @@ processes results, and stores them in versioned directories.
 """
 
 import os
-import json
 import time
-from typing import Dict, List, Union, Any
 
-from src.utils.reading_files import load_yaml, load_csv_news, load_excel_news
-from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary
+from src.utils.reading_files import load_yaml, load_data_by_extension
+from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary, save_results
 from src.utils.logging_utils import setup_logging, get_logger
-from src.llm.batch_processor import BatchProcessor
+from src.utils.text_processing import extract_json_from_output
+from src.llm.model_handler import LLMHandler
+from src.llm.openai_batch_processor import OpenAIBatchProcessor
 
 # Initialize logger
 logger = get_logger(__name__)
-
-def extract_json_from_output(output_content: str) -> List[Dict[str, str]]:
-    """Extract JSON data from the model output."""
-    try:
-        # Look for content between ```json and ``` markers if present
-        if "```json" in output_content and "```" in output_content.split("```json")[1]:
-            json_str = output_content.split("```json")[1].split("```")[0].strip()
-        # Otherwise, try to parse the whole content as JSON
-        else:
-            json_str = output_content.strip()
-        
-        return json.loads(json_str)
-    except json.JSONDecodeError:
-        logger.error(f"Failed to parse JSON from output: {output_content}")
-        # Try to handle other formats here if needed
-        return []
-
-def save_results(results: Union[List[Dict[str, str]], str, Dict[str, Any]], test_dir: str, sentence_id: str) -> str:
-    """Save results to a JSON file and return the file path."""
-    # If results is a string, try to parse it as JSON
-    if isinstance(results, str):
-        try:
-            results = extract_json_from_output(results)
-        except Exception:
-            # If parsing fails, store as is in a dict
-            results = {"raw_output": results}
-    
-    # Save to file
-    file_path = os.path.join(test_dir, f"{sentence_id}.json")
-    save_json(results, file_path)
-    
-    return file_path
 
 def main():
     """Main function to run LLM tasks."""
@@ -74,28 +42,11 @@ def main():
             logger.info(f"Results will be stored in: {test_dir}")
         
         # Load sample data based on file extension
-        data_path = config["data_path"]
-        file_extension = os.path.splitext(data_path)[1].lower()
-        
-        if file_extension == '.yaml' or file_extension == '.yml':
-            # Load from YAML (original behavior)
-            sample_data = load_yaml(data_path)
-        elif file_extension == '.csv':
-            # Load from CSV using the new function
-            sample_data = load_csv_news(
-                data_path, 
-                id_column="newsID",
-                text_column="story"
-            )
-        elif file_extension in ['.xlsx', '.xls']:
-            # Load from Excel file
-            sample_data = load_excel_news(
-                data_path,
-                id_column="newsID",
-                text_column="story"
-            )
-        else:
-            raise ValueError(f"Unsupported file extension: {file_extension}")
+        sample_data = load_data_by_extension(
+            config["data_path"],
+            id_column="newsID",
+            text_column="story"
+        )
         
         # Extract text from sample data
         texts = list(sample_data.values())
@@ -103,66 +54,146 @@ def main():
         
         logger.info(f"Loaded {len(texts)} sample texts")
         
-        # Initialize BatchProcessor
-        batch_processor = BatchProcessor()
+        # Initialize LLM Handler
+        llm_handler = LLMHandler()
         
-        # Run batch processing
-        logger.info(f"Running batch {config['prompt']}...")
+        # Check if batch processing should be used
+        use_batch = config.get("use_batch", False)
         
-        # Process each text individually to handle different sentence IDs
-        results_files = {}
-        for sentence_id, text in zip(sentence_ids, texts):
-            logger.info(f"Processing {sentence_id}...")
+        if use_batch and llm_handler.provider == "openai":
+            # Use batch processing for OpenAI
+            logger.info(f"Using OpenAI Batch API for processing {len(texts)} texts...")
             
-            # Run the LLM task on the text
-            response = batch_processor.run_task(config["prompt"], text)
+            # Initialize the batch processor
+            batch_processor = OpenAIBatchProcessor()
             
-            # Save results if configured
-            if store_results and test_dir:
-                # Get the model provider from the batch processor
-                provider = batch_processor.llm_handler.provider
-
-                if provider == "llama3":
-                    # For Llama3 models, try to extract JSON content 
-                    # but also accept raw text if extraction fails
-                    try:
-                        json_content = extract_json_from_output(response)
-                        results_file = save_results(json_content, test_dir, sentence_id)
-                    except Exception:
-                        # If JSON extraction fails, save the raw content
-                        results_file = save_results(response, test_dir, sentence_id)
-                elif provider == "t5":
-                    # For T5 models, the response is already formatted as JSON
-                    results_file = save_results(response, test_dir, sentence_id)
-                elif config["prompt"] == "triplet_extraction" or config["prompt"] == "triplet_extraction_with_schema":
-                    # For triplet extraction, parse the JSON output
-                    triplets = extract_json_from_output(response.content)
-                    results_file = save_results(triplets, test_dir, sentence_id)
-                else:
-                    # For other tasks, save the raw output
-                    results_file = save_results(response.content, test_dir, sentence_id)
-                
-                results_files[sentence_id] = results_file
-                logger.info(f"Saved results to {results_file}")
-        
-        # Save a summary file if storing results
-        if store_results and test_dir:
-            summary = create_run_summary(
-                config={k: v for k, v in config.items() if k != "api_key"},
-                stats={
-                    "num_texts": len(texts),
-                    "results_files": results_files
-                }
+            # Get batch size from config or use default
+            batch_size = config.get("batch_size", 2000)
+            
+            # Get parent batch directory if specified
+            parent_batch_dir = config.get("parent_batch_dir")
+            
+            # Submit the batch
+            batch_info = batch_processor.submit_batch(
+                task=config["prompt"], 
+                texts=texts,
+                item_ids=sentence_ids,
+                batch_size=batch_size,
+                parent_batch_dir=parent_batch_dir
             )
             
-            summary_path = os.path.join(test_dir, "summary.json")
-            save_json(summary, summary_path)
-            logger.info(f"Summary saved to {summary_path}")
+            # Check for batch status
+            if batch_info.get("status") == "skipped":
+                logger.info("No new items to process, all have been processed already.")
+            elif batch_info.get("status") == "failed":
+                logger.error(f"Batch submission failed: {batch_info.get('error')}")
+            else:
+                logger.info(f"Batch submitted with ID: {batch_info.get('batch_id')}")
+                
+                # Store batch ID for later reference
+                batch_id = batch_info.get("batch_id")
             
-        logger.info("Batch processing completed successfully!")
+                # If configured to wait for results, check status and retrieve when ready
+                wait_for_completion = config.get("wait_for_completion", False)
+                
+                if wait_for_completion:
+                    if not batch_id:
+                        logger.error("Batch submission failed or batch_id not returned")
+                    else:
+                        # Wait for batch to complete
+                        logger.info("Waiting for batch to complete...")
+                        
+                        while True:
+                            status_info = batch_processor.check_batch_status(batch_id)
+                            
+                            if "error" in status_info:
+                                logger.error(f"Error checking batch status: {status_info['error']}")
+                                break
+                                    
+                            if status_info.get("completed", False):
+                                logger.info("Batch processing completed!")
+                                
+                                # Retrieve and save results
+                                results_info = batch_processor.retrieve_batch_results(
+                                    batch_id, 
+                                    output_dir=test_dir if store_results else None
+                                )
+                                
+                                logger.info(f"Retrieved {results_info.get('n_results', 0)} results")
+                                break
+                                    
+                            # Wait before checking again
+                            wait_time = 10  # seconds
+                            logger.info(f"Batch status: {status_info.get('status', 'unknown')}. Checking again in {wait_time} seconds...")
+                            time.sleep(wait_time)
+                
+                else:
+                    logger.info(f"Batch submitted for asynchronous processing. Check status later with the batch ID: {batch_id}")
+                    logger.info(f"Use: python -m src.retrieve_batch {batch_id} --check_only to check status")
+                    logger.info(f"Use: python -m src.retrieve_batch {batch_id} to retrieve results when completed")
+        else:
+            # Process each text individually
+            logger.info(f"Running task {config['prompt']} on {len(texts)} texts individually...")
+            
+            # Process each text individually to handle different sentence IDs
+            results_files = {}
+            for sentence_id, text in zip(sentence_ids, texts):
+                logger.info(f"Processing {sentence_id}...")
+                
+                # Run the LLM task on the text
+                response = llm_handler.run_task(config["prompt"], text)
+                
+                # Save results if configured
+                if store_results and test_dir:
+                    # Get the model provider
+                    provider = llm_handler.provider
+
+                    if provider == "llama3":
+                        # For Llama3 models, try to extract JSON content 
+                        # but also accept raw text if extraction fails
+                        try:
+                            json_content = extract_json_from_output(response)
+                            results_file = save_results(json_content, test_dir, sentence_id)
+                        except Exception:
+                            # If JSON extraction fails, save the raw content
+                            results_file = save_results(response, test_dir, sentence_id)
+                    elif provider == "t5":
+                        # For T5 models, the response is already formatted as JSON
+                        results_file = save_results(response, test_dir, sentence_id)
+                    elif config["prompt"] == "triplet_extraction" or config["prompt"] == "triplet_extraction_with_schema":
+                        # For triplet extraction, parse the JSON output
+                        triplets = extract_json_from_output(response.content)
+                        results_file = save_results(triplets, test_dir, sentence_id)
+                    else:
+                        # For other tasks, save the raw output
+                        try:
+                            content = response.content if hasattr(response, 'content') else response
+                            results_file = save_results(content, test_dir, sentence_id)
+                        except Exception as e:
+                            logger.error(f"Error saving results: {str(e)}")
+                            results_file = save_results({"error": str(e)}, test_dir, sentence_id)
+                    
+                    results_files[sentence_id] = results_file
+                    logger.info(f"Saved results to {results_file}")
+            
+            # Save a summary file if storing results
+            if store_results and test_dir:
+                summary = create_run_summary(
+                    config={k: v for k, v in config.items() if k != "api_key"},
+                    stats={
+                        "num_texts": len(texts),
+                        "results_files": results_files
+                    }
+                )
+                
+                summary_path = os.path.join(test_dir, "summary.json")
+                save_json(summary, summary_path)
+                logger.info(f"Summary saved to {summary_path}")
+            
+        logger.info("Processing completed successfully!")
         
     except Exception as e:
-        logger.error(f"Error during batch processing: {str(e)}")
+        logger.error(f"Error during processing: {str(e)}")
         import traceback
         traceback.print_exc()
     finally:

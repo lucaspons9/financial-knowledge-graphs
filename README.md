@@ -14,7 +14,8 @@ Financial Knowledge Graphs is a Python-based application that leverages Large La
 - **Ground Truth Extraction**: Use Stanford OpenIE to extract triples as ground truth
 - **Flexible LLM Integration**: Support for multiple LLM providers (OpenAI, Anthropic, Cohere, Mistral, local models)
 - **Neo4j Integration**: Store and query extracted information in a graph database
-- **Batch Processing**: Process multiple texts efficiently
+- **Batch Processing**: Process multiple texts efficiently, with special support for OpenAI's Batch API
+- **Cost-Efficient Processing**: Save up to 50% on API costs using OpenAI's Batch API
 - **Test Result Storage**: Automatically store test results in versioned directories
 - **Configurable**: Easy configuration through YAML files
 
@@ -64,6 +65,8 @@ The application is configured through YAML files in the `configs` directory:
 llm_provider: "openai" # Options: "openai", "anthropic", "cohere", "mistral", "local"
 mode: "light" # Options: "full" for high-quality, "light" for efficiency
 task: "entity_extraction" # Default task to run
+use_batch: false # Enable to use batch processing (OpenAI Batch API for cost savings)
+wait_for_completion: false # Wait for batch processing to complete
 ```
 
 ### Stanford OpenIE Configuration Options
@@ -141,6 +144,150 @@ To run triplet extraction on sample sentences and store the results:
 
 3. Results will be stored in sequentially numbered directories (`test_llm_prompt_1`, `test_llm_prompt_2`, etc.) in the `runs` directory, with each test result in a JSON file named after the sentence ID.
 
+### Cost-Efficient Batch Processing with OpenAI
+
+For processing large datasets (thousands of articles), you can use OpenAI's Batch API for significant cost savings:
+
+1. Enable batch processing in `configs/config_llm_execution.yaml`:
+
+   ```yaml
+   llm_provider: "openai"
+   task: "triplet_extraction"
+   data_path: "data/raw/large_dataset.csv"
+   store_results: true
+   results_dir: "runs"
+   test_name: "batch_processing"
+   use_batch: true # Enable batch processing
+   wait_for_completion: false # Set to true to wait for results
+   ```
+
+2. Run the batch processing:
+
+   ```bash
+   python -m src.main llm
+   ```
+
+3. If `wait_for_completion` is set to `false`, the system will:
+
+   - Submit your batch to OpenAI's Batch API
+   - Report the batch ID for later reference
+   - Return immediately without waiting for results
+
+4. To retrieve results later:
+
+   ```bash
+   python -m src.retrieve_batch your_batch_id
+   ```
+
+This approach can save approximately 50% on API costs compared to synchronous API calls and works well for processing datasets of 20,000+ articles.
+
+### Handling Large Datasets (20,000+ Samples)
+
+The system automatically handles datasets of any size through intelligent batch management:
+
+#### Key Concepts
+
+- **Single Batch**: For smaller datasets (under 2,000 samples by default). Each batch is processed as a single unit.
+- **Parent Batch**: For larger datasets (20,000+ samples). The system automatically splits the data into multiple sub-batches (e.g., 10 batches of 2,000 samples each) and tracks them under a parent batch ID.
+- **Batch Size**: Configurable parameter (default: 2,000) determining when data gets split into multiple batches.
+
+#### Using Parent Batches
+
+When processing large datasets:
+
+1. Configure batch size in `configs/config_llm_execution.yaml`:
+
+   ```yaml
+   batch_size: 2000 # Determines when data gets split into multiple batches
+   ```
+
+2. The system automatically:
+
+   - Detects when dataset exceeds batch size
+   - Creates a parent batch with multiple sub-batches
+   - Returns a parent batch ID (different format from regular batch IDs)
+
+3. To check status or retrieve results using the unified batch retrieval interface:
+
+   ```bash
+   # Check status of an individual batch
+   python -m src.retrieve_batch your_batch_id --check_only
+
+   # Check status of a parent batch
+   python -m src.retrieve_batch your_parent_batch_id --parent --check_only
+
+   # Wait for an individual batch to complete and retrieve results
+   python -m src.retrieve_batch your_batch_id --wait
+
+   # Wait for a parent batch to complete and retrieve results
+   python -m src.retrieve_batch your_parent_batch_id --parent --wait
+   ```
+
+   The `--parent` flag indicates you're working with a parent batch rather than an individual batch.
+
+Parent batch processing provides significant advantages:
+
+- Efficiently handles datasets of any size
+- Maintains OpenAI's batch API cost savings
+- Combines results from all sub-batches in a single operation
+- Provides progress tracking across all sub-batches
+
+### Unified Batch Retrieval
+
+The system now provides a unified approach for retrieving both individual batches and parent batches using a single command:
+
+```bash
+# Check status of an individual batch
+python -m src.retrieve_batch your_batch_id --check_only
+
+# Check status of a parent batch
+python -m src.retrieve_batch your_parent_batch_id --parent --check_only
+
+# Wait for an individual batch to complete and retrieve results
+python -m src.retrieve_batch your_batch_id --wait
+
+# Wait for a parent batch to complete and retrieve results
+python -m src.retrieve_batch your_parent_batch_id --parent --wait
+
+# Specify a custom output directory for results
+python -m src.retrieve_batch your_batch_id --output_dir /path/to/output
+
+# Specify wait interval when using the wait flag (default is 30 seconds)
+python -m src.retrieve_batch your_batch_id --wait --wait_interval 60
+```
+
+The `--parent` flag indicates you're working with a parent batch rather than an individual batch.
+
+### Avoiding Duplicate Processing
+
+The system intelligently tracks which newsIDs have already been processed to avoid duplicate processing:
+
+1. When submitting a batch with a specified parent batch directory:
+
+   - The system reads the parent batch metadata to identify already processed newsIDs
+   - Any newsIDs that have already been processed are automatically filtered out
+   - Only new, unprocessed newsIDs are included in the new batch
+
+2. To continue processing with an existing parent batch:
+
+   ```yaml
+   # In configs/config_llm_execution.yaml
+   parent_batch_dir: "data/batch_processing/parent_batch_20250414_184157_03d77ca6"
+   ```
+
+   This ensures that:
+
+   - Each article is processed exactly once, even across multiple execution runs
+   - You can incrementally process large datasets in multiple sessions
+   - Processing can be resumed after interruptions without duplicating work
+
+3. The parent batch metadata tracks:
+   - All processed newsIDs
+   - All child batches
+   - Timestamps and processing status
+
+This approach is ideal for processing large datasets over time, ensuring each unique article is processed only once while maintaining a complete record of all processing operations.
+
 ### Test Results Storage
 
 All LLM test runs are stored in the `runs` directory by default. The system automatically:
@@ -207,6 +354,7 @@ The evaluation compares triplets using fuzzy matching to handle slight variation
 │   ├── models.yaml            # LLM models configuration
 │   └── prompts.yaml           # LLM prompt templates
 ├── data/
+│   ├── batch_processing/      # OpenAI Batch API processing files
 │   ├── ground_truth/          # Ground truth data from Stanford OpenIE
 │   ├── processed/             # Processed data files
 │   └── raw/                   # Raw data files
@@ -216,8 +364,8 @@ The evaluation compares triplets using fuzzy matching to handle slight variation
 │   ├── db/                    # Database handlers
 │   │   └── neo4j_handler.py   # Neo4j integration
 │   ├── llm/                   # LLM integration
-│   │   ├── batch_processor.py # Process multiple texts
-│   │   └── model_handler.py   # LLM provider management
+│   │   ├── model_handler.py   # LLM provider management
+│   │   └── openai_batch_processor.py # OpenAI Batch API integration
 │   ├── utils/                 # Utility functions
 │   │   ├── data_processing.py # CSV data processing utilities
 │   │   ├── evaluation.py      # Evaluation metrics and comparison tools
@@ -225,5 +373,6 @@ The evaluation compares triplets using fuzzy matching to handle slight variation
 │   │   └── ground_truth.py    # Stanford OpenIE ground truth extractor
 │   ├── main.py                # Main application entry point
 │   ├── run_llm_task.py        # LLM task runner
+│   ├── retrieve_batch.py      # OpenAI Batch result retriever
 │   └── run_stanford_openie.py # Stanford OpenIE runner
 ```

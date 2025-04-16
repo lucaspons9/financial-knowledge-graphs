@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
 from src.utils.reading_files import load_yaml
+from langchain_core.prompts import ChatPromptTemplate
+import json
 
 # Load environment variables from .env
 load_dotenv()
@@ -62,3 +64,57 @@ class LLMHandler:
             return model, tokenizer
         else:
             raise ValueError(f"Invalid LLM provider in config_llm_execution.yaml: {self.provider}")
+            
+    def run_task(self, task: str, text: str) -> Any:
+        """
+        Generate a prompt and pass it to the selected model.
+        
+        Args:
+            task: The task name corresponding to a prompt in prompts.yaml
+            text: Text input to process
+            
+        Returns:
+            Model response in appropriate format
+        """
+        # Get the model
+        model = self.get_model()
+        
+        # Check if using T5
+        if self.provider == "t5":
+            # Handle T5 model
+            model_t5, tokenizer = model
+            
+            # Format the prompt for T5
+            input_text = self.prompts[task].replace("{text}", text)
+            
+            # Tokenize and generate
+            inputs = tokenizer(input_text, return_tensors="pt", max_length=512, truncation=True)
+            outputs = model_t5.generate(
+                inputs.input_ids,
+                max_length=128,
+                num_beams=4,
+                early_stopping=True
+            )
+            
+            # Decode and format response
+            response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            
+            # Format response as JSON for consistency
+            try:
+                # Try to parse as JSON if it's already in JSON format
+                json.loads(response)
+                return response
+            except json.JSONDecodeError:
+                # If not JSON, format it as a triplet
+                formatted_response = f'[{{"subject": "{response}"}}]'
+                return formatted_response
+        else:
+            # Handle LangChain models (OpenAI, Llama, etc.)
+            # Create a chat prompt template
+            chat_prompt = ChatPromptTemplate.from_template(self.prompts[task])
+            
+            # Create a runnable sequence using the pipe operator
+            chain = chat_prompt | model
+            
+            # Run the chain with the input
+            return chain.invoke({"text": text})
