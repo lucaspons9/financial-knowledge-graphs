@@ -6,7 +6,7 @@ import os
 import re
 import glob
 from pathlib import Path
-from typing import Optional, Dict, List, Any, TypeVar, Union, Set
+from typing import Optional, Dict, List, Any, Union, Set
 import json
 from datetime import datetime
 
@@ -15,9 +15,6 @@ from src.utils.text_processing import extract_json_from_output
 
 # Initialize logger
 logger = get_logger(__name__)
-
-# Type variables for better typing
-T = TypeVar('T')
 
 def ensure_dir(directory: str) -> str:
     """
