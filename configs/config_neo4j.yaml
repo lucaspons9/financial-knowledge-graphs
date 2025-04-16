@@ -1,0 +1,36 @@
+# Neo4j Docker Configuration
+container_name: "neo4j-fkg" # Name of the Docker container
+port: 7687 # Bolt protocol port
+browser_port: 7474 # Neo4j Browser web interface port
+user: "neo4j" # Neo4j username
+password: "password" # Neo4j password
+
+# Database Actions
+clear_database: false # Set to true to clear the database before loading new data
+create_schema: true # Create necessary schema constraints
+load_data: true # Load data from JSON files
+
+# Data Path
+data_path: "data/ground_truth/ground_truth_real" # Path to JSON files containing entity-relationship data
+
+# Schema Information
+# Entity Types:
+#   - Entity (base class)
+#   - Company (subclass of Entity)
+#
+# Edge Types:
+#   - hasDebtHolder
+#   - hasEquityStakeIn
+#   - mergedWith
+#   - acquired
+#
+# Attributes for Companies:
+#   - companyName (string)
+#   - ticker (string, for public companies)
+#   - industry (string)
+#   - country (string)
+#
+# Attributes for Relationships:
+#   - valueAmount (float) - monetary value of transaction
+#   - percentage (float) - for equity stakes
+#   - transactionDate (date)
