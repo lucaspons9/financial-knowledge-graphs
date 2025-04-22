@@ -50,7 +50,7 @@ def main():
     
     elif task == "batch":
         # Run batch retrieval with the remaining arguments
-        from src.retrieve_batch import main as run_batch
+        from src.llm.retrieve_batch import main as run_batch
         
         # Create a new argv list without 'batch' for the retrieve_batch script
         new_argv = [sys.argv[0]] + sys.argv[2:]
