@@ -75,7 +75,7 @@ The system extracts financial entities and relationships from text:
 
 ### Batch Processing
 
-For processing large datasets efficiently. *Only available when using OpenAI as the LLM provider*.
+For processing large datasets efficiently. _Only available when using OpenAI as the LLM provider_.
 
 - Processes thousands of articles with 50% cost savings versus standard API calls
 - Intelligently splits large datasets into manageable batches, avoiding reprocessing duplicate articles
@@ -105,7 +105,7 @@ The project uses a domain-specific financial ontology to structure information i
 ├── src/                       # Source code
 │   ├── db/                    # Database handlers
 │   ├── llm/                   # LLM integration
+│   ├── runners/               # Task runners
 │   ├── utils/                 # Utility functions
-│   ├── main.py                # Main entry point
-│   └── run_*.py               # Task runners
+│   └── main.py                # Main entry point
 ```
