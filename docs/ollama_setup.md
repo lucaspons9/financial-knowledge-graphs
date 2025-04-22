@@ -32,20 +32,12 @@ This guide will help you set up and use Llama3 models locally via Ollama.
    ollama serve
    ```
 
-## Configuration
+## Configuration and Usage
 
-1. **Update configuration files**:
+**Update configuration files**:
 
-   - The `config_llm_execution.yaml` file has been updated to use Ollama as the provider
-   - The `models.yaml` file includes configuration for Llama3 models
-
-2. **Dependencies**:
-   - Make sure you have installed the required dependencies:
-   ```bash
-   uv add langchain-ollama
-   ```
-
-## Usage
+- The `config_llm_execution.yaml` file has been updated to use Ollama as the provider
+- The `models.yaml` file includes configuration for Llama3 models
 
 Run your application as usual. The system will now connect to your local Ollama instance and use the Llama3 model specified in the configuration.
 

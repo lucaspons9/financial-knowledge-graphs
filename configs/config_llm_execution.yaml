@@ -1,4 +1,4 @@
-llm_provider: "openai" # Options: openai, llama3, anthropic, cohere, mistral, t5
+llm_provider: "openai" # Options: openai, llama3, /* anthropic, cohere, mistral, */ t5
 mode: "light" # Options: full, light
 
 prompt: "v4" # Prompt to use from prompts.yaml
