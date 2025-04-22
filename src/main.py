@@ -27,25 +27,25 @@ def main():
     if task == "llm":
         # Run LLM-based entity extraction
         print("Running LLM-based entity extraction...")
-        from src.run_llm_task import main as run_llm
+        from src.runners.run_llm_task import main as run_llm
         run_llm()
     
     elif task == "openie":
         # Run Stanford OpenIE extraction
         print("Running Stanford OpenIE extraction...")
-        from src.run_stanford_openie import main as run_openie
+        from src.runners.run_stanford_openie import main as run_openie
         run_openie()
     
     elif task == "evaluate":
         # Run evaluation
         print("Evaluating triplet extraction results...")
-        from src.run_evaluation import main as run_evaluation
+        from src.runners.run_evaluation import main as run_evaluation
         run_evaluation()
     
     elif task == "neo4j":
         # Run Neo4j database operations
         print("Running Neo4j database operations...")
-        from src.run_neo4j_task import main as run_neo4j
+        from src.runners.run_neo4j_task import main as run_neo4j
         run_neo4j()
     
     elif task == "batch":
