@@ -1,6 +1,7 @@
 from neo4j import GraphDatabase
 import json
 from typing import Dict, Any, Tuple
+import os
 
 class Neo4jHandler:
     def __init__(self, uri: str = "bolt://localhost:7687", user: str = "neo4j", password: str = "password"):
@@ -32,23 +33,25 @@ class Neo4jHandler:
             attr_params = {k: str(v) for k, v in attributes.items()}
             attr_params["id"] = entity_id
             attr_params["name"] = entity_name
+            attr_params["type"] = entity_type  # Store entity type as a property instead of a label
             
-            # Create the entity with the appropriate labels and all attributes
-            # Create the node first with just the id
+            # Create the entity with only Entity label and all attributes
             query1 = f"""
-            MERGE (e:{entity_type}:Entity {{id: $id}})
+            MERGE (e:Entity {{id: $id}})
             RETURN e
             """
             
             session.run(query1, {"id": entity_id})
             
-            # Then set all attributes individually
-            for key, value in attr_params.items():
-                query2 = f"""
-                MATCH (e:{entity_type}:Entity {{id: $id}})
-                SET e.{key} = $value
-                """
-                session.run(query2, {"id": entity_id, "value": value})
+            # Add or update all other attributes
+            for attr_key, attr_value in attr_params.items():
+                if attr_key != "id":  # Skip the id as it's already set in the MERGE
+                    query2 = f"""
+                    MATCH (e:Entity {{id: $id}})
+                    SET e.{attr_key} = $value
+                    RETURN e
+                    """
+                    session.run(query2, {"id": entity_id, "value": attr_value})
 
     def insert_relationship(self, relationship_data: Dict[str, Any]) -> None:
         """Insert a relationship with all its attributes"""
@@ -91,14 +94,42 @@ class Neo4jHandler:
             with open(json_file_path, 'r') as file:
                 data = json.load(file)
                 
+            # Extract filename without path and extension to use as prefix
+            filename = os.path.basename(json_file_path)
+            filename = os.path.splitext(filename)[0]
+            
             # Process entities
             entities = data.get("entities", [])
+            entity_id_mapping = {}  # Map original IDs to prefixed IDs
+            
             for entity in entities:
+                # Create a globally unique ID by prefixing with filename
+                original_id = entity.get("id", "")
+                entity["id"] = f"{filename}_{original_id}"
+                
+                # Store mapping for relationship processing
+                entity_id_mapping[original_id] = entity["id"]
+                
+                # Remove original_id if it exists to avoid duplication
+                if "original_id" in entity:
+                    del entity["original_id"]
+                    
                 self.insert_entity(entity)
                 
             # Process relationships
             relationships = data.get("relationships", [])
             for relationship in relationships:
+                # Create a globally unique ID by prefixing with filename
+                original_id = relationship.get("id", "")
+                relationship["id"] = f"{filename}_{original_id}"
+                
+                # Update source and target references using the mapping
+                original_source = relationship.get("source", "")
+                original_target = relationship.get("target", "")
+                
+                relationship["source"] = entity_id_mapping.get(original_source, f"{filename}_{original_source}")
+                relationship["target"] = entity_id_mapping.get(original_target, f"{filename}_{original_target}")
+                
                 self.insert_relationship(relationship)
                 
             return True, f"Successfully processed {len(entities)} entities and {len(relationships)} relationships from {json_file_path}"

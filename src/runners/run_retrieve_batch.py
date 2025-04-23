@@ -152,14 +152,13 @@ def retrieve_execution_batches(execution_id: str, batch_dir: str = DEFAULT_BATCH
 def main():
     """Main function to process command line arguments and retrieve batches."""
     # Check for execution ID argument
-    # if len(sys.argv) < 2:
-    #     print("Usage: python run_retrieve_batch.py <execution_id>")
-    #     print("  execution_id: The ID or name of the execution directory to process")
-    #     sys.exit(1)
+    if len(sys.argv) < 2:
+        print("Usage: python run_retrieve_batch.py <execution_id>")
+        print("  execution_id: The ID or name of the execution directory to process")
+        sys.exit(1)
     
-    # # Get execution ID from command line arguments
-    # execution_id = sys.argv[1]
-    execution_id = "execution_1"
+    # Get execution ID from command line arguments
+    execution_id = sys.argv[1]
     batch_dir = DEFAULT_BATCH_DIR
     
     logger.info(f"Starting batch retrieval for execution ID: {execution_id}")
