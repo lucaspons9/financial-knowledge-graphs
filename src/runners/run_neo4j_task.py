@@ -160,13 +160,14 @@ def main():
                 logger.info(f"Found {len(json_files)} JSON files to process")
                 
                 for json_file in json_files:
-                    logger.info(f"Processing {json_file}...")
+                    #logger.info(f"Processing {json_file}...")
                     success, message = neo4j_handler.process_json_file(json_file)
                     
-                    if success:
-                        logger.info(message)
-                    else:
-                        logger.error(message)
+                    # if success:
+                    #     #logger.info(message)
+                    #     pass
+                    # else:
+                    #     logger.error(message)
         
         # Get database statistics
         try:
