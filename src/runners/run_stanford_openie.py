@@ -8,7 +8,7 @@ the extracted triples as ground truth in versioned directories.
 import os
 from typing import List, Dict, Any
 
-from src.utils.reading_files import load_yaml
+from src.utils.file_utils import load_yaml
 from src.utils.ground_truth import StanfordOpenIEExtractor
 from src.utils.logging_utils import setup_logging, get_logger
 

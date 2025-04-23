@@ -11,7 +11,7 @@ import time
 import subprocess
 from typing import Dict, Any
 
-from src.utils.reading_files import load_yaml
+from src.utils.file_utils import load_yaml
 from src.utils.logging_utils import setup_logging, get_logger
 from src.db.neo4j_handler import Neo4jHandler
 

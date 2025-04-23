@@ -1,12 +1,13 @@
 """
 Common file and directory utilities used across the application.
 """
-
+import yaml
+import pandas as pd
 import os
 import re
 import glob
 from pathlib import Path
-from typing import Optional, Dict, List, Any, Union, Set
+from typing import Optional, Dict, List, Any, Union
 import json
 from datetime import datetime
 
@@ -96,12 +97,12 @@ def find_latest_dir(base_dir: str, prefix: str) -> Optional[str]:
     logger.info(f"Found latest directory: {latest_dir}")
     return latest_dir
 
-def save_json(data: Union[Dict[str, Any], List[Dict[str, Any]]], file_path: str, indent: int = 2) -> None:
+def save_json(data: Union[Dict[str, Any], List[Any]], file_path: str, indent: int = 2) -> None:
     """
     Save data to a JSON file.
     
     Args:
-        data: Data to save (dict or list of dicts)
+        data: Data to save (dict or list)
         file_path: Path to save the file to
         indent: JSON indentation level
     """
@@ -114,123 +115,6 @@ def save_json(data: Union[Dict[str, Any], List[Dict[str, Any]]], file_path: str,
         json.dump(data, f, indent=indent)
     
     logger.info(f"Saved JSON file: {file_path}")
-
-def load_json(file_path: str) -> Dict[str, Any]:
-    """
-    Load data from a JSON file.
-    
-    Args:
-        file_path: Path to the JSON file
-    
-    Returns:
-        Dict[str, Any]: The loaded data
-    """
-    with open(file_path, 'r') as f:
-        data = json.load(f)
-    
-    logger.info(f"Loaded JSON file: {file_path}")
-    return data
-
-def get_processed_item_ids(parent_batch_dir: str) -> Set[str]:
-    """
-    Get all processed item IDs (newsIDs) from a parent batch directory.
-    This function scans through all batch subdirectories and retrieves the keys
-    from the 'original_texts' dictionary in each batch's metadata.json file.
-    
-    Args:
-        parent_batch_dir: Path to the parent batch directory
-            
-    Returns:
-        Set[str]: Set of all processed item IDs across all batches
-    """
-    if not os.path.exists(parent_batch_dir):
-        logger.warning(f"Parent batch directory not found: {parent_batch_dir}")
-        return set()
-    
-    processed_ids: Set[str] = set()
-    
-    # Find all batch directories in the parent directory
-    batch_dirs = [d for d in os.listdir(parent_batch_dir) 
-                  if os.path.isdir(os.path.join(parent_batch_dir, d)) 
-                  and d.startswith('batch_')]
-    
-    for batch_dir in batch_dirs:
-        batch_path = os.path.join(parent_batch_dir, batch_dir)
-        metadata_path = os.path.join(batch_path, "metadata.json")
-        
-        if not os.path.exists(metadata_path):
-            logger.warning(f"Metadata file not found for batch: {batch_dir}")
-            continue
-        
-        try:
-            # Load metadata and extract keys from original_texts
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-            
-            # Get keys from original_texts (newsIDs)
-            original_texts = metadata.get("original_texts", {})
-            processed_ids.update(original_texts.keys())
-            
-        except Exception as e:
-            logger.error(f"Error reading metadata from batch {batch_dir}: {str(e)}")
-    
-    logger.info(f"Found {len(processed_ids)} processed item IDs across all batches in {parent_batch_dir}")
-    return processed_ids
-
-def create_run_summary(config: Dict[str, Any], stats: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Create a summary object for a run.
-    
-    Args:
-        config: Configuration used for the run
-        stats: Statistics about the run
-    
-    Returns:
-        Dict[str, Any]: Summary object
-    """
-    return {
-        "timestamp": datetime.now().isoformat(),
-        "config": config,
-        "stats": stats
-    }
-
-def extract_run_info(path: str) -> str:
-    """
-    Extract run information from a path.
-    
-    Args:
-        path: Path to extract information from
-    
-    Returns:
-        str: Extracted run information
-    """
-    # Extract the last directory name from the path
-    run_name = os.path.basename(path)
-    return run_name
-
-def load_triplets_from_directory(directory: str) -> Dict[str, List[Dict[str, str]]]:
-    """
-    Load all triplet JSON files from a directory.
-    
-    Args:
-        directory: Directory containing JSON files with triplets
-    
-    Returns:
-        Dict[str, List[Dict[str, str]]]: Dictionary mapping file names to lists of triplets
-    """
-    triplets_by_file: Dict[str, List[Dict[str, str]]] = {}
-    json_files = glob.glob(os.path.join(directory, "*.json"))
-    
-    for json_file in json_files:
-        if os.path.basename(json_file) == "summary.json":
-            continue  # Skip summary files
-            
-        file_id = os.path.splitext(os.path.basename(json_file))[0]
-        triplets = load_json(json_file)
-        triplets_by_file[file_id] = triplets
-    
-    logger.info(f"Loaded triplets from {len(triplets_by_file)} files in {directory}")
-    return triplets_by_file
 
 def load_evaluation_files(directory: str) -> Dict[str, Dict[str, Any]]:
     """
@@ -318,4 +202,129 @@ def save_results(results: Union[List[Dict[str, Any]], str, Dict[str, Any]], test
     # Save the results
     save_json(results, file_path)
     
-    return file_path 
+    return file_path
+
+def create_run_summary(config: Dict[str, Any], stats: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Create a summary object for a run.
+    
+    Args:
+        config: Configuration used for the run
+        stats: Statistics about the run
+    
+    Returns:
+        Dict[str, Any]: Summary object
+    """
+    return {
+        "timestamp": datetime.now().isoformat(),
+        "config": config,
+        "stats": stats
+    }
+
+def load_yaml(file_path: str) -> Dict[str, Any]:
+    """Load a YAML file and return its contents."""
+    with open(file_path, "r") as file:
+        return yaml.safe_load(file)
+
+def load_csv_news(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
+    """
+    Load news texts from a CSV file.
+    
+    Args:
+        file_path: Path to the CSV file
+        id_column: Column name containing news article IDs
+        text_column: Column name containing news article texts
+        
+    Returns:
+        Dictionary mapping news IDs to their text content
+    """
+    df = pd.read_csv(file_path)
+    
+    # Check if required columns exist
+    if id_column not in df.columns:
+        raise ValueError(f"CSV file does not contain column '{id_column}'")
+    if text_column not in df.columns:
+        raise ValueError(f"CSV file does not contain column '{text_column}'")
+    
+    # Convert to dictionary format {newsID: story}
+    news_dict = {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
+    
+    return news_dict
+
+def load_excel_news(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
+    """
+    Load news texts from an Excel file.
+    
+    Args:
+        file_path: Path to the Excel file
+        id_column: Column name containing news article IDs
+        text_column: Column name containing news article texts
+        
+    Returns:
+        Dictionary mapping news IDs to their text content
+    """
+    # Read Excel file
+    df = pd.read_excel(file_path)
+    
+    # Check if required columns exist
+    if id_column not in df.columns:
+        raise ValueError(f"Excel file does not contain column '{id_column}'")
+    if text_column not in df.columns:
+        raise ValueError(f"Excel file does not contain column '{text_column}'")
+    
+    # Convert to dictionary format {newsID: story}
+    news_dict = {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
+    
+    return news_dict
+
+def load_data_by_extension(data_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, Any]:
+    """
+    Load data based on file extension.
+    
+    Args:
+        data_path: Path to the data file
+        id_column: Column name containing IDs (for CSV/Excel)
+        text_column: Column name containing text content (for CSV/Excel)
+        
+    Returns:
+        Dictionary with loaded data
+        
+    Raises:
+        ValueError: If file extension is not supported
+    """
+    file_extension = os.path.splitext(data_path)[1].lower()
+    
+    if file_extension in ['.yaml', '.yml']:
+        return load_yaml(data_path)
+    elif file_extension == '.csv':
+        return load_csv_news(data_path, id_column, text_column)
+    elif file_extension in ['.xlsx', '.xls']:
+        return load_excel_news(data_path, id_column, text_column)
+    else:
+        raise ValueError(f"Unsupported file extension: {file_extension}") 
+    
+def setup_results_directory(config: Dict[str, Any]) -> Optional[str]:
+    """Set up results directory if storing results.
+    
+    Args:
+        config: Configuration dictionary
+        
+    Returns:
+        Optional[str]: Path to results directory or None if not storing results
+    """
+    store_results = config.get("store_results", False)
+    
+    if not store_results:
+        return None
+        
+    results_dir = config.get("results_dir", "runs")
+    test_name = config.get("test_name", "test_llm")
+    test_dir = find_next_versioned_dir(results_dir, test_name)
+    logger.info(f"Results will be stored in: {test_dir}")
+    
+    return test_dir
+
+
+
+
+

@@ -3,7 +3,7 @@ from typing import Any, Tuple
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
-from src.utils.reading_files import load_yaml
+from src.utils.file_utils import load_yaml
 from langchain_core.prompts import ChatPromptTemplate
 import json
 
@@ -11,6 +11,13 @@ import json
 load_dotenv()
 
 class LLMHandler:
+    """
+    Handler for interacting with various Large Language Models.
+    
+    Coordinates interactions with different LLM providers
+    based on configuration settings.
+    """
+
     def __init__(self, config_path: str = "configs/config_llm_execution.yaml"):
         # Load main configuration from config_llm_execution.yaml (or specified path)
         self.config = load_yaml(config_path)

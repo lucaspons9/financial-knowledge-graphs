@@ -7,7 +7,7 @@ Usage:
 
 import os
 from typing import Optional
-from src.utils.reading_files import load_yaml
+from src.utils.file_utils import load_yaml
 from src.utils.logging_utils import setup_logging, get_logger
 from src.utils.file_utils import find_latest_dir
 from src.utils.evaluation import Evaluator

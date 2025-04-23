@@ -8,7 +8,7 @@ import os
 import json
 from typing import List, Dict, Any, Optional
 from datetime import datetime
-from src.utils.reading_files import load_yaml
+from src.utils.file_utils import load_yaml
 from src.utils.file_utils import find_next_versioned_dir, save_json, create_run_summary
 from src.utils.logging_utils import get_logger
 from openie import StanfordOpenIE

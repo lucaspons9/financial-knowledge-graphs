@@ -7,13 +7,20 @@ with significant cost savings compared to synchronous API calls.
 
 import os
 import json
-from typing import List, Dict, Any, Optional, Tuple, Set
+from typing import List, Dict, Any, Optional
 from datetime import datetime
-import uuid
 
-from src.utils.file_utils import ensure_dir, save_json, get_processed_item_ids
+from src.utils.file_utils import ensure_dir, save_json
+from src.utils.batch_utils import (
+    find_batch_metadata, 
+    process_batch_results,
+    resolve_batch_id,
+    update_execution_metadata,
+    create_next_batch_dir
+)
 from src.utils.logging_utils import get_logger
 from src.llm.model_handler import LLMHandler
+from src.llm import DEFAULT_BATCH_DIR, COMPLETION_WINDOW
 
 # Import OpenAI library
 from openai import OpenAI
@@ -43,9 +50,8 @@ class OpenAIBatchProcessor:
             logger.warning("Not using OpenAI provider. Batch processing will be limited.")
 
     def submit_batch(self, task: str, texts: List[str], 
-                    item_ids: Optional[List[str]] = None, batch_size: int = 2000, 
-                    batch_dir: str = "data/batch_processing",
-                    parent_batch_dir: Optional[str] = None) -> Dict[str, Any]:
+                    item_ids: Optional[List[str]] = None,
+                    execution_dir: Optional[str] = None) -> Dict[str, Any]:
         """
         Submit a batch of texts for processing using OpenAI's Batch API.
         
@@ -53,9 +59,7 @@ class OpenAIBatchProcessor:
             task: The task name corresponding to a prompt in prompts.yaml
             texts: List of text inputs to process
             item_ids: Custom IDs to use instead of generic indices (e.g., newsIDs)
-            batch_size: Maximum size for the batch
-            batch_dir: Directory to store batch files and results
-            parent_batch_dir: Optional existing parent batch directory to use and update
+            execution_dir: Optional existing execution directory to use and update
             
         Returns:
             Dict containing batch information including batch_id and status
@@ -68,61 +72,13 @@ class OpenAIBatchProcessor:
         if not texts:
             logger.warning("Empty text list provided. Nothing to process.")
             return {"error": "Empty text list", "status": "failed"}
-        
-        # Check if batch size is exceeded
-        if len(texts) > batch_size:
-            logger.warning(f"Batch size {len(texts)} exceeds maximum configured size {batch_size}. " 
-                          f"Only processing the first {batch_size} items.")
-            texts = texts[:batch_size]
-            if item_ids:
-                item_ids = item_ids[:batch_size]
-        
-        # Create or use existing parent batch directory
-        if parent_batch_dir and os.path.exists(parent_batch_dir):
-            batch_path = parent_batch_dir
-            logger.info(f"Using existing parent batch directory: {batch_path}")
+
+        # Find the next batch number and create the batch directory
+        if execution_dir is None:
+            logger.error("Execution directory path is None. Cannot create batch directory.")
+            return {"error": "Execution directory path is None", "status": "failed"}
             
-            # Load previously processed item IDs to avoid duplicates
-            # Use the get_processed_item_ids function from file_utils
-            processed_ids = get_processed_item_ids(batch_path)
-            
-            # Filter out already processed items
-            if processed_ids and item_ids:
-                filtered_indices = []
-                filtered_texts = []
-                filtered_item_ids = []
-                
-                for i, item_id in enumerate(item_ids):
-                    if item_id not in processed_ids:
-                        filtered_indices.append(i)
-                        filtered_item_ids.append(item_id)
-                        filtered_texts.append(texts[i])
-                
-                if not filtered_texts:
-                    logger.info("All items have been processed already. Nothing to do.")
-                    return {"status": "skipped", "message": "All items already processed"}
-                
-                logger.info(f"Filtered out {len(texts) - len(filtered_texts)} already processed items.")
-                texts = filtered_texts
-                item_ids = filtered_item_ids
-        else:
-            # Create new parent batch directory
-            parent_batch_id = f"parent_batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
-            batch_path = ensure_dir(os.path.join(batch_dir, parent_batch_id))
-            logger.info(f"Created new parent batch directory: {batch_path}")
-            
-            # Initialize parent batch metadata
-            parent_metadata = {
-                "parent_batch_id": parent_batch_id,
-                "created_at": datetime.now().isoformat(),
-                "batches": []
-            }
-            parent_info_path = os.path.join(batch_path, "parent_batch_info.json")
-            save_json(parent_metadata, parent_info_path)
-        
-        # Generate a unique batch ID
-        batch_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
-        batch_folder = ensure_dir(os.path.join(batch_path, batch_id))
+        batch_id, batch_folder = create_next_batch_dir(execution_dir)
         
         # Create JSONL file for batch submission
         jsonl_file = os.path.join(batch_folder, f"{batch_id}.jsonl")
@@ -176,259 +132,118 @@ class OpenAIBatchProcessor:
             logger.info(f"File uploaded successfully with ID: {file_id}")
             
             # STEP 2: Create the batch using the file_id
-            logger.info("Creating batch with the uploaded file...")
-            response = self.openai_client.batches.create(
+            batch_response = self.openai_client.batches.create(
                 input_file_id=file_id,
                 endpoint="/v1/chat/completions",
-                completion_window="24h"
+                completion_window=COMPLETION_WINDOW,
+                metadata={"batch_id": batch_id}
             )
             
-            # Store original items mapping for results reconstruction
-            original_texts_mapping = {}
-            processed_item_ids = []
-            
-            for i, text in enumerate(texts):
-                # Use the same ID logic as above for consistency
-                if item_ids and i < len(item_ids):
-                    item_id = f"{item_ids[i]}"
-                    processed_item_ids.append(item_id)
-                else:
-                    item_id = f"item_{i}"
-                    
-                original_texts_mapping[item_id] = text
-            
-            # Store batch information
-            batch_info = {
-                "batch_id": response.id,
-                "created_at": datetime.now().isoformat(),
-                "status": response.status,
-                "n_items": len(texts),
-                "expires_at": datetime.fromtimestamp(response.expires_at).isoformat() if response.expires_at else None,
-                "original_texts": original_texts_mapping,
-                "task": task,
-                "model": model_name,
-                "file_id": file_id,
-                "using_custom_ids": item_ids is not None
-            }
+            # Get the OpenAI batch ID
+            openai_batch_id = batch_response.id
+            logger.info(f"Batch created successfully with ID: {openai_batch_id}")
             
             # Save batch metadata
-            metadata_file = os.path.join(batch_folder, "metadata.json")
-            save_json(batch_info, metadata_file)
+            metadata: Dict[str, Any] = {
+                "batch_id": openai_batch_id,
+                "file_id": file_id,
+                "created_at": datetime.now().isoformat(),
+                "n_items": len(texts),
+                "original_texts": {item_ids[i]: texts[i] for i in range(len(texts))} if item_ids else {},
+                "retrieved": False
+            }
             
-            # Update parent batch metadata
-            self._update_parent_batch_metadata(batch_path, batch_id, len(processed_item_ids))
+            metadata_path = os.path.join(batch_folder, "metadata.json")
+            save_json(metadata, metadata_path)
             
-            logger.info(f"Successfully submitted batch {response.id} to OpenAI with {len(texts)} items")
-            return batch_info
+            # Update execution metadata with the new batch info
+            update_execution_metadata(execution_dir, batch_id, len(texts), item_ids)
+            
+            return {
+                "status": "submitted",
+                "batch_id": openai_batch_id,
+                "execution_dir": execution_dir,
+                "n_items": len(texts)
+            }
                 
         except Exception as e:
             logger.error(f"Error submitting batch to OpenAI: {str(e)}")
             return {"error": str(e), "batch_id": batch_id, "status": "failed"}
-    
-    def _update_parent_batch_metadata(self, parent_batch_dir: str, batch_id: str, n_items: int):
+
+    def retrieve_batch_items(self, batch_id: str, batch_metadata: Dict[str, Any] = None, batch_path: str = None) -> Dict[str, Any]:
         """
-        Update the parent batch metadata with new batch information.
+        Retrieve batch results for a given batch ID and update the retrieved status.
         
         Args:
-            parent_batch_dir: The parent batch directory
-            batch_id: The ID of the new batch
-            n_items: Number of items in the batch
-        """
-        parent_info_path = os.path.join(parent_batch_dir, "parent_batch_info.json")
-        if not os.path.exists(parent_info_path):
-            logger.warning(f"Parent batch metadata file not found: {parent_info_path}")
-            return
-            
-        try:
-            with open(parent_info_path, 'r') as f:
-                parent_info = json.load(f)
-            
-            # Add the new batch to the list
-            parent_info["batches"].append({
-                "batch_id": batch_id,
-                "created_at": datetime.now().isoformat(),
-                "n_items": n_items
-            })
-            
-            # Update the last updated timestamp
-            parent_info["last_updated"] = datetime.now().isoformat()
-            
-            # Save the updated metadata
-            save_json(parent_info, parent_info_path)
-            logger.info(f"Updated parent batch metadata with new batch: {batch_id}")
-            
-        except Exception as e:
-            logger.error(f"Error updating parent batch metadata: {str(e)}")
-    
-    def check_batch_status(self, batch_id: str, 
-                          batch_dir: str = "data/batch_processing") -> Dict[str, Any]:
-        """
-        Check the status of a submitted batch.
-        
-        Args:
-            batch_id: The OpenAI batch ID to check
+            batch_id: The batch ID to retrieve results for
             batch_dir: Directory where batch metadata is stored
-            
-        Returns:
-            Dict containing status information
-        """
-        if not self.openai_client:
-            logger.error("OpenAI client not initialized. Cannot check batch status.")
-            return {"error": "OpenAI client not initialized", "status": "failed"}
-        
-        # Find the batch metadata
-        batch_metadata, batch_folder = self._find_batch_metadata(batch_id, batch_dir)
-        
-        if not batch_metadata or not batch_folder:
-            logger.error(f"Batch metadata not found for batch_id: {batch_id}")
-            return {"error": "Batch metadata not found", "status": "failed"}
-        
-        # Check batch status with OpenAI
-        try:
-            batch_info = self.openai_client.batches.retrieve(batch_id)
-            
-            # Update metadata with latest status
-            batch_metadata["status"] = batch_info.status
-            batch_metadata["last_checked"] = datetime.now().isoformat()
-            
-            # Save updated metadata
-            metadata_file = os.path.join(batch_folder, "metadata.json")
-            save_json(batch_metadata, metadata_file)
-            
-            logger.info(f"Batch {batch_id} status: {batch_info.status}")
-            
-            return {
-                "batch_id": batch_id,
-                "status": batch_info.status,
-                "completed": batch_info.status == "completed",
-                "created_at": batch_metadata.get("created_at", "unknown"),
-                "last_checked": batch_metadata["last_checked"],
-                "output_file_id": batch_info.output_file_id,
-                "error_file_id": batch_info.error_file_id
-            }
-            
-        except Exception as e:
-            logger.error(f"Error checking batch status: {str(e)}")
-            return {"error": str(e), "batch_id": batch_id, "status": "failed"}
-    
-    def retrieve_batch_results(self, batch_id: str, 
-                              batch_dir: str = "data/batch_processing",
-                              output_dir: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Retrieve and process results from a completed batch.
-        
-        Args:
-            batch_id: The OpenAI batch ID to retrieve
-            batch_dir: Directory where batch metadata is stored
-            output_dir: Directory to save individual results (if None, uses batch directory)
             
         Returns:
             Dict containing status and results information
         """
+        # Ensure OpenAI client is initialized
         if not self.openai_client:
             logger.error("OpenAI client not initialized. Cannot retrieve batch results.")
             return {"error": "OpenAI client not initialized", "status": "failed"}
         
-        # First check the status
-        status_info = self.check_batch_status(batch_id, batch_dir)
+        if not batch_metadata or not batch_path:
+            logger.error(f"Batch metadata or path not found for batch_id: {batch_id}")
+            return {"error": "Batch metadata or path not found", "status": "failed"}
         
-        # If there was an error checking status or batch is not completed, return early
-        if "error" in status_info or not status_info.get("completed", False):
-            if "error" not in status_info:
-                logger.info(f"Batch {batch_id} not yet completed. Current status: {status_info.get('status', 'unknown')}")
-            return status_info
+        # Check if batch is already retrieved
+        if batch_metadata.get("retrieved", False):
+            return {"status": "already_retrieved", "batch_id": batch_id}
         
-        # Find the batch metadata
-        batch_metadata, batch_folder = self._find_batch_metadata(batch_id, batch_dir)
-        
-        if not batch_metadata or not batch_folder:
-            logger.error(f"Batch metadata not found for batch_id: {batch_id}")
-            return {"error": "Batch metadata not found", "status": "failed"}
-        
-        # Set up output directory
-        if not output_dir:
-            output_dir = os.path.join(batch_folder, "results")
-            
-        ensure_dir(output_dir)
-        
-        # Get the output file ID from the status
-        output_file_id = status_info.get("output_file_id")
-        if not output_file_id:
-            logger.error("No output file ID available in batch status.")
-            return {"error": "No output file ID available", "status": "failed"}
-        
-        # Download the batch output file
-        output_file = os.path.join(batch_folder, f"{batch_id}_output.jsonl")
-        
-        if not os.path.exists(output_file):
-            # Download output file if it doesn't exist
-            try:
-                # Download the file content using the file ID
-                logger.info(f"Downloading output file with ID: {output_file_id}...")
-                response = self.openai_client.files.content(output_file_id)
-                
-                # Write the content to a file
-                with open(output_file, 'wb') as f:
-                    f.write(response.content)
-                
-                logger.info(f"Downloaded batch output file to {output_file}")
-            except Exception as e:
-                logger.error(f"Error downloading batch results: {str(e)}")
-                return {"error": str(e), "batch_id": batch_id, "status": "failed"}
-        
-        # Process results and save individual files
-        results = []
-        original_texts = batch_metadata.get("original_texts", {})
-        
+        # Get batch status from OpenAI
         try:
-            # Read the JSONL output file and process each entry
-            with open(output_file, 'r') as f:
-                for line in f:
-                    result = json.loads(line)
-                    item_id = result.get("custom_id")
-                    
-                    # Get the model's response content from the response
-                    if result.get("response") and result["response"].get("choices"):
-                        content = result["response"]["choices"][0].get("message", {}).get("content", "")
-                    else:
-                        logger.warning(f"No valid content found for item {item_id}")
-                        content = ""
-                    
-                    # Skip if item_id not in original texts
-                    if item_id not in original_texts:
-                        continue
-                        
-                    # Get original index from item_id
-                    index = item_id.replace("item_", "")
-                    result_file = os.path.join(output_dir, f"result_{index}.json")
-                    
-                    # Try to parse JSON from content if available
-                    try:
-                        if "```json" in content and "```" in content.split("```json")[1]:
-                            json_str = content.split("```json")[1].split("```")[0].strip()
-                            parsed_content = json.loads(json_str)
-                        else:
-                            parsed_content = json.loads(content.strip())
-                    except json.JSONDecodeError:
-                        parsed_content = {"raw_output": content}
-                    
-                    # Save the result
-                    save_json(parsed_content, result_file)
-                    
-                    # Record the result
-                    results.append({
-                        "item_id": item_id,
-                        "result_file": result_file
-                    })
-        
-            # Update metadata with completion info
+            batch_info = self.openai_client.batches.retrieve(batch_id)
+            
+            # Check if batch is completed
+            if batch_info.status != "completed":
+                return {
+                    "batch_id": batch_id,
+                    "status": batch_info.status,
+                    "completed": False
+                }
+            
+            # Create results directory
+            results_dir = os.path.join(batch_path, "results")
+            ensure_dir(results_dir)
+            
+            # Get the output file ID from the batch info
+            output_file_id = batch_info.output_file_id
+            if not output_file_id:
+                logger.error("No output file ID available in batch status.")
+                return {"error": "No output file ID available", "status": "failed"}
+            
+            # Download the batch output file
+            output_file = os.path.join(batch_path, f"{batch_id}_output.jsonl")
+            
+            # Download output file
+            logger.info(f"Downloading output file with ID: {output_file_id}...")
+            response = self.openai_client.files.content(output_file_id)
+            
+            # Write the content to a file
+            with open(output_file, 'wb') as f:
+                f.write(response.content)
+            
+            logger.info(f"Downloaded batch output file to {output_file}")
+            
+            # Get original texts dictionary from metadata
+            original_texts = batch_metadata.get("original_texts", {})
+            
+            # Process the results using the utility function
+            results = process_batch_results(output_file, results_dir, original_texts)
+            
+            # Update metadata with completion info and set retrieved to True
             batch_metadata["status"] = "completed"
             batch_metadata["completed_at"] = datetime.now().isoformat()
-            batch_metadata["results_path"] = output_dir
+            batch_metadata["results_path"] = results_dir
             batch_metadata["n_results"] = len(results)
+            batch_metadata["retrieved"] = True
             
             # Save updated metadata
-            metadata_file = os.path.join(batch_folder, "metadata.json")
+            metadata_file = os.path.join(batch_path, "metadata.json")
             save_json(batch_metadata, metadata_file)
             
             logger.info(f"Successfully processed {len(results)} results from batch {batch_id}")
@@ -438,64 +253,12 @@ class OpenAIBatchProcessor:
                 "status": "completed",
                 "completed": True,
                 "n_results": len(results),
-                "results_path": output_dir
+                "results_path": results_dir
             }
             
         except Exception as e:
-            logger.error(f"Error processing batch results: {str(e)}")
+            logger.error(f"Error retrieving batch results: {str(e)}")
             return {"error": str(e), "batch_id": batch_id, "status": "failed"}
-            
-    def _find_batch_metadata(self, batch_id: str, batch_dir: str) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
-        """
-        Find metadata file for a specific batch ID.
-        
-        Args:
-            batch_id: Batch ID to find
-            batch_dir: Directory to search
-            
-        Returns:
-            tuple: (batch_metadata, batch_folder) or (None, None) if not found
-        """
-        # First, check if there's a direct path match - the batch_id is actually the name of a batch folder
-        # Check inside batch_dir
-        direct_path = os.path.join(batch_dir, batch_id)
-        if os.path.isdir(direct_path) and os.path.exists(os.path.join(direct_path, "metadata.json")):
-            metadata_path = os.path.join(direct_path, "metadata.json")
-            try:
-                with open(metadata_path, 'r') as f:
-                    metadata = json.load(f)
-                    return metadata, direct_path
-            except Exception as e:
-                logger.error(f"Error reading metadata from direct path {direct_path}: {str(e)}")
-        
-        # Check inside parent batch directories
-        for parent_dir in os.listdir(batch_dir):
-            parent_path = os.path.join(batch_dir, parent_dir)
-            if os.path.isdir(parent_path) and parent_dir.startswith("parent_batch_"):
-                direct_path = os.path.join(parent_path, batch_id)
-                if os.path.isdir(direct_path) and os.path.exists(os.path.join(direct_path, "metadata.json")):
-                    metadata_path = os.path.join(direct_path, "metadata.json")
-                    try:
-                        with open(metadata_path, 'r') as f:
-                            metadata = json.load(f)
-                            return metadata, direct_path
-                    except Exception as e:
-                        logger.error(f"Error reading metadata from direct path {direct_path}: {str(e)}")
-        
-        # If no direct folder match, fall back to looking for metadata file with matching batch_id
-        logger.info(f"No direct folder match for batch ID {batch_id}, searching through metadata files...")
-        for dir_path, _, files in os.walk(batch_dir):
-            if "metadata.json" in files:
-                metadata_path = os.path.join(dir_path, "metadata.json")
-                try:
-                    with open(metadata_path, 'r') as f:
-                        metadata = json.load(f)
-                        if metadata.get("batch_id") == batch_id:
-                            return metadata, dir_path
-                except Exception:
-                    continue
-                    
-        return None, None
 
 # Example Usage
 if __name__ == "__main__":
@@ -512,7 +275,3 @@ if __name__ == "__main__":
     batch_info = processor.submit_batch("v4", texts)
     print(f"Batch submitted: {batch_info}")
     
-    # For large number of texts, use submit_multiple_batches
-    # large_texts = ["text1", "text2", ..., "text20000"]
-    # all_batches = processor.submit_multiple_batches("v4", large_texts, batch_size=2000)
-    # print(f"Submitted {all_batches['num_batches']} batches with parent ID: {all_batches['parent_batch_id']}") 
