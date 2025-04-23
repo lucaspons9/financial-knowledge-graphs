@@ -6,7 +6,7 @@ user: "neo4j" # Neo4j username
 password: "password" # Neo4j password
 
 # Database Actions
-clear_database: false # Set to true to clear the database before loading new data
+clear_database: true # Set to true to clear the database before loading new data
 create_schema: true # Create necessary schema constraints
 load_data: true # Load data from JSON files
 
