@@ -9,71 +9,66 @@ Usage:
     python -m src.main openie     # Run the Stanford OpenIE extraction
     python -m src.main evaluate   # Evaluate the latest triplet extraction results
     python -m src.main neo4j      # Run Neo4j database operations
-    python -m src.main batch ID   # Retrieve batch results (pass --help for options)
+    python -m src.main retrieve execution_id   # Retrieve batch results (pass --help for options)
 """
 
 import sys
-
+from src.utils.logging_utils import setup_logging, get_logger
+# Set up logging
+setup_logging(log_level="INFO")
+logger = get_logger(__name__)
 
 def main():
     # Check command-line arguments
     if len(sys.argv) < 2:
-        print("Please specify a task to run: llm, openie, evaluate, neo4j, or batch")
-        print("Usage: python -m src.main [llm|openie|evaluate|neo4j|batch]")
+        logger.info("Please specify a task to run: llm, openie, evaluate, neo4j, or batch")
+        logger.info("Usage: python -m src.main [llm|openie|evaluate|neo4j|batch]")
         return
     
     task = sys.argv[1].lower()
     
     if task == "llm":
         # Run LLM-based entity extraction
-        print("Running LLM-based entity extraction...")
+        logger.info("Running LLM-based entity extraction...")
         from src.runners.run_llm_task import main as run_llm
         run_llm()
     
     elif task == "openie":
         # Run Stanford OpenIE extraction
-        print("Running Stanford OpenIE extraction...")
+        logger.info("Running Stanford OpenIE extraction...")
         from src.runners.run_stanford_openie import main as run_openie
         run_openie()
     
     elif task == "evaluate":
         # Run evaluation
-        print("Evaluating triplet extraction results...")
+        logger.info("Evaluating triplet extraction results...")
         from src.runners.run_evaluation import main as run_evaluation
         run_evaluation()
     
     elif task == "neo4j":
         # Run Neo4j database operations
-        print("Running Neo4j database operations...")
+        logger.info("Running Neo4j database operations...")
         from src.runners.run_neo4j_task import main as run_neo4j
         run_neo4j()
     
-    elif task == "batch":
+    elif task == "retrieve":
         # Run batch retrieval with the remaining arguments
-        from src.llm.retrieve_batch import main as run_batch
+        from src.runners.run_retrieve_batch import main as run_retrieve_batch
         
         # Create a new argv list without 'batch' for the retrieve_batch script
         new_argv = [sys.argv[0]] + sys.argv[2:]
         sys.argv = new_argv
-        
         if len(sys.argv) < 2:
-            # If no batch ID provided, show help message
-            print("Please specify a batch ID")
-            print("Usage: python -m src.main batch <batch_id> [options]")
-            print("Options:")
-            print("  --parent             Treat the batch_id as a parent batch ID")
-            print("  --output_dir DIR     Directory to save results")
-            print("  --check_only         Only check batch status without retrieving results")
-            print("  --wait               Wait for batch to complete before retrieving results")
-            return
+            # If no execution ID provided, will use the latest execution
+            logger.info("No execution ID provided, using the latest execution directory")
         
         # Run the batch retrieval
-        run_batch()
+        run_retrieve_batch()
     
     else:
-        print(f"Unknown task: {task}")
-        print("Please specify a valid task: llm, openie, evaluate, neo4j, or batch")
-        print("Usage: python -m src.main [llm|openie|evaluate|neo4j|batch]")
+        logger.info(f"Unknown task: {task}")
+        logger.info("Please specify a valid task: llm, openie, evaluate, neo4j, or batch")
+        logger.info("Usage: python -m src.main [llm|openie|evaluate|neo4j|batch]")
 
 
 if __name__ == "__main__":

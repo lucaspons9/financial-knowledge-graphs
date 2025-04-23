@@ -10,6 +10,5 @@ test_name: "v4_3kSample_openaiGPT4oMini" # convention: <version_of_prompt>_<data
 
 # Batch processing settings
 use_batch: true # Set to true to use OpenAI's Batch API for cost-efficient processing (50% cheaper)
-wait_for_completion: false # Set to true to wait for batch completion, false for async processing
 batch_size: 500 # Number of items per batch, max recommended is 5000
-parent_batch_dir: parent_batch_20250416_140953_09cc7b1c # Specify an existing parent batch directory to update and avoid reprocessing same newsIDs
+execution_id:  # Specify an existing execution directory to update and avoid reprocessing same newsIDs
