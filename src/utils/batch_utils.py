@@ -5,18 +5,19 @@ Utilities for batch processing operations.
 import os
 import re
 import json
-from typing import Dict, Any, List, Optional, Tuple, Set
+from typing import Dict, Any, List, Optional, Tuple, Set, Union, cast
 from datetime import datetime
 
 from src.utils.logging_utils import get_logger
-from src.utils.file_utils import ensure_dir, save_json
+from src.utils.file_utils import ensure_dir, save_json, load_json
 from src.llm import BATCH_FOLDER_PATTERN, EXECUTION_PREFIX, DEFAULT_BATCH_DIR
 
 # Initialize logger
 logger = get_logger(__name__)
 
 def is_batch_folder_name(batch_id: str) -> bool:
-    """Check if the provided batch ID looks like a folder name.
+    """
+    Check if the provided batch ID looks like a folder name.
     
     Args:
         batch_id: The batch ID to check
@@ -79,19 +80,15 @@ def get_execution_info(execution_dir: str) -> Dict[str, Any]:
     metadata_file = "execution_info.json"
     metadata_path = os.path.join(execution_dir, metadata_file)
     
-    if not os.path.exists(metadata_path):
-        logger.warning(f"Execution metadata file not found: {metadata_path}")
+    result = load_json(metadata_path)
+    if isinstance(result, list):
+        logger.warning(f"Expected dictionary but got list from {metadata_path}")
         return {}
-    
-    try:
-        with open(metadata_path, 'r') as f:
-            return json.load(f)
-    except Exception as e:
-        logger.error(f"Error reading execution metadata: {str(e)}")
-        return {}
+    return cast(Dict[str, Any], result)
 
 def find_latest_execution_dir(batch_dir: str = DEFAULT_BATCH_DIR) -> Optional[str]:
-    """Find the latest execution directory.
+    """
+    Find the latest execution directory.
     
     Args:
         batch_dir: Base directory for batch processing
@@ -118,7 +115,8 @@ def find_latest_execution_dir(batch_dir: str = DEFAULT_BATCH_DIR) -> Optional[st
     return os.path.join(batch_dir, latest_dir)
 
 def create_next_execution_dir(batch_dir: str = DEFAULT_BATCH_DIR) -> str:
-    """Create a new versioned execution directory.
+    """
+    Create a new versioned execution directory.
     
     Args:
         batch_dir: Base directory for batch processing
@@ -134,17 +132,18 @@ def create_next_execution_dir(batch_dir: str = DEFAULT_BATCH_DIR) -> str:
                       if os.path.isdir(os.path.join(batch_dir, d)) 
                       and d.startswith(EXECUTION_PREFIX)]
     
-    if not execution_dirs:
-        next_num = 1
-    else:
-        # Extract numbers from directory names
-        nums = []
-        for d in execution_dirs:
-            match = re.match(f"{EXECUTION_PREFIX}(\\d+)$", d)
-            if match:
+    # Extract numbers from directory names
+    nums: List[int] = []
+    for d in execution_dirs:
+        match = re.match(f"{EXECUTION_PREFIX}(\\d+)$", d)
+        if match:
+            try:
                 nums.append(int(match.group(1)))
-        
-        next_num = max(nums) + 1 if nums else 1
+            except ValueError:
+                continue
+    
+    # Determine next number
+    next_num = max(nums) + 1 if nums else 1
     
     # Create and return the new directory
     exec_dir_name = f"{EXECUTION_PREFIX}{next_num}"
@@ -154,7 +153,7 @@ def create_next_execution_dir(batch_dir: str = DEFAULT_BATCH_DIR) -> str:
     logger.info(f"Created new execution directory: {exec_dir_path}")
     
     # Initialize execution metadata
-    exec_metadata = {
+    exec_metadata: Dict[str, Any] = {
         "execution_id": exec_dir_name,
         "created_at": datetime.now().isoformat(),
         "batches": [],
@@ -167,7 +166,8 @@ def create_next_execution_dir(batch_dir: str = DEFAULT_BATCH_DIR) -> str:
     return exec_dir_path
 
 def create_next_batch_dir(execution_dir: str) -> Tuple[str, str]:
-    """Create a new batch directory with incremented number.
+    """
+    Create a new batch directory with incremented number.
     
     Args:
         execution_dir: Path to execution directory
@@ -179,48 +179,24 @@ def create_next_batch_dir(execution_dir: str) -> Tuple[str, str]:
                  if os.path.isdir(os.path.join(execution_dir, d)) 
                  and d.startswith('batch_')]
     
-    if not batch_dirs:
-        batch_num = 1
-    else:
-        # Extract numbers from batch directory names
-        nums = []
-        for d in batch_dirs:
-            match = re.match(r'batch_(\d+)$', d)
-            if match:
+    # Extract numbers from batch directory names
+    nums: List[int] = []
+    for d in batch_dirs:
+        match = re.match(r'batch_(\d+)$', d)
+        if match:
+            try:
                 nums.append(int(match.group(1)))
-        
-        # If no valid numbered batches, start with 1
-        batch_num = max(nums) + 1 if nums else 1
+            except ValueError:
+                continue
+    
+    # Determine next batch number
+    batch_num = max(nums) + 1 if nums else 1
     
     # Create batch directory and return info
     batch_id = f"batch_{batch_num}"
     batch_folder = ensure_dir(os.path.join(execution_dir, batch_id))
     
     return batch_id, batch_folder
-
-def get_real_batch_id(folder_name: str, batch_dir: str) -> Optional[str]:
-    """Get the real OpenAI batch ID from a folder's metadata.
-    
-    Args:
-        folder_name: The batch folder name
-        batch_dir: The base directory for batch processing
-        
-    Returns:
-        Optional[str]: The real OpenAI batch ID or None if not found
-    """
-    # Check in batch_dir
-    folder_path = os.path.join(batch_dir, folder_name)
-    metadata_path = os.path.join(folder_path, "metadata.json")
-    
-    if os.path.exists(metadata_path):
-        try:
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-                return metadata.get("batch_id")
-        except Exception as e:
-            logger.error(f"Error reading metadata from {metadata_path}: {str(e)}")
-    
-    return None
 
 def find_batch_metadata(batch_id: str, batch_dir: str) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
     """
@@ -237,12 +213,9 @@ def find_batch_metadata(batch_id: str, batch_dir: str) -> Tuple[Optional[Dict[st
     direct_path = os.path.join(batch_dir, batch_id)
     if os.path.isdir(direct_path) and os.path.exists(os.path.join(direct_path, "metadata.json")):
         metadata_path = os.path.join(direct_path, "metadata.json")
-        try:
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-                return metadata, direct_path
-        except Exception as e:
-            logger.error(f"Error reading metadata from direct path {direct_path}: {str(e)}")
+        metadata = load_json(metadata_path)
+        if metadata and isinstance(metadata, dict):
+            return cast(Dict[str, Any], metadata), direct_path
     
     # If no direct folder match, fall back to looking for metadata file with matching batch_id
     logger.info(f"No direct folder match for batch ID {batch_id}, searching through metadata files...")
@@ -250,14 +223,33 @@ def find_batch_metadata(batch_id: str, batch_dir: str) -> Tuple[Optional[Dict[st
         if "metadata.json" in files:
             metadata_path = os.path.join(dir_path, "metadata.json")
             try:
-                with open(metadata_path, 'r') as f:
-                    metadata = json.load(f)
-                    if metadata.get("batch_id") == batch_id:
-                        return metadata, dir_path
+                metadata = load_json(metadata_path)
+                if isinstance(metadata, dict) and metadata.get("batch_id") == batch_id:
+                    return cast(Dict[str, Any], metadata), dir_path
             except Exception:
                 continue
                 
     return None, None
+
+def get_real_batch_id(folder_name: str, batch_dir: str) -> Optional[str]:
+    """
+    Get the real OpenAI batch ID from a folder's metadata.
+    
+    Args:
+        folder_name: The batch folder name
+        batch_dir: The base directory for batch processing
+        
+    Returns:
+        Optional[str]: The real OpenAI batch ID or None if not found
+    """
+    # Check in batch_dir
+    folder_path = os.path.join(batch_dir, folder_name)
+    metadata_path = os.path.join(folder_path, "metadata.json")
+    
+    metadata = load_json(metadata_path)
+    if isinstance(metadata, dict):
+        return metadata.get("batch_id")
+    return None
 
 def get_processed_item_ids(execution_dir: str) -> Set[str]:
     """
@@ -280,18 +272,13 @@ def get_processed_item_ids(execution_dir: str) -> Set[str]:
     
     # First try to get processed_item_ids from execution_info.json
     execution_info_path = os.path.join(execution_dir, "execution_info.json")
-    if os.path.exists(execution_info_path):
-        try:
-            with open(execution_info_path, 'r') as f:
-                execution_info = json.load(f)
-            
-            # Get processed_item_ids from execution_info
-            if "processed_item_ids" in execution_info:
-                processed_ids = set(execution_info["processed_item_ids"])
-                logger.info(f"Found {len(processed_ids)} processed item IDs in execution_info.json")
-                return processed_ids
-        except Exception as e:
-            logger.error(f"Error reading execution_info.json: {str(e)}")
+    execution_info = load_json(execution_info_path)
+    
+    # Get processed_item_ids from execution_info
+    if isinstance(execution_info, dict) and "processed_item_ids" in execution_info:
+        processed_ids = set(execution_info["processed_item_ids"])
+        logger.info(f"Found {len(processed_ids)} processed item IDs in execution_info.json")
+        return processed_ids
     
     # If execution_info.json doesn't exist or doesn't have processed_item_ids,
     # fall back to scanning batch directories
@@ -310,17 +297,13 @@ def get_processed_item_ids(execution_dir: str) -> Set[str]:
             logger.warning(f"Metadata file not found for batch: {batch_dir}")
             continue
         
-        try:
-            # Load metadata and extract keys from original_texts
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-            
-            # Get keys from original_texts (newsIDs)
+        # Load metadata and extract keys from original_texts
+        metadata = load_json(metadata_path)
+        
+        # Get keys from original_texts (newsIDs)
+        if isinstance(metadata, dict):
             original_texts = metadata.get("original_texts", {})
             processed_ids.update(original_texts.keys())
-            
-        except Exception as e:
-            logger.error(f"Error reading metadata from batch {batch_dir}: {str(e)}")
     
     logger.info(f"Found {len(processed_ids)} processed item IDs across all batches in {execution_dir}")
     return processed_ids
@@ -348,8 +331,11 @@ def process_batch_results(output_file: str, output_dir: str, original_texts: Dic
                 item_id = result.get("custom_id")
                 
                 # Get the model's response content from the response
-                if result.get("response") and result["response"].get("choices"):
-                    content = result["response"]["choices"][0].get("message", {}).get("content", "")
+                # The OpenAI Batch API response structure contains a 'body' field
+                if (result.get("response") and 
+                    result["response"].get("body") and 
+                    result["response"]["body"].get("choices")):
+                    content = result["response"]["body"]["choices"][0].get("message", {}).get("content", "")
                 else:
                     logger.warning(f"No valid content found for item {item_id}")
                     content = ""
@@ -401,40 +387,35 @@ def update_execution_metadata(execution_dir: str, batch_id: str, n_items: int, i
     metadata_file = "execution_info.json"
     
     metadata_path = os.path.join(execution_dir, metadata_file)
-    if not os.path.exists(metadata_path):
-        logger.warning(f"Execution metadata file not found: {metadata_path}")
+    metadata = load_json(metadata_path)
+    
+    if not metadata or not isinstance(metadata, dict):
+        logger.warning(f"Execution metadata file not found or empty: {metadata_path}")
         return
+    
+    # Add the new batch to the list
+    metadata["batches"].append({
+        "batch_id": batch_id,
+        "created_at": datetime.now().isoformat(),
+        "n_items": n_items
+    })
+    
+    # Update the last updated timestamp
+    metadata["last_updated"] = datetime.now().isoformat()
+    
+    # Update processed item IDs if provided
+    if item_ids:
+        if "processed_item_ids" not in metadata:
+            metadata["processed_item_ids"] = []
         
-    try:
-        with open(metadata_path, 'r') as f:
-            metadata = json.load(f)
-        
-        # Add the new batch to the list
-        metadata["batches"].append({
-            "batch_id": batch_id,
-            "created_at": datetime.now().isoformat(),
-            "n_items": n_items
-        })
-        
-        # Update the last updated timestamp
-        metadata["last_updated"] = datetime.now().isoformat()
-        
-        # Update processed item IDs if provided
-        if item_ids:
-            if "processed_item_ids" not in metadata:
-                metadata["processed_item_ids"] = []
-            
-            # Add unique item IDs to the list
-            for item_id in item_ids:
-                if item_id not in metadata["processed_item_ids"]:
-                    metadata["processed_item_ids"].append(item_id)
-        
-        # Save the updated metadata
-        save_json(metadata, metadata_path)
-        logger.info(f"Updated execution metadata with new batch: {batch_id}")
-        
-    except Exception as e:
-        logger.error(f"Error updating execution metadata: {str(e)}")
+        # Add unique item IDs to the list
+        for item_id in item_ids:
+            if item_id not in metadata["processed_item_ids"]:
+                metadata["processed_item_ids"].append(item_id)
+    
+    # Save the updated metadata
+    save_json(metadata, metadata_path)
+    logger.info(f"Updated execution metadata with new batch: {batch_id}")
 
 def resolve_batch_id(batch_id: str, batch_dir: str) -> str:
     """
@@ -447,8 +428,6 @@ def resolve_batch_id(batch_id: str, batch_dir: str) -> str:
     Returns:
         str: The resolved OpenAI batch ID
     """
-    logger = get_logger(__name__)
-    
     # If the batch ID looks like a folder name, get the real batch ID from metadata
     if is_batch_folder_name(batch_id):
         logger.info(f"Input appears to be a batch folder name: {batch_id}")

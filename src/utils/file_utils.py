@@ -7,7 +7,7 @@ import os
 import re
 import glob
 from pathlib import Path
-from typing import Optional, Dict, List, Any, Union
+from typing import Optional, Dict, List, Any, Union, Tuple, Set
 import json
 from datetime import datetime
 
@@ -31,71 +31,66 @@ def ensure_dir(directory: str) -> str:
     path.mkdir(parents=True, exist_ok=True)
     return str(path)
 
-def find_next_versioned_dir(base_dir: str, prefix: str) -> str:
+def find_or_create_versioned_dir(base_dir: str, prefix: str, create_new: bool = True, version_format: str = "{prefix}_{index}") -> str:
     """
-    Create a versioned directory with incrementing index.
-    Pattern: {prefix}_{i} where i is an incrementing number.
+    Find the latest versioned directory or create a new one.
     
     Args:
-        base_dir: Base directory to create the versioned directory in
-        prefix: Prefix for the directory name
-    
+        base_dir: Base directory containing versioned directories
+        prefix: Prefix of the versioned directories
+        create_new: If True, creates a new directory; if False, returns the latest existing one
+        version_format: Format string for directory naming (default: "{prefix}_{index}")
+        
     Returns:
-        str: Path to the newly created directory
+        str: Path to directory (either newly created or latest existing)
     """
-    # Ensure base directory exists
     ensure_dir(base_dir)
     
-    # Look for existing folders with the pattern: prefix_i
+    # Look for existing folders with the pattern
     pattern = os.path.join(base_dir, f"{prefix}_*")
     existing_folders = glob.glob(pattern)
     
     if not existing_folders:
+        if not create_new:
+            logger.warning(f"No directories found matching pattern {pattern}")
+            return None
         # No existing folders, start with index 1
-        output_dir = os.path.join(base_dir, f"{prefix}_1")
+        next_index = 1
     else:
         # Extract indices from folder names
-        indices: List[int] = []
+        indices = []
         for folder in existing_folders:
             match = re.search(rf"{prefix}_(\d+)$", folder)
             if match:
                 indices.append(int(match.group(1)))
         
         if not indices:
-            # No valid indices found, start with index 1
-            output_dir = os.path.join(base_dir, f"{prefix}_1")
+            next_index = 1
         else:
-            # Find the next index
             next_index = max(indices) + 1
-            output_dir = os.path.join(base_dir, f"{prefix}_{next_index}")
+            
+        # If we just want the latest directory, return it
+        if not create_new:
+            latest_dir = max(existing_folders, key=os.path.getctime)
+            logger.info(f"Found latest directory: {latest_dir}")
+            return latest_dir
     
-    # Create the directory
-    ensure_dir(output_dir)
-    logger.info(f"Created versioned directory: {output_dir}")
-    return output_dir
+    # Create the directory using the format string
+    dir_name = version_format.format(prefix=prefix, index=next_index)
+    dir_path = os.path.join(base_dir, dir_name)
+    
+    ensure_dir(dir_path)
+    logger.info(f"Created versioned directory: {dir_path}")
+    return dir_path
+
+# Backwards compatibility functions
+def find_next_versioned_dir(base_dir: str, prefix: str) -> str:
+    """Backward compatibility wrapper for find_or_create_versioned_dir"""
+    return find_or_create_versioned_dir(base_dir, prefix, create_new=True)
 
 def find_latest_dir(base_dir: str, prefix: str) -> Optional[str]:
-    """
-    Find the latest (highest index) versioned directory.
-    
-    Args:
-        base_dir: Base directory containing versioned directories
-        prefix: Prefix of the versioned directories
-    
-    Returns:
-        Optional[str]: Path to the latest directory, or None if none found
-    """
-    pattern = os.path.join(base_dir, f"{prefix}_*")
-    dirs = glob.glob(pattern)
-    
-    if not dirs:
-        logger.warning(f"No directories found matching pattern {pattern}")
-        return None
-    
-    # Sort by creation time, newest first
-    latest_dir = max(dirs, key=os.path.getctime)
-    logger.info(f"Found latest directory: {latest_dir}")
-    return latest_dir
+    """Backward compatibility wrapper for find_or_create_versioned_dir"""
+    return find_or_create_versioned_dir(base_dir, prefix, create_new=False)
 
 def save_json(data: Union[Dict[str, Any], List[Any]], file_path: str, indent: int = 2) -> None:
     """
@@ -115,6 +110,27 @@ def save_json(data: Union[Dict[str, Any], List[Any]], file_path: str, indent: in
         json.dump(data, f, indent=indent)
     
     logger.info(f"Saved JSON file: {file_path}")
+
+def load_json(file_path: str) -> Union[Dict[str, Any], List[Any]]:
+    """
+    Load data from a JSON file.
+    
+    Args:
+        file_path: Path to the JSON file
+        
+    Returns:
+        Union[Dict[str, Any], List[Any]]: Loaded JSON data
+    """
+    if not os.path.exists(file_path):
+        logger.warning(f"JSON file not found: {file_path}")
+        return {}
+    
+    try:
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Error reading JSON file {file_path}: {str(e)}")
+        return {}
 
 def load_evaluation_files(directory: str) -> Dict[str, Dict[str, Any]]:
     """
@@ -138,10 +154,9 @@ def load_evaluation_files(directory: str) -> Dict[str, Dict[str, Any]]:
     for file_name in json_files:
         file_path = os.path.join(directory, file_name)
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                if data:  # Only add non-empty files
-                    results[file_name.replace('.json', '')] = data
+            data = load_json(file_path)
+            if data:  # Only add non-empty files
+                results[file_name.replace('.json', '')] = data
         except Exception as e:
             logger.error(f"Error loading {file_path}: {str(e)}")
             continue
@@ -161,9 +176,7 @@ def save_evaluation_results(results: Dict[str, Any], llm_run_path: str,
     Returns:
         str: Path to the saved results file
     """
-    
     llm_run_info = os.path.basename(llm_run_path)
-    
     filename = f"prompt_{llm_run_info}.json"
     file_path = os.path.join(output_dir, filename)
     
@@ -175,7 +188,7 @@ def save_evaluation_results(results: Dict[str, Any], llm_run_path: str,
 
 def save_results(results: Union[List[Dict[str, Any]], str, Dict[str, Any]], test_dir: str, sentence_id: str) -> str:
     """
-    Save results to a file.
+    Save results to a file. Can handle different input types including raw strings with JSON.
     
     Args:
         results: Results to save (can be a list of triplets, raw string or dictionary)
@@ -197,7 +210,7 @@ def save_results(results: Union[List[Dict[str, Any]], str, Dict[str, Any]], test
                 results = json_content
         except Exception:
             # If extraction fails, keep as string
-            pass
+            results = {"raw_output": results}
     
     # Save the results
     save_json(results, file_path)
@@ -222,60 +235,62 @@ def create_run_summary(config: Dict[str, Any], stats: Dict[str, Any]) -> Dict[st
     }
 
 def load_yaml(file_path: str) -> Dict[str, Any]:
-    """Load a YAML file and return its contents."""
+    """
+    Load a YAML file and return its contents.
+    
+    Args:
+        file_path: Path to the YAML file
+        
+    Returns:
+        Dict[str, Any]: YAML file contents
+    """
     with open(file_path, "r") as file:
         return yaml.safe_load(file)
 
-def load_csv_news(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
+def load_tabular_data(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
     """
-    Load news texts from a CSV file.
+    Load data from tabular files (CSV/Excel).
     
     Args:
-        file_path: Path to the CSV file
-        id_column: Column name containing news article IDs
-        text_column: Column name containing news article texts
+        file_path: Path to the tabular file
+        id_column: Column name containing IDs
+        text_column: Column name containing text content
         
     Returns:
-        Dictionary mapping news IDs to their text content
+        Dict[str, str]: Dictionary mapping IDs to text content
     """
-    df = pd.read_csv(file_path)
+    file_extension = os.path.splitext(file_path)[1].lower()
     
-    # Check if required columns exist
-    if id_column not in df.columns:
-        raise ValueError(f"CSV file does not contain column '{id_column}'")
-    if text_column not in df.columns:
-        raise ValueError(f"CSV file does not contain column '{text_column}'")
+    try:
+        # Read file based on extension
+        if file_extension == '.csv':
+            df = pd.read_csv(file_path)
+        elif file_extension in ['.xlsx', '.xls']:
+            df = pd.read_excel(file_path)
+        else:
+            raise ValueError(f"Unsupported file extension: {file_extension}")
+        
+        # Check if required columns exist
+        if id_column not in df.columns:
+            raise ValueError(f"File does not contain column '{id_column}'")
+        if text_column not in df.columns:
+            raise ValueError(f"File does not contain column '{text_column}'")
+        
+        # Convert to dictionary format {ID: text}
+        return {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
     
-    # Convert to dictionary format {newsID: story}
-    news_dict = {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
-    
-    return news_dict
+    except Exception as e:
+        logger.error(f"Error loading data from {file_path}: {str(e)}")
+        return {}
+
+# Backwards compatibility functions
+def load_csv_news(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
+    """Backwards compatibility wrapper for load_tabular_data."""
+    return load_tabular_data(file_path, id_column, text_column)
 
 def load_excel_news(file_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, str]:
-    """
-    Load news texts from an Excel file.
-    
-    Args:
-        file_path: Path to the Excel file
-        id_column: Column name containing news article IDs
-        text_column: Column name containing news article texts
-        
-    Returns:
-        Dictionary mapping news IDs to their text content
-    """
-    # Read Excel file
-    df = pd.read_excel(file_path)
-    
-    # Check if required columns exist
-    if id_column not in df.columns:
-        raise ValueError(f"Excel file does not contain column '{id_column}'")
-    if text_column not in df.columns:
-        raise ValueError(f"Excel file does not contain column '{text_column}'")
-    
-    # Convert to dictionary format {newsID: story}
-    news_dict = {str(row[id_column]): str(row[text_column]) for _, row in df.iterrows()}
-    
-    return news_dict
+    """Backwards compatibility wrapper for load_tabular_data."""
+    return load_tabular_data(file_path, id_column, text_column)
 
 def load_data_by_extension(data_path: str, id_column: str = "newsID", text_column: str = "story") -> Dict[str, Any]:
     """
@@ -296,15 +311,14 @@ def load_data_by_extension(data_path: str, id_column: str = "newsID", text_colum
     
     if file_extension in ['.yaml', '.yml']:
         return load_yaml(data_path)
-    elif file_extension == '.csv':
-        return load_csv_news(data_path, id_column, text_column)
-    elif file_extension in ['.xlsx', '.xls']:
-        return load_excel_news(data_path, id_column, text_column)
+    elif file_extension in ['.csv', '.xlsx', '.xls']:
+        return load_tabular_data(data_path, id_column, text_column)
     else:
         raise ValueError(f"Unsupported file extension: {file_extension}") 
     
 def setup_results_directory(config: Dict[str, Any]) -> Optional[str]:
-    """Set up results directory if storing results.
+    """
+    Set up results directory if storing results.
     
     Args:
         config: Configuration dictionary
