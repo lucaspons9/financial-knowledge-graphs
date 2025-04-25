@@ -2,18 +2,23 @@
 Script for running Neo4j database tasks.
 
 This script sets up a Neo4j database with Docker, creates necessary schema 
-and loads entity-relationship data from processed JSON files.
+and loads entity-relationship data from processed execution batches.
 """
 
 import os
 import glob
+import sys
 import time
 import subprocess
-from typing import Dict, Any
+import json
+from typing import Dict, Any, List
+from datetime import datetime
 
 from src.utils.file_utils import load_yaml
 from src.utils.logging_utils import setup_logging, get_logger
+from src.utils.batch_utils import get_execution_path
 from src.db.neo4j_handler import Neo4jHandler
+from src.llm import DEFAULT_BATCH_DIR
 
 # Initialize logger
 logger = get_logger(__name__)
@@ -111,11 +116,199 @@ def start_neo4j_docker(config: Dict[str, Any]) -> bool:
         logger.error(f"Error starting Neo4j Docker container: {str(e)}")
         return False
 
+def process_execution_batches(execution_id: str, config: Dict[str, Any], neo4j_handler: Neo4jHandler, batch_dir: str = DEFAULT_BATCH_DIR) -> Dict[str, Any]:
+    """
+    Process all batches in an execution directory and load their results into Neo4j.
+    
+    Args:
+        execution_id: The execution ID to process
+        config: Neo4j configuration dictionary
+        neo4j_handler: Initialized Neo4jHandler
+        batch_dir: Base directory for batch processing
+        
+    Returns:
+        Dict containing summary of processing results
+    """
+    # Get the execution directory path
+    execution_dir = get_execution_path(execution_id, batch_dir)
+    if not execution_dir:
+        logger.error(f"Execution directory not found for ID: {execution_id}")
+        return {"error": "Execution directory not found", "status": "failed"}
+    
+    logger.info(f"Processing batches in execution directory: {execution_dir}")
+    
+    # Track results
+    batches_list: List[Dict[str, Any]] = []
+    results: Dict[str, Any] = {
+        "execution_id": execution_id,
+        "processed_batches": 0,
+        "loaded_to_neo4j": 0,
+        "already_loaded": 0,
+        "skipped": 0,
+        "failed": 0,
+        "entities_loaded": 0,
+        "relationships_loaded": 0,
+        "batches": batches_list
+    }
+    
+    # Find all batch directories in the execution directory
+    batch_dirs = [d for d in os.listdir(execution_dir) 
+                  if os.path.isdir(os.path.join(execution_dir, d)) 
+                  and d.startswith('batch_')]
+    
+    # Process each batch directory
+    total_entities = 0
+    total_relationships = 0
+    
+    for batch_dir in batch_dirs:
+        batch_path = os.path.join(execution_dir, batch_dir)
+        results_path = os.path.join(batch_path, "results")
+        metadata_path = os.path.join(batch_path, "metadata.json")
+
+        # Get batch details from metadata if available
+        batch_id = batch_dir  # Default to directory name
+        metadata = {}
+        
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, 'r') as f:
+                    metadata = json.load(f)
+                batch_id = metadata.get("batch_id", batch_dir)
+                
+                # Check if this batch has already been processed
+                if metadata.get("saved_to_neo4j", False):
+                    logger.info(f"Batch {batch_dir} (ID: {batch_id}) already loaded to Neo4j")
+                    results["already_loaded"] += 1
+                    batches_list.append({
+                        "batch_id": batch_id,
+                        "status": "already_loaded"
+                    })
+                    continue
+            except Exception as e:
+                logger.warning(f"Could not read metadata for batch {batch_dir}: {str(e)}")
+
+        # Check if the batch has been retrieved (results directory exists)
+        if not os.path.isdir(results_path):
+            logger.warning(f"Results directory not found for batch {batch_dir}. Skipping.")
+            results["skipped"] += 1
+            batches_list.append({
+                "batch_id": batch_id,
+                "status": "skipped", 
+                "reason": "No results directory"
+            })
+            continue
+            
+        try:
+            # Find all JSON files in the results directory
+            json_files = glob.glob(os.path.join(results_path, "*.json"))
+            
+            if not json_files:
+                logger.warning(f"No JSON files found in results directory for batch {batch_dir}")
+                results["skipped"] += 1
+                batches_list.append({
+                    "batch_id": batch_id,
+                    "status": "skipped", 
+                    "reason": "No JSON files in results"
+                })
+                continue
+                
+            # Process each JSON file
+            batch_entities = 0
+            batch_relationships = 0
+            batch_success = True
+            
+            for json_file in json_files:
+                success, message = neo4j_handler.process_json_file(json_file)
+                
+                if success:
+                    # Extract metrics from the success message
+                    import re
+                    entities_match = re.search(r'Processed (\d+) entities', message)
+                    relationships_match = re.search(r'and (\d+) relationships', message)
+                    
+                    if entities_match:
+                        batch_entities += int(entities_match.group(1))
+                    if relationships_match:
+                        batch_relationships += int(relationships_match.group(1))
+                else:
+                    logger.error(f"Failed to process {json_file}: {message}")
+                    batch_success = False
+            
+            # Update counts
+            total_entities += batch_entities
+            total_relationships += batch_relationships
+            
+            # Add batch result and update metadata
+            if batch_success:
+                results["loaded_to_neo4j"] += 1
+                batches_list.append({
+                    "batch_id": batch_id,
+                    "status": "loaded",
+                    "entities": batch_entities,
+                    "relationships": batch_relationships
+                })
+                
+                # Update metadata to mark as saved to Neo4j
+                if os.path.exists(metadata_path):
+                    metadata["saved_to_neo4j"] = True
+                    metadata["neo4j_saved_at"] = datetime.now().isoformat()
+                    metadata["entities_loaded"] = batch_entities
+                    metadata["relationships_loaded"] = batch_relationships
+                    
+                    with open(metadata_path, 'w') as f:
+                        json.dump(metadata, f, indent=2)
+                        
+                    logger.info(f"Updated metadata for batch {batch_id} with Neo4j loading status")
+            else:
+                results["failed"] += 1
+                batches_list.append({
+                    "batch_id": batch_id,
+                    "status": "partially_failed",
+                    "entities": batch_entities,
+                    "relationships": batch_relationships
+                })
+                
+        except Exception as e:
+            logger.error(f"Error processing batch {batch_dir}: {str(e)}")
+            results["failed"] += 1
+            batches_list.append({
+                "batch_id": batch_dir,
+                "status": "failed",
+                "error": str(e)
+            })
+    
+    # Update total counts
+    results["processed_batches"] = len(batch_dirs)
+    results["entities_loaded"] = total_entities
+    results["relationships_loaded"] = total_relationships
+    
+    # Print summary
+    logger.info(f"Execution {execution_id} processing summary:")
+    logger.info(f"Total batches: {results['processed_batches']}")
+    logger.info(f"Already loaded to Neo4j: {results['already_loaded']}")
+    logger.info(f"Successfully loaded to Neo4j: {results['loaded_to_neo4j']}")
+    logger.info(f"Skipped: {results['skipped']}")
+    logger.info(f"Failed: {results['failed']}")
+    logger.info(f"Total entities loaded: {results['entities_loaded']}")
+    logger.info(f"Total relationships loaded: {results['relationships_loaded']}")
+    
+    return results
+
 def main():
     """Main function to run Neo4j database tasks."""
     # Setup logging
     setup_logging(log_level="INFO")
     logger.info("Starting Neo4j database task")
+    
+    # Check for execution ID argument
+    if len(sys.argv) < 2:
+        print("Usage: python run_neo4j_task.py <execution_id>")
+        print("  execution_id: The ID or name of the execution directory to process")
+        sys.exit(1)
+    
+    # Get execution ID from command line arguments
+    execution_id = sys.argv[2]
+    batch_dir = DEFAULT_BATCH_DIR
     
     start_time = time.time()
     
@@ -145,29 +338,14 @@ def main():
             logger.info("Creating schema constraints...")
             neo4j_handler.create_schema_constraints()
         
-        # Process data files
-        if config.get("load_data", True):
-            data_path = config.get("data_path", "data/processed/json")
-            logger.info(f"Processing data files from {data_path}...")
-            
-            # Find all JSON files in the data directory
-            pattern = os.path.join(data_path, "*.json")
-            json_files = glob.glob(pattern)
-            
-            if not json_files:
-                logger.warning(f"No JSON files found in {data_path}")
-            else:
-                logger.info(f"Found {len(json_files)} JSON files to process")
-                
-                for json_file in json_files:
-                    #logger.info(f"Processing {json_file}...")
-                    success, message = neo4j_handler.process_json_file(json_file)
-                    
-                    # if success:
-                    #     #logger.info(message)
-                    #     pass
-                    # else:
-                    #     logger.error(message)
+        # Process batches from the execution
+        logger.info(f"Processing batches for execution ID: {execution_id}")
+        results = process_execution_batches(execution_id, config, neo4j_handler, batch_dir)
+        
+        # Check for errors
+        if "error" in results:
+            logger.error(f"Batch processing failed: {results['error']}")
+            sys.exit(1)
         
         # Get database statistics
         try:
