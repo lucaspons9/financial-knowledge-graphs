@@ -11,7 +11,7 @@ python -m src.main llm
 #### Neo4j Database Operations
 
 ```bash
-python -m src.main neo4j
+python -m src.main neo4j <execution_id>
 ```
 
 #### Evaluation
@@ -23,12 +23,11 @@ python -m src.main evaluate
 #### Retrieve Batch Results
 
 ```bash
-python -m src.main batch <batch_id> [options]
+python -m src.main retrieve <execution_id>
 ```
 
 **Options:**
 
-- `--parent`: Treat as parent batch
 - `--check_only`: Check status only
 - `--wait`: Wait for completion
 - `--output_dir DIR`: Custom output location
@@ -60,8 +59,6 @@ python -m src.main batch <batch_id> [options]
 - `password`: Neo4j password
 - `clear_database`: Clear database before loading
 - `create_schema`: Create schema constraints
-- `load_data`: Load data from JSON files
-- `data_path`: Path to JSON files
 
 #### Evaluation
 

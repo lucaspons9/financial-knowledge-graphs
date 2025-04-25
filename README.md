@@ -54,8 +54,8 @@ python -m src.main llm
 # Evaluate extraction results
 python -m src.main evaluate
 
-# Neo4j database operations
-python -m src.main neo4j
+# Neo4j database operations (import from execution batch results)
+python -m src.main neo4j <execution_id>
 
 # Retrieve batch processing results
 python -m src.main batch <batch_id> [options]
