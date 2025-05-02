@@ -2,7 +2,7 @@ llm_provider: "openai" # Options: openai, llama3, /* anthropic, cohere, mistral,
 mode: "light" # Options: full, light
 
 prompt: "v4" # Prompt to use from prompts.yaml
-data_path: "data/processed/3k_sample.csv" # Path to the data file (YAML, CSV or XLSX)
+data_path: "data/processed/processed_MA2024.csv" # Path to the data file (YAML, CSV or XLSX)
 
 store_results: true
 results_dir: "runs"
