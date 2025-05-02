@@ -6,6 +6,8 @@ A toolset for extracting financial knowledge from text and building queryable kn
 
 Financial Knowledge Graphs leverages Large Language Models (LLMs) to extract structured financial knowledge from unstructured news articles. The extracted information is stored in a Neo4j graph database, creating a queryable knowledge graph of financial entities and their relationships.
 
+![Financial Knowledge Graph Example](docs/images/knowledge-graph.png)
+
 ## Features
 
 - **Knowledge Extraction**: Extract structured financial information from unstructured text using LLMs, including company entities (name, ticker, industry, country) and key financial relationships (acquisitions, mergers, debt, equity stakes)
