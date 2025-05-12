@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Global Energy Partners",
+        "attributes": {
+          "companyName": "Global Energy Partners Ltd.",
+          "ticker": "GEP",
+          "industry": "Energy",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Nordic Renewables",
+        "attributes": {
+          "companyName": "Nordic Renewables ASA",
+          "ticker": "NREN",
+          "industry": "Renewable Energy",
+          "country": "Norway"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Suntech Ventures",
+        "attributes": {
+          "companyName": "Suntech Ventures Inc.",
+          "ticker": "STV",
+          "industry": "Solar Energy",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 850000000,
+          "percentage": 35.8,
+          "transactionDate": "2023-09-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 320000000,
+          "transactionDate": "2023-05-22"
+        }
+      }
+    ]
+  }

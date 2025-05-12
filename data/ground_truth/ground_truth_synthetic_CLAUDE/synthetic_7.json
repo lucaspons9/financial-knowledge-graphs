@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "AgroTech",
+        "attributes": {
+          "companyName": "AgroTech Global",
+          "ticker": "AGTG",
+          "industry": "Agricultural Technology",
+          "country": "Brazil"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "VerticalFarms",
+        "attributes": {
+          "companyName": "Vertical Farms International",
+          "ticker": "VFIN",
+          "industry": "Indoor Agriculture",
+          "country": "Netherlands"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "EcoFinance",
+        "attributes": {
+          "companyName": "EcoFinance Group",
+          "ticker": "EFGP",
+          "industry": "Sustainable Finance",
+          "country": "France"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3450000000,
+          "percentage": 100,
+          "transactionDate": "2023-06-30"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 875000000,
+          "percentage": 22.5,
+          "transactionDate": "2022-10-15"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Cobalt Mining Corp",
+        "attributes": {
+          "companyName": "Cobalt Mining Corporation",
+          "ticker": "CBLT",
+          "industry": "Mining",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "EcoMinerals Ltd",
+        "attributes": {
+          "companyName": "EcoMinerals Limited",
+          "ticker": "ECM",
+          "industry": "Mining",
+          "country": "Australia"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "GreenTech Ventures",
+        "attributes": {
+          "companyName": "GreenTech Ventures Inc.",
+          "ticker": "GTV",
+          "industry": "Renewable Energy",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2900000000,
+          "transactionDate": "2024-03-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 350000000,
+          "percentage": 12.8,
+          "transactionDate": "2023-12-15"
+        }
+      }
+    ]
+  }

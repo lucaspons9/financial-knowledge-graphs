@@ -1,0 +1,72 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "TechFusion",
+        "attributes": {
+          "companyName": "TechFusion Systems Inc.",
+          "ticker": "TFSI",
+          "industry": "Enterprise Software",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "DataNexus",
+        "attributes": {
+          "companyName": "DataNexus Analytics Ltd.",
+          "ticker": "DNAL",
+          "industry": "Data Analytics",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "QuantumCore",
+        "attributes": {
+          "companyName": "QuantumCore Technologies",
+          "ticker": "QCTC",
+          "industry": "Semiconductor",
+          "country": "Taiwan"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2750000000,
+          "percentage": 100,
+          "transactionDate": "2023-09-21"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 850000000,
+          "percentage": 18.5,
+          "transactionDate": "2023-04-15"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasDebtHolder",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 325000000,
+          "percentage": 12.3,
+          "transactionDate": "2022-11-30"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,56 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Arcosa, Inc.",
+        "attributes": {
+          "companyName": "Arcosa, Inc.",
+          "ticker": "ACA",
+          "industry": "infrastructure-related products",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Stavola Holding Corporation",
+        "attributes": {
+          "companyName": "Stavola Holding Corporation",
+          "industry": "construction materials (aggregates, asphalt)",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Stellex Capital Management LLC",
+        "attributes": {
+          "companyName": "Stellex Capital Management LLC",
+          "industry": "private equity",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 1200000000,
+          "transactionDate": "2024-08-01"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "transactionDate": "2024-08-01"
+        }
+      }
+    ]
+  }

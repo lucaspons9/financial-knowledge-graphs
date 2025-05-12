@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Continental Foods",
+        "attributes": {
+          "companyName": "Continental Foods Group",
+          "ticker": "CFG",
+          "industry": "Food Processing",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Harvest Organics",
+        "attributes": {
+          "companyName": "Harvest Organics Inc.",
+          "ticker": "HVST",
+          "industry": "Organic Food",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Morgan Trust",
+        "attributes": {
+          "companyName": "Morgan Trust & Investments",
+          "ticker": "MTI",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 45.3,
+          "valueAmount": 780000000,
+          "transactionDate": "2023-07-28"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 320000000,
+          "transactionDate": "2023-12-05"
+        }
+      }
+    ]
+  }

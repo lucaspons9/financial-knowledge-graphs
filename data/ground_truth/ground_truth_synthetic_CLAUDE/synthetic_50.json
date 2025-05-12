@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "ArcticStar Energy",
+        "attributes": {
+          "companyName": "ArcticStar Energy Corp.",
+          "ticker": "ARCT",
+          "industry": "Oil & Gas",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "SunRidge Renewables",
+        "attributes": {
+          "companyName": "SunRidge Renewables Holdings",
+          "ticker": "SRDG",
+          "industry": "Renewable Energy",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "BlackPeak Capital",
+        "attributes": {
+          "companyName": "BlackPeak Capital Partners",
+          "industry": "Private Equity",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3750000000,
+          "transactionDate": "2024-01-17"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 1200000000,
+          "percentage": 32.0,
+          "transactionDate": "2024-01-10"
+        }
+      }
+    ]
+  }

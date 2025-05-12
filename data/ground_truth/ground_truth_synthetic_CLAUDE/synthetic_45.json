@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Alpine Pharma",
+        "attributes": {
+          "companyName": "Alpine Pharmaceuticals",
+          "ticker": "ALP",
+          "industry": "Pharmaceuticals",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "NeuroCure",
+        "attributes": {
+          "companyName": "NeuroCure Therapeutics",
+          "ticker": "NCUR",
+          "industry": "Biotechnology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Horizon Investments",
+        "attributes": {
+          "companyName": "Horizon Global Investments",
+          "ticker": "HGI",
+          "industry": "Asset Management",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasDebtHolder",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 380000000,
+          "transactionDate": "2023-04-18"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 4150000000,
+          "transactionDate": "2024-05-22"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Spectral AI, Inc.",
+        "attributes": {
+          "companyName": "Spectral AI, Inc.",
+          "ticker": "MDAI",
+          "industry": "medical diagnostics (AI)",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": []
+  }

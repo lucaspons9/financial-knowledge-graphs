@@ -1,0 +1,45 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Banco Bilbao Vizcaya Argentaria, S.A.",
+        "attributes": {
+          "companyName": "Banco Bilbao Vizcaya Argentaria, S.A."
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "J.P. Morgan Securities plc",
+        "attributes": {
+          "companyName": "J.P. Morgan Securities plc"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "BofA Securities, Inc.",
+        "attributes": {
+          "companyName": "BofA Securities, Inc."
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Citigroup Global Markets Inc.",
+        "attributes": {
+          "companyName": "Citigroup Global Markets Inc."
+        }
+      },
+      {
+        "id": "C5",
+        "type": "Company",
+        "name": "Kroll Issuer Services Limited",
+        "attributes": {
+          "companyName": "Kroll Issuer Services Limited"
+        }
+      }
+    ],
+    "relationships": []
+  }

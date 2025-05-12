@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "GreenEnergy",
+        "attributes": {
+          "companyName": "GreenEnergy Renewables",
+          "ticker": "GREN",
+          "industry": "Renewable Energy",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "SolarPeak",
+        "attributes": {
+          "companyName": "SolarPeak Technologies",
+          "ticker": "SPKT",
+          "industry": "Solar Energy",
+          "country": "Spain"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 450000000,
+          "percentage": 32.8,
+          "transactionDate": "2023-06-12"
+        }
+      }
+    ]
+  }

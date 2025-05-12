@@ -1,0 +1,70 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "MediTrust Pharmaceuticals",
+        "attributes": {
+          "companyName": "MediTrust Pharmaceuticals Inc.",
+          "ticker": "MTPI",
+          "industry": "Pharmaceuticals",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BioGenix Research",
+        "attributes": {
+          "companyName": "BioGenix Research Ltd.",
+          "ticker": "BGNX",
+          "industry": "Biotechnology",
+          "country": "Ireland"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Apex Healthcare Ventures",
+        "attributes": {
+          "companyName": "Apex Healthcare Ventures",
+          "industry": "Venture Capital",
+          "country": "Switzerland"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 32.5,
+          "valueAmount": 950000000,
+          "transactionDate": "2023-12-05"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 425000000,
+          "transactionDate": "2022-08-15"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {
+          "percentage": 15.8,
+          "valueAmount": 320000000,
+          "transactionDate": "2021-03-22"
+        }
+      }
+    ]
+  }

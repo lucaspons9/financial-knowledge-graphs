@@ -1,0 +1,32 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "TerraVest Industries Inc.",
+        "attributes": {
+          "companyName": "TerraVest Industries Inc."
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "9162-2803 Quebec Inc.",
+        "attributes": {
+          "companyName": "9162-2803 Quebec Inc."
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "percentage": 19.74,
+          "transactionDate": "2024-03-07"
+        }
+      }
+    ]
+  }

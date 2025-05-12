@@ -1,0 +1,37 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "SNDL Inc.",
+        "attributes": {
+          "companyName": "SNDL Inc.",
+          "ticker": "SNDL",
+          "industry": "cannabis production and retail",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Indiva Limited",
+        "attributes": {
+          "companyName": "Indiva Limited",
+          "industry": "cannabis edibles production",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 22700000,
+          "transactionDate": "2024-11-04"
+        }
+      }
+    ]
+  }

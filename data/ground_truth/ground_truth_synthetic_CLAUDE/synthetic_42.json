@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Frontier Mining",
+        "attributes": {
+          "companyName": "Frontier Mining Corporation",
+          "ticker": "FMC",
+          "industry": "Mining",
+          "country": "Australia"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "GreenTech Minerals",
+        "attributes": {
+          "companyName": "GreenTech Minerals Ltd.",
+          "ticker": "GTM",
+          "industry": "Critical Minerals",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Resource Capital",
+        "attributes": {
+          "companyName": "Resource Capital Investments",
+          "ticker": "RCI",
+          "industry": "Investment Management",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2300000000,
+          "transactionDate": "2024-04-05"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "percentage": 17.8,
+          "valueAmount": 650000000,
+          "transactionDate": "2023-10-18"
+        }
+      }
+    ]
+  }

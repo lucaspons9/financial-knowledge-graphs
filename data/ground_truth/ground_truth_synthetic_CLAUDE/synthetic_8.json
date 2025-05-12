@@ -1,0 +1,83 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "QuantumHealth",
+        "attributes": {
+          "companyName": "Quantum Health Systems",
+          "ticker": "QHSY",
+          "industry": "Healthcare Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "MedicalAI",
+        "attributes": {
+          "companyName": "Medical AI Solutions Ltd.",
+          "ticker": "MAIS",
+          "industry": "Artificial Intelligence",
+          "country": "Israel"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "PatientCare",
+        "attributes": {
+          "companyName": "PatientCare Technologies",
+          "ticker": "PCTC",
+          "industry": "Telemedicine",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "HealthVenture",
+        "attributes": {
+          "companyName": "HealthVenture Capital",
+          "ticker": "HVCG",
+          "industry": "Venture Capital",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 1875000000,
+          "percentage": 100,
+          "transactionDate": "2023-04-28"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 650000000,
+          "percentage": 18.7,
+          "transactionDate": "2022-11-03"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 425000000,
+          "percentage": 29.3,
+          "transactionDate": "2023-01-22"
+        }
+      }
+    ]
+  }

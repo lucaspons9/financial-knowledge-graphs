@@ -1,0 +1,58 @@
+{
+  "entities": [
+    {
+      "id": "C1",
+      "type": "Company",
+      "name": "SageView Advisory Group",
+      "attributes": {
+        "companyName": "SageView Advisory Group",
+        "industry": "independent RIA firm",
+        "country": "US"
+      }
+    },
+    {
+      "id": "C2",
+      "type": "Company",
+      "name": "Palmer Retirement Consulting",
+      "attributes": {
+        "companyName": "Palmer Retirement Consulting",
+        "country": "US"
+      }
+    },
+    {
+      "id": "C3",
+      "type": "Company",
+      "name": "Aquiline Capital Partners",
+      "attributes": {
+        "companyName": "Aquiline Capital Partners",
+        "industry": "private equity firm"
+      }
+    },
+    {
+      "id": "C4",
+      "type": "Company",
+      "name": "Wise Rhino",
+      "attributes": {
+        "companyName": "Wise Rhino"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "R1",
+      "type": "acquired",
+      "source": "C1",
+      "target": "C2",
+      "attributes": {
+        "transactionDate": "2023-12-15"
+      }
+    },
+    {
+      "id": "R2",
+      "type": "hasEquityStakeIn",
+      "source": "C3",
+      "target": "C1",
+      "attributes": {}
+    }
+  ]
+}

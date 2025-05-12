@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Aareal Bank AG",
+        "attributes": {
+          "companyName": "Aareal Bank AG",
+          "industry": "banking (property financing)",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Atlantic BidCo GmbH",
+        "attributes": {
+          "companyName": "Atlantic BidCo GmbH",
+          "country": "Germany"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 33.20,
+          "percentage": 95.5,
+          "transactionDate": "2024-05-03"
+        }
+      }
+    ]
+  }

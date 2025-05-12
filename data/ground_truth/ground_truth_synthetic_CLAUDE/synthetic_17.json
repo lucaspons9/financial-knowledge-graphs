@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "TechRetail",
+        "attributes": {
+          "companyName": "TechRetail Innovations",
+          "ticker": "TCRT",
+          "industry": "Retail Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "PaymentPro",
+        "attributes": {
+          "companyName": "PaymentPro Systems",
+          "ticker": "PPAY",
+          "industry": "Financial Technology",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "VenturePartners",
+        "attributes": {
+          "companyName": "Venture Partners International",
+          "ticker": "VNTP",
+          "industry": "Venture Capital",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 380000000,
+          "percentage": 15.4,
+          "transactionDate": "2022-11-30"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 1650000000,
+          "percentage": 100,
+          "transactionDate": "2023-09-12"
+        }
+      }
+    ]
+  }

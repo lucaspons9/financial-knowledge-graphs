@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "TechVision Systems",
+        "attributes": {
+          "companyName": "TechVision Systems Inc.",
+          "ticker": "TVS",
+          "industry": "Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "GlobalChip Semiconductors",
+        "attributes": {
+          "companyName": "GlobalChip Semiconductors Ltd.",
+          "ticker": "GCHP",
+          "industry": "Semiconductors",
+          "country": "Taiwan"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Quantum Finance Partners",
+        "attributes": {
+          "companyName": "Quantum Finance Partners",
+          "ticker": "QFP",
+          "industry": "Financial Services",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 4200000000,
+          "transactionDate": "2023-09-28"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 1500000000,
+          "percentage": 35.7,
+          "transactionDate": "2023-09-15"
+        }
+      }
+    ]
+  }

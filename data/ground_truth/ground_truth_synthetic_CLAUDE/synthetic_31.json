@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "OceanWave Shipping",
+        "attributes": {
+          "companyName": "OceanWave Shipping Corporation",
+          "ticker": "OWS",
+          "industry": "Marine Transportation",
+          "country": "Singapore"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Pacific Cargo Ltd",
+        "attributes": {
+          "companyName": "Pacific Cargo Limited",
+          "ticker": "PCL",
+          "industry": "Freight & Logistics",
+          "country": "Hong Kong"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3250000000,
+          "percentage": 100,
+          "transactionDate": "2023-10-12"
+        }
+      }
+    ]
+  }

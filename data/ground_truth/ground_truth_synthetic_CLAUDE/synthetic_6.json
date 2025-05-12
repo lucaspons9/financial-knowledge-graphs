@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "SolarStream",
+        "attributes": {
+          "companyName": "SolarStream Technologies",
+          "ticker": "SLST",
+          "industry": "Solar Energy",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BatteryCore",
+        "attributes": {
+          "companyName": "BatteryCore Solutions Inc.",
+          "ticker": "BATT",
+          "industry": "Energy Storage",
+          "country": "South Korea"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "EnergyCapital",
+        "attributes": {
+          "companyName": "Energy Capital Partners",
+          "ticker": "ECAP",
+          "industry": "Private Equity",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2980000000,
+          "percentage": 100,
+          "transactionDate": "2023-05-12"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 1250000000,
+          "percentage": 45.8,
+          "transactionDate": "2022-09-28"
+        }
+      }
+    ]
+  }

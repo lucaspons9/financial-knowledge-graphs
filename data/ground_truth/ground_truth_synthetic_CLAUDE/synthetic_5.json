@@ -1,0 +1,83 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "GlobalLogistics",
+        "attributes": {
+          "companyName": "Global Logistics International",
+          "ticker": "GLOG",
+          "industry": "Freight & Logistics",
+          "country": "Singapore"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "AmeriTrans",
+        "attributes": {
+          "companyName": "AmeriTrans Holdings Corp.",
+          "ticker": "AMTR",
+          "industry": "Transportation",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "EasternPorts",
+        "attributes": {
+          "companyName": "Eastern Ports Authority",
+          "ticker": "EPRT",
+          "industry": "Port Operations",
+          "country": "United Arab Emirates"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "MaritimeFin",
+        "attributes": {
+          "companyName": "Maritime Financial Services",
+          "ticker": "MFIN",
+          "industry": "Specialized Finance",
+          "country": "Netherlands"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 1850000000,
+          "percentage": 35.7,
+          "transactionDate": "2022-11-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 5750000000,
+          "percentage": 100,
+          "transactionDate": "2023-07-28"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C4",
+        "attributes": {
+          "valueAmount": 2350000000,
+          "percentage": 41.2,
+          "transactionDate": "2023-03-10"
+        }
+      }
+    ]
+  }

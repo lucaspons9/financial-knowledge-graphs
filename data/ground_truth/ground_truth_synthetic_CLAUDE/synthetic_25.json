@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Pacific Trust Bank",
+        "attributes": {
+          "companyName": "Pacific Trust Bancorp",
+          "ticker": "PTB",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Riverside Financial",
+        "attributes": {
+          "companyName": "Riverside Financial Group",
+          "ticker": "RFG",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Heritage Investment",
+        "attributes": {
+          "companyName": "Heritage Investment Partners",
+          "ticker": "HIP",
+          "industry": "Asset Management",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 450000000,
+          "transactionDate": "2023-10-05"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 780000000,
+          "percentage": 22.5,
+          "transactionDate": "2023-07-28"
+        }
+      }
+    ]
+  }

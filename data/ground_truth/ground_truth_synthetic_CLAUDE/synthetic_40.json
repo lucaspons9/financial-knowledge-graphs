@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Meridian Healthcare",
+        "attributes": {
+          "companyName": "Meridian Healthcare Systems",
+          "ticker": "MHS",
+          "industry": "Healthcare",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BioTech Innovations",
+        "attributes": {
+          "companyName": "BioTech Innovations Inc.",
+          "ticker": "BTI",
+          "industry": "Biotechnology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Ascension Capital",
+        "attributes": {
+          "companyName": "Ascension Capital Group",
+          "ticker": "ACG",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasDebtHolder",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 475000000,
+          "transactionDate": "2023-08-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 28.7,
+          "valueAmount": 920000000,
+          "transactionDate": "2024-02-01"
+        }
+      }
+    ]
+  }

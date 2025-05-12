@@ -1,0 +1,83 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "UrbanLiving",
+        "attributes": {
+          "companyName": "Urban Living Properties",
+          "ticker": "ULIV",
+          "industry": "Real Estate Development",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "SmartSpaces",
+        "attributes": {
+          "companyName": "Smart Spaces Technologies",
+          "ticker": "SSPC",
+          "industry": "PropTech",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "SustainBuild",
+        "attributes": {
+          "companyName": "Sustainable Building Materials",
+          "ticker": "SBMI",
+          "industry": "Green Construction",
+          "country": "Sweden"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "PropFin",
+        "attributes": {
+          "companyName": "Property Finance Global",
+          "ticker": "PFGL",
+          "industry": "Real Estate Finance",
+          "country": "Singapore"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 985000000,
+          "percentage": 100,
+          "transactionDate": "2023-08-10"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 450000000,
+          "percentage": 32.7,
+          "transactionDate": "2022-06-15"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C4",
+        "attributes": {
+          "valueAmount": 1450000000,
+          "percentage": 47.3,
+          "transactionDate": "2023-01-30"
+        }
+      }
+    ]
+  }

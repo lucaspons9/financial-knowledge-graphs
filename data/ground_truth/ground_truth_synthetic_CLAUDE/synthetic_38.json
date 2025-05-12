@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "NexGen Technologies",
+        "attributes": {
+          "companyName": "NexGen Technologies Inc.",
+          "ticker": "NGT",
+          "industry": "Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Quantum Innovations",
+        "attributes": {
+          "companyName": "Quantum Innovations Ltd.",
+          "ticker": "QNTM",
+          "industry": "Artificial Intelligence",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Vertex Capital",
+        "attributes": {
+          "companyName": "Vertex Capital Partners",
+          "ticker": "VCP",
+          "industry": "Investment Banking",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3750000000,
+          "transactionDate": "2023-09-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 850000000,
+          "transactionDate": "2023-06-22"
+        }
+      }
+    ]
+  }

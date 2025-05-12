@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Dragos Inc.",
+        "attributes": {
+          "companyName": "Dragos Inc.",
+          "industry": "cybersecurity for operational technology (OT)",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Network Perception",
+        "attributes": {
+          "companyName": "Network Perception",
+          "industry": "network visualization platform for OT networks",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-10-01"
+        }
+      }
+    ]
+  }

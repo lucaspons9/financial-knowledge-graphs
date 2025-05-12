@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Nevada Sunrise Metals Corp.",
+        "attributes": {
+          "companyName": "Nevada Sunrise Metals Corp.",
+          "ticker": "NEV",
+          "industry": "mineral exploration (lithium, gold, copper)",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "CopAur Minerals Inc.",
+        "attributes": {
+          "companyName": "CopAur Minerals Inc.",
+          "industry": "mineral exploration"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 475000,
+          "percentage": 18.74
+        }
+      }
+    ]
+  }

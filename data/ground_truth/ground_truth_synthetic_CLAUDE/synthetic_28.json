@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Harvest Agritech",
+        "attributes": {
+          "companyName": "Harvest Agritech Solutions",
+          "ticker": "HAS",
+          "industry": "Agricultural Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "SoilSense Technologies",
+        "attributes": {
+          "companyName": "SoilSense Technologies Inc.",
+          "ticker": "SOIL",
+          "industry": "Agricultural Technology",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "GreenField Investments",
+        "attributes": {
+          "companyName": "GreenField Investments LLC",
+          "industry": "Investment Management",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 185000000,
+          "percentage": 32.5,
+          "transactionDate": "2023-08-10"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 95000000,
+          "transactionDate": "2022-11-30"
+        }
+      }
+    ]
+  }

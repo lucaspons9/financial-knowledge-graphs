@@ -1,0 +1,24 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "APPlife Digital Solutions",
+        "attributes": {
+          "companyName": "APPlife Digital Solutions, Inc.",
+          "ticker": "ALDS",
+          "industry": "business incubator, e-commerce, cloud-based solutions",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Silver Bear Sports Entertainment and Gaming",
+        "attributes": {
+          "companyName": "Silver Bear Sports Entertainment and Gaming"
+        }
+      }
+    ],
+    "relationships": []
+  }

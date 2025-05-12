@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Global Energy Partners",
+        "attributes": {
+          "companyName": "Global Energy Partners PLC",
+          "ticker": "GEP",
+          "industry": "Energy",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "SunTech Renewables",
+        "attributes": {
+          "companyName": "SunTech Renewables SA",
+          "ticker": "STR",
+          "industry": "Renewable Energy",
+          "country": "Spain"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Eastern Power Corporation",
+        "attributes": {
+          "companyName": "Eastern Power Corporation",
+          "ticker": "EPC",
+          "industry": "Utilities",
+          "country": "Germany"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 32.5,
+          "valueAmount": 1250000000,
+          "transactionDate": "2023-11-08"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 4200000000,
+          "transactionDate": "2024-03-22"
+        }
+      }
+    ]
+  }

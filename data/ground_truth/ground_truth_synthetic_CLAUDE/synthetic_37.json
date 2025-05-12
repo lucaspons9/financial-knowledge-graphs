@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Atlas Financial",
+        "attributes": {
+          "companyName": "Atlas Financial Services Inc.",
+          "ticker": "AFS",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Meridian Trust",
+        "attributes": {
+          "companyName": "Meridian Trust & Investment Co.",
+          "ticker": "MTI",
+          "industry": "Wealth Management",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Granite Capital",
+        "attributes": {
+          "companyName": "Granite Capital Holdings",
+          "ticker": "GCH",
+          "industry": "Asset Management",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3850000000,
+          "transactionDate": "2024-02-10"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 550000000,
+          "transactionDate": "2023-07-15"
+        }
+      }
+    ]
+  }

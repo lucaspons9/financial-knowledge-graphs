@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Pinnacle Industries",
+        "attributes": {
+          "companyName": "Pinnacle Industries Inc.",
+          "ticker": "PIN",
+          "industry": "Manufacturing",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Advanced Materials Group",
+        "attributes": {
+          "companyName": "Advanced Materials Group plc",
+          "ticker": "AMG",
+          "industry": "Materials Science",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2650000000,
+          "percentage": 100,
+          "transactionDate": "2024-05-03"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Frontier Logistics",
+        "attributes": {
+          "companyName": "Frontier Logistics Corporation",
+          "ticker": "FLC",
+          "industry": "Transportation",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Global Freight Systems",
+        "attributes": {
+          "companyName": "Global Freight Systems S.A.",
+          "ticker": "GFS",
+          "industry": "Logistics",
+          "country": "France"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3850000000,
+          "percentage": 100,
+          "transactionDate": "2024-01-17"
+        }
+      }
+    ]
+  }

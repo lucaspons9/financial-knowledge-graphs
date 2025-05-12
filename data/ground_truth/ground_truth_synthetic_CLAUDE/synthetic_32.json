@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "UrbanDev Properties",
+        "attributes": {
+          "companyName": "UrbanDev Properties REIT",
+          "ticker": "UDP",
+          "industry": "Real Estate",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Metropolitan Holdings",
+        "attributes": {
+          "companyName": "Metropolitan Holdings Inc.",
+          "ticker": "MHI",
+          "industry": "Real Estate Investment",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Skyline Investments",
+        "attributes": {
+          "companyName": "Skyline Investments Group",
+          "ticker": "SKY",
+          "industry": "Financial Services",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 8950000000,
+          "transactionDate": "2024-01-20"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 1250000000,
+          "percentage": 15.7,
+          "transactionDate": "2023-05-18"
+        }
+      }
+    ]
+  }

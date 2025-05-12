@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "OceanBlue Energy",
+        "attributes": {
+          "companyName": "OceanBlue Energy PLC",
+          "ticker": "OBLUE",
+          "industry": "Renewable Energy",
+          "country": "Norway"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Greenwave Technologies",
+        "attributes": {
+          "companyName": "Greenwave Technologies Inc.",
+          "ticker": "GWAV",
+          "industry": "Clean Technology",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "NexGen Capital",
+        "attributes": {
+          "companyName": "NexGen Capital Group",
+          "ticker": "NXG",
+          "industry": "Investment Banking",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2800000000,
+          "transactionDate": "2023-11-12"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "percentage": 18.5,
+          "valueAmount": 750000000,
+          "transactionDate": "2023-06-30"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "TechVision Dynamics",
+        "attributes": {
+          "companyName": "TechVision Dynamics Inc.",
+          "ticker": "TVD",
+          "industry": "Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Quantum Innovations",
+        "attributes": {
+          "companyName": "Quantum Innovations LLC",
+          "ticker": "QIL",
+          "industry": "Artificial Intelligence",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 4200000000,
+          "percentage": 100,
+          "transactionDate": "2023-11-28"
+        }
+      }
+    ]
+  }

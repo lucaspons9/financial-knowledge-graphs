@@ -1,0 +1,44 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Siris",
+        "attributes": {
+          "companyName": "Siris",
+          "industry": "private equity, technology, telecommunications",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BearCom",
+        "attributes": {
+          "companyName": "BearCom",
+          "industry": "wireless communications, technology integration",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Bertram Capital",
+        "attributes": {
+          "companyName": "Bertram Capital",
+          "industry": "private equity"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-01-09"
+        }
+      }
+    ]
+  }

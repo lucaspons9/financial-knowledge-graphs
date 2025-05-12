@@ -1,0 +1,60 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Sovereign Bank",
+        "attributes": {
+          "companyName": "Sovereign National Bank",
+          "ticker": "SNB",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Coastal Financial",
+        "attributes": {
+          "companyName": "Coastal Financial Holdings",
+          "ticker": "CFH",
+          "industry": "Financial Services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Heritage Trust",
+        "attributes": {
+          "companyName": "Heritage Trust & Savings",
+          "ticker": "HTS",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 7850000000,
+          "transactionDate": "2024-02-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {
+          "percentage": 18.3,
+          "valueAmount": 580000000,
+          "transactionDate": "2023-09-05"
+        }
+      }
+    ]
+  }

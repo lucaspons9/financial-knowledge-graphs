@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "GlobalAuto",
+        "attributes": {
+          "companyName": "Global Automotive Group",
+          "ticker": "GLAU",
+          "industry": "Automotive Manufacturing",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "ElectricMotors",
+        "attributes": {
+          "companyName": "Electric Motors Corporation",
+          "ticker": "ELMC",
+          "industry": "Electric Vehicles",
+          "country": "China"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "AsiaFinance",
+        "attributes": {
+          "companyName": "Asia Finance Corporation",
+          "ticker": "AFIN",
+          "industry": "Financial Services",
+          "country": "Singapore"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 2300000000,
+          "percentage": 24.5,
+          "transactionDate": "2023-03-27"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C2",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 950000000,
+          "percentage": 42.3,
+          "transactionDate": "2022-10-15"
+        }
+      }
+    ]
+  }

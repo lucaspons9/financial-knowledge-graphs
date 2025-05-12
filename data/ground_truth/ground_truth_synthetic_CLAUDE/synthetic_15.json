@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "AtlanticBank",
+        "attributes": {
+          "companyName": "Atlantic Financial Group",
+          "ticker": "ATLB",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "MidwestBank",
+        "attributes": {
+          "companyName": "Midwest Regional Banking Corporation",
+          "ticker": "MWRB",
+          "industry": "Regional Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "VentureX",
+        "attributes": {
+          "companyName": "VentureX Capital Partners",
+          "ticker": "VXCP",
+          "industry": "Investment Management",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 5620000000,
+          "percentage": 100,
+          "transactionDate": "2023-05-18"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 1800000000,
+          "percentage": 28.7,
+          "transactionDate": "2023-04-02"
+        }
+      }
+    ]
+  }

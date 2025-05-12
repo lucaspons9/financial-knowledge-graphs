@@ -1,0 +1,14 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Leonovus Inc.",
+        "attributes": {
+          "companyName": "Leonovus Inc.",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": []
+  }

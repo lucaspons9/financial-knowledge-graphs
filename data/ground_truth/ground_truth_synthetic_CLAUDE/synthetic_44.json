@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "TechNova Solutions",
+        "attributes": {
+          "companyName": "TechNova Solutions Inc.",
+          "ticker": "TNS",
+          "industry": "Software",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "CloudMatrix",
+        "attributes": {
+          "companyName": "CloudMatrix Systems",
+          "ticker": "CLDM",
+          "industry": "Cloud Computing",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Pinnacle Ventures",
+        "attributes": {
+          "companyName": "Pinnacle Ventures LLC",
+          "industry": "Venture Capital",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 5250000000,
+          "transactionDate": "2024-03-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C2",
+        "attributes": {
+          "percentage": 22.5,
+          "valueAmount": 450000000,
+          "transactionDate": "2022-11-30"
+        }
+      }
+    ]
+  }

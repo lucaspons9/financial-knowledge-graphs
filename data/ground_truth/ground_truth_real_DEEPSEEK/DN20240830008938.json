@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Seamless Group Inc.",
+        "attributes": {
+          "companyName": "Seamless Group Inc.",
+          "industry": "fintech",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "INFINT Acquisition Corporation",
+        "attributes": {
+          "companyName": "INFINT Acquisition Corporation",
+          "ticker": "IFIN",
+          "industry": "special purpose acquisition company",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-08-30"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Axion Telecom",
+        "attributes": {
+          "companyName": "Axion Telecommunications Inc.",
+          "ticker": "AXT",
+          "industry": "Telecommunications",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Spectrum Wireless",
+        "attributes": {
+          "companyName": "Spectrum Wireless Ltd.",
+          "ticker": "SWL",
+          "industry": "Wireless Communications",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 7850000000,
+          "percentage": 100,
+          "transactionDate": "2024-03-15"
+        }
+      }
+    ]
+  }

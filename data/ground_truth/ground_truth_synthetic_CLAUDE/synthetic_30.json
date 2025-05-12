@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "MediCore Therapeutics",
+        "attributes": {
+          "companyName": "MediCore Therapeutics Inc.",
+          "ticker": "MDCR",
+          "industry": "Biotechnology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "NeuraStem Research",
+        "attributes": {
+          "companyName": "NeuraStem Research Ltd.",
+          "ticker": "NSTM",
+          "industry": "Pharmaceuticals",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Alpine Ventures",
+        "attributes": {
+          "companyName": "Alpine Ventures Capital",
+          "industry": "Venture Capital",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 420000000,
+          "percentage": 28.5,
+          "transactionDate": "2024-02-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 175000000,
+          "transactionDate": "2023-11-08"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,83 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "GlobalRetail",
+        "attributes": {
+          "companyName": "Global Retail Group",
+          "ticker": "GRTL",
+          "industry": "Retail",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "EcomSolutions",
+        "attributes": {
+          "companyName": "EcomSolutions Technologies",
+          "ticker": "ECOM",
+          "industry": "E-commerce Technology",
+          "country": "India"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "LogisticsPlus",
+        "attributes": {
+          "companyName": "LogisticsPlus International",
+          "ticker": "LGPL",
+          "industry": "Logistics",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "RetailFund",
+        "attributes": {
+          "companyName": "Retail Transformation Fund",
+          "ticker": "RTFP",
+          "industry": "Private Equity",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 1650000000,
+          "percentage": 100,
+          "transactionDate": "2023-07-15"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C4",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 950000000,
+          "percentage": 21.8,
+          "transactionDate": "2022-12-08"
+        }
+      },
+      {
+        "id": "R3",
+        "type": "hasDebtHolder",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 750000000,
+          "percentage": 35.4,
+          "transactionDate": "2023-03-22"
+        }
+      }
+    ]
+  }

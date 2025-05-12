@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "NexTech",
+        "attributes": {
+          "companyName": "NexTech Solutions Inc.",
+          "ticker": "NTSI",
+          "industry": "Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "GlobalFinance",
+        "attributes": {
+          "companyName": "Global Financial Holdings Ltd.",
+          "ticker": "GFH",
+          "industry": "Financial Services",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "AsiaEnergy",
+        "attributes": {
+          "companyName": "Asia Energy Corporation",
+          "ticker": "AEC",
+          "industry": "Energy",
+          "country": "Singapore"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 3750000000,
+          "percentage": 100,
+          "transactionDate": "2023-07-12"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 850000000,
+          "percentage": 32.5,
+          "transactionDate": "2022-11-04"
+        }
+      }
+    ]
+  }

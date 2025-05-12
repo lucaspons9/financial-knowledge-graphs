@@ -1,0 +1,34 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "i3 Energy",
+        "attributes": {
+          "companyName": "i3 Energy",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Gran Tierra",
+        "attributes": {
+          "companyName": "Gran Tierra",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "percentage": 100,
+          "transactionDate": "2024-10-31"
+        }
+      }
+    ]
+  }

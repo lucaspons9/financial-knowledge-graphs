@@ -1,0 +1,53 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Alterra IOS",
+        "attributes": {
+          "companyName": "Alterra IOS",
+          "industry": "industrial outdoor storage real estate",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "J.P. Morgan Asset Management",
+        "attributes": {
+          "companyName": "J.P. Morgan Asset Management",
+          "industry": "asset management",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Peakstone Realty Trust",
+        "attributes": {
+          "companyName": "Peakstone Realty Trust",
+          "industry": "real estate investment trust",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 490000000,
+          "transactionDate": "2024-11-05"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {}
+      }
+    ]
+  }

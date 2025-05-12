@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "GreenHorizon",
+        "attributes": {
+          "companyName": "GreenHorizon Energy Corporation",
+          "ticker": "GHEC",
+          "industry": "Renewable Energy",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "OceanPower",
+        "attributes": {
+          "companyName": "OceanPower Innovations Ltd.",
+          "ticker": "OPIL",
+          "industry": "Tidal Energy",
+          "country": "Denmark"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "AlphaFinance",
+        "attributes": {
+          "companyName": "AlphaFinance Global Partners",
+          "ticker": "AFGP",
+          "industry": "Investment Banking",
+          "country": "Switzerland"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 4850000000,
+          "percentage": 100,
+          "transactionDate": "2023-10-05"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 1250000000,
+          "percentage": 32.7,
+          "transactionDate": "2022-07-18"
+        }
+      }
+    ]
+  }

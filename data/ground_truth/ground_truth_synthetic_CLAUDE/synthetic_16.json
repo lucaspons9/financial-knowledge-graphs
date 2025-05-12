@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "OceanicShipping",
+        "attributes": {
+          "companyName": "Oceanic Shipping Holdings",
+          "ticker": "OCSH",
+          "industry": "Marine Transportation",
+          "country": "Singapore"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "PortExpress",
+        "attributes": {
+          "companyName": "Port Express Logistics",
+          "ticker": "PEXL",
+          "industry": "Freight & Logistics",
+          "country": "Netherlands"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "MaritimeFund",
+        "attributes": {
+          "companyName": "Maritime Infrastructure Fund",
+          "ticker": "MIFQ",
+          "industry": "Investment Management",
+          "country": "Norway"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 1250000000,
+          "percentage": 18.6,
+          "transactionDate": "2023-02-09"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 3870000000,
+          "percentage": 100,
+          "transactionDate": "2023-08-04"
+        }
+      }
+    ]
+  }

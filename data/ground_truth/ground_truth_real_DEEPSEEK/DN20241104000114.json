@@ -1,0 +1,38 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Relief Therapeutics Holding SA",
+        "attributes": {
+          "companyName": "Relief Therapeutics Holding SA",
+          "ticker": "RLF",
+          "industry": "biopharmaceutical",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Renexxion, Inc.",
+        "attributes": {
+          "companyName": "Renexxion, Inc.",
+          "industry": "biotechnology (gastrointestinal disorders)",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 360000000,
+          "percentage": 72.2,
+          "transactionDate": "2024-11-04"
+        }
+      }
+    ]
+  }

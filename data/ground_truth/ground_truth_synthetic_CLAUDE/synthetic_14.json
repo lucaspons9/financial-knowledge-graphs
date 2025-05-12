@@ -1,0 +1,39 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "PharmaNova",
+        "attributes": {
+          "companyName": "PharmaNova Therapeutics",
+          "ticker": "PHRM",
+          "industry": "Pharmaceuticals",
+          "country": "Switzerland"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BioGenesis",
+        "attributes": {
+          "companyName": "BioGenesis Sciences",
+          "ticker": "BGEN",
+          "industry": "Biotechnology",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 8750000000,
+          "percentage": 100,
+          "transactionDate": "2023-07-21"
+        }
+      }
+    ]
+  }

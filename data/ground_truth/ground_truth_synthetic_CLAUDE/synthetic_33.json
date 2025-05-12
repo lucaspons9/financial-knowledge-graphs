@@ -1,0 +1,59 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "SunTech Energy",
+        "attributes": {
+          "companyName": "SunTech Energy Corporation",
+          "ticker": "STE",
+          "industry": "Renewable Energy",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "PowerCell Innovations",
+        "attributes": {
+          "companyName": "PowerCell Innovations GmbH",
+          "ticker": "PWC",
+          "industry": "Energy Storage",
+          "country": "Germany"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Global Infrastructure Fund",
+        "attributes": {
+          "companyName": "Global Infrastructure Fund LP",
+          "industry": "Asset Management",
+          "country": "United Kingdom"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 580000000,
+          "percentage": 45.3,
+          "transactionDate": "2023-07-12"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasDebtHolder",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 750000000,
+          "transactionDate": "2023-03-09"
+        }
+      }
+    ]
+  }

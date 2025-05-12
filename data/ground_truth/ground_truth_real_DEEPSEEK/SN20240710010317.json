@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Crosswalk Therapeutics",
+        "attributes": {
+          "companyName": "Crosswalk Therapeutics",
+          "industry": "biotechnology (rare diseases)",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Codexis, Inc.",
+        "attributes": {
+          "companyName": "Codexis, Inc.",
+          "ticker": "CDXS",
+          "industry": "biotechnology (engineered enzymes)",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-07-10"
+        }
+      }
+    ]
+  }

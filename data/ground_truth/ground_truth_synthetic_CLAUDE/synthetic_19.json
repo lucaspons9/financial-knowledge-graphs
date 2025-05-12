@@ -1,0 +1,61 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "MediaGiant",
+        "attributes": {
+          "companyName": "MediaGiant Entertainment",
+          "ticker": "MGNT",
+          "industry": "Media & Entertainment",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "StreamTech",
+        "attributes": {
+          "companyName": "StreamTech Networks",
+          "ticker": "STRM",
+          "industry": "Streaming Technology",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "ContentStudios",
+        "attributes": {
+          "companyName": "Content Studios International",
+          "ticker": "CNTS",
+          "industry": "Film & Television Production",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 4250000000,
+          "percentage": 100,
+          "transactionDate": "2023-06-30"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "valueAmount": 680000000,
+          "percentage": 35.2,
+          "transactionDate": "2022-12-08"
+        }
+      }
+    ]
+  }

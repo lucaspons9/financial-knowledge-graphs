@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Sodexo",
+        "attributes": {
+          "companyName": "Sodexo",
+          "industry": "sustainable food and valued experiences",
+          "country": "France"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "CRH Catering",
+        "attributes": {
+          "companyName": "CRH Catering Co., Inc.",
+          "industry": "industrial catering and food service",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2025-H1"
+        }
+      }
+    ]
+  }

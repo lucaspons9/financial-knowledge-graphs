@@ -1,0 +1,38 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Meridian Financial",
+        "attributes": {
+          "companyName": "Meridian Financial Holdings",
+          "ticker": "MFH",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Atlas Banking Group",
+        "attributes": {
+          "companyName": "Atlas Banking Group Inc.",
+          "ticker": "ABG",
+          "industry": "Banking",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 12500000000,
+          "transactionDate": "2024-02-05"
+        }
+      }
+    ]
+  }

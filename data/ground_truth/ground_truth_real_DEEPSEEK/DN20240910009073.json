@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Viatris Inc.",
+        "attributes": {
+          "companyName": "Viatris Inc.",
+          "ticker": "VTRS",
+          "industry": "healthcare",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": []
+  }
