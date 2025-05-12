@@ -168,14 +168,21 @@ def analyze_token_distribution(
     
     # Calculate approximate token counts for each article
     token_counts = []
-    for _, row in df.iterrows():
-        # Split by whitespace and filter out empty strings
-        words = [word for word in re.split(r'\s+', row['story']) if word]
+    valid_indices = []
+    for idx, row in df.iterrows():
+        # Skip NaN values and ensure story is a string
+        if pd.isna(row['story']):
+            continue
+            
+        # Convert to string and split by whitespace
+        story_text = str(row['story'])
+        words = [word for word in re.split(r'\s+', story_text) if word]
 
         # Approximate token count (words * avg_tokens_per_word)
         # Add a small buffer for special tokens and punctuation
         approx_tokens = int(len(words) * avg_tokens_per_word) + 10
         token_counts.append(approx_tokens)
+        valid_indices.append(idx)
     
     # Create histogram
     plt.figure(figsize=(12, 8))
@@ -218,7 +225,7 @@ def analyze_token_distribution(
     
     # Find and print examples of shortest and longest articles
     # Create a DataFrame with token counts for easier analysis
-    df_with_counts = df.copy()
+    df_with_counts = df.loc[valid_indices].copy()
     df_with_counts['token_count'] = token_counts
     
     # Calculate percentiles
@@ -262,6 +269,6 @@ if __name__ == "__main__":
     
     # Analyze token distribution in the processed data
     analyze_token_distribution(
-        csv_path="data/processed/processed_MA2024.csv",
-        output_dir="data/processed/analysis",
+        csv_path="data/raw/MA2024.csv",
+        output_dir="data/processed/analysis/v2",
     )
