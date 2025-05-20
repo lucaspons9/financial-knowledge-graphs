@@ -1,0 +1,72 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Gracell Biotechnologies Inc.",
+        "attributes": {
+          "companyName": "Gracell Biotechnologies Inc.",
+          "ticker": "GRCL",
+          "industry": "biopharmaceutical",
+          "country": "China"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "AstraZeneca",
+        "attributes": {
+          "companyName": "AstraZeneca",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "AstraZeneca Treasury Limited",
+        "attributes": {
+          "companyName": "AstraZeneca Treasury Limited",
+          "country": "United Kingdom"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Grey Wolf Merger Sub",
+        "attributes": {
+          "companyName": "Grey Wolf Merger Sub",
+          "country": "Cayman Islands"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 2.00,
+          "transactionDate": "2024-02-22"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C3",
+        "target": "C1",
+        "attributes": {
+          "percentage": 100
+        }
+      },
+      {
+        "id": "R3",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C4",
+        "attributes": {
+          "transactionDate": "2024-02-22"
+        }
+      }
+    ]
+  }

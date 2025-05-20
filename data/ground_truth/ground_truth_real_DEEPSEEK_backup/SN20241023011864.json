@@ -1,0 +1,42 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Aldel Financial II Inc.",
+        "attributes": {
+          "companyName": "Aldel Financial II Inc.",
+          "ticker": "ALDFU",
+          "country": "Cayman Islands"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BTIG, LLC",
+        "attributes": {
+          "companyName": "BTIG, LLC"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Fortress Investment Group, LLC",
+        "attributes": {
+          "companyName": "Fortress Investment Group, LLC"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {
+          "valueAmount": 230000000,
+          "transactionDate": "2024-10-23"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,33 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Choice Hotels International, Inc.",
+        "attributes": {
+          "companyName": "Choice Hotels International, Inc.",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Wyndham Hotels & Resorts",
+        "attributes": {
+          "companyName": "Wyndham Hotels & Resorts",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-01-10"
+        }
+      }
+    ]
+  }

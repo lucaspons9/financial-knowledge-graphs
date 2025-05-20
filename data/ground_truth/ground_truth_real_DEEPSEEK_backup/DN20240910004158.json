@@ -1,0 +1,22 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Fiddlehead Resources Corp.",
+        "attributes": {
+          "companyName": "Fiddlehead Resources Corp."
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "GLJ Ltd.",
+        "attributes": {
+          "companyName": "GLJ Ltd.",
+          "industry": "oil and gas reserves evaluation"
+        }
+      }
+    ],
+    "relationships": []
+  }

@@ -1,0 +1,30 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "DHC",
+        "attributes": {
+          "companyName": "DHC"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "BEN",
+        "attributes": {
+          "companyName": "Brand Engagement Network",
+          "ticker": "BEN"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "ICR",
+        "attributes": {
+          "companyName": "ICR"
+        }
+      }
+    ],
+    "relationships": []
+  }

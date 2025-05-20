@@ -1,0 +1,52 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Kelvin Group",
+        "attributes": {
+          "companyName": "Kelvin Group",
+          "industry": "industrial and commercial mission-critical mechanical services",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Southfield Capital",
+        "attributes": {
+          "companyName": "Southfield Capital",
+          "industry": "private equity",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "JS Compliance, LLC",
+        "attributes": {
+          "companyName": "JS Compliance, LLC",
+          "industry": "process safety and risk management consultancy",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "transactionDate": "2024-11-25"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C1",
+        "attributes": {}
+      }
+    ]
+  }

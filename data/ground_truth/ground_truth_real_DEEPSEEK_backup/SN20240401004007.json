@@ -1,0 +1,56 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "North Square Investments",
+        "attributes": {
+          "companyName": "North Square Investments",
+          "country": "USA",
+          "industry": "investment management"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Patterson Capital Corporation",
+        "attributes": {
+          "companyName": "Patterson Capital Corporation",
+          "country": "USA",
+          "industry": "fixed income investment"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "CS McKee",
+        "attributes": {
+          "companyName": "CS McKee",
+          "country": "USA",
+          "industry": "institutional investment management"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-04-01",
+          "valueAmount": 1000000000
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {
+          "percentage": 50.1,
+          "basis": "majority ownership"
+        }
+      }
+    ]
+  }

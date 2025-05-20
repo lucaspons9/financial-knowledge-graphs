@@ -1,0 +1,35 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Alba Wheels Up International",
+        "attributes": {
+          "companyName": "Alba Wheels Up International",
+          "industry": "customs brokerage and logistics",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "John A. Steer Co.",
+        "attributes": {
+          "companyName": "John A. Steer Co.",
+          "industry": "customs brokerage and logistics",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-01-09"
+        }
+      }
+    ]
+  }

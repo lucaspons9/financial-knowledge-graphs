@@ -1,0 +1,36 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "E-Home Household Services Holdings Limited",
+        "attributes": {
+          "companyName": "E-Home Household Services Holdings Limited",
+          "ticker": "EJH",
+          "industry": "integrated home services",
+          "country": "China"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Fuzhou Yunding Mutual Chain Information Technology Company Limited",
+        "attributes": {
+          "companyName": "Fuzhou Yunding Mutual Chain Information Technology Company Limited",
+          "industry": "AI access control system + smart community services",
+          "country": "China"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "acquired",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "transactionDate": "2024-10-09"
+        }
+      }
+    ]
+  }

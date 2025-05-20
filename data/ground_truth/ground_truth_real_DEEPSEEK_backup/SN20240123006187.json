@@ -1,0 +1,43 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Landsea Homes",
+        "attributes": {
+          "companyName": "Landsea Homes Corporation",
+          "ticker": "LSEA",
+          "industry": "residential homebuilding",
+          "country": "US"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Samsung",
+        "attributes": {
+          "companyName": "Samsung",
+          "industry": "electronics"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Dell",
+        "attributes": {
+          "companyName": "Dell",
+          "industry": "computer technology"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Tesla",
+        "attributes": {
+          "companyName": "Tesla",
+          "industry": "automotive/energy"
+        }
+      }
+    ],
+    "relationships": []
+  }

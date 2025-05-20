@@ -1,0 +1,73 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Territorial Bancorp Inc.",
+        "attributes": {
+          "companyName": "Territorial Bancorp Inc.",
+          "ticker": "TBNK",
+          "industry": "banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Hope Bancorp, Inc.",
+        "attributes": {
+          "companyName": "Hope Bancorp, Inc.",
+          "ticker": "HOPE",
+          "industry": "banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C3",
+        "type": "Company",
+        "name": "Territorial Savings Bank",
+        "attributes": {
+          "companyName": "Territorial Savings Bank",
+          "industry": "banking",
+          "country": "United States"
+        }
+      },
+      {
+        "id": "C4",
+        "type": "Company",
+        "name": "Bank of Hope",
+        "attributes": {
+          "companyName": "Bank of Hope",
+          "industry": "banking",
+          "country": "United States"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "mergedWith",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "valueAmount": 78600000,
+          "percentage": 100,
+          "transactionDate": "2024-04-29"
+        }
+      },
+      {
+        "id": "R2",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C3",
+        "attributes": {}
+      },
+      {
+        "id": "R3",
+        "type": "hasEquityStakeIn",
+        "source": "C2",
+        "target": "C4",
+        "attributes": {}
+      }
+    ]
+  }

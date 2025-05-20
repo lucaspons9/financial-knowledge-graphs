@@ -1,0 +1,38 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Fortune Bay Corp.",
+        "attributes": {
+          "companyName": "Fortune Bay Corp.",
+          "ticker": "FOR, 5QN, FTBYF",
+          "industry": "uranium exploration",
+          "country": "Canada"
+        }
+      },
+      {
+        "id": "C2",
+        "type": "Company",
+        "name": "Aero Energy Limited",
+        "attributes": {
+          "companyName": "Aero Energy Limited",
+          "ticker": "AERO, AAUGF, 13L0",
+          "industry": "uranium exploration",
+          "country": "Canada"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "id": "R1",
+        "type": "hasEquityStakeIn",
+        "source": "C1",
+        "target": "C2",
+        "attributes": {
+          "percentage": 30,
+          "transactionDate": "2024-02-21"
+        }
+      }
+    ]
+  }

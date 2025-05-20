@@ -1,0 +1,16 @@
+{
+    "entities": [
+      {
+        "id": "C1",
+        "type": "Company",
+        "name": "Globalink Investment Inc.",
+        "attributes": {
+          "companyName": "Globalink Investment Inc.",
+          "ticker": "GLLI, GLLIW, GLLIR, GLLIU",
+          "industry": "special purpose acquisition company",
+          "country": "US"
+        }
+      }
+    ],
+    "relationships": []
+  }

@@ -4,6 +4,16 @@ openai:
   light_model: "gpt-4o-mini"
   temperature: 0.7
 
+# SiliconFlow DeepSeek models
+siliconflow:
+  api_key: ${SILICONFLOW_API_KEY}
+  full_model: "DeepSeek-V3"
+  light_model: "DeepSeek-Coder-V2-Instruct"
+  temperature: 0.7
+  max_tokens: 2048
+  top_p: 0.7
+  frequency_penalty: 0.5
+
 # Llama models via Ollama
 llama3:
   light_model: "llama3:8b"
