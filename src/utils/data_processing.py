@@ -262,13 +262,14 @@ if __name__ == "__main__":
     # )
     
     # # Create a sample for ground truth annotation
-    # ground_truth_sample = create_ground_truth_sample(
-    #     input_csv_path="data/processed/processed_MA2024.csv",
-    #     output_path="data/processed/ground_truth_sample100.csv"
-    # )
+    ground_truth_sample = create_ground_truth_sample(
+        input_csv_path="data/processed/processed_MA2024.csv", 
+        sample_size=380,
+        output_path="data/processed/ground_truth_big.csv"
+    )
     
     # Analyze token distribution in the processed data
-    analyze_token_distribution(
-        csv_path="data/raw/MA2024.csv",
-        output_dir="data/processed/analysis/v2",
-    )
+    # analyze_token_distribution(
+    #     csv_path="data/raw/MA2024.csv",
+    #     output_dir="data/processed/analysis/v2",
+    # )

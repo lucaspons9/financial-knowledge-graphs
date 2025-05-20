@@ -1,12 +1,12 @@
-llm_provider: "openai" # Options: openai, llama3, /* anthropic, cohere, mistral, */ t5
+llm_provider: "siliconflow" # Options: openai, llama3, siliconflow, /* anthropic, cohere, mistral, */ t5
 mode: "light" # Options: full, light
 
 prompt: "v4" # Prompt to use from prompts.yaml
-data_path: "data/processed/ground_truth_synthetic_DEEPSEEK.xlsx" # Path to the data file (YAML, CSV or XLSX)
+data_path: "data/processed/ground_truth_big.csv" # Path to the data file (YAML, CSV or XLSX)
 
 store_results: true
 results_dir: "runs"
-test_name: "v4_ground_truth_synthetic_DEEPSEEK_openaiGPT4oMini" # convention: <version_of_prompt>_<data>_<model_name>
+test_name: "v4_ground_truth_big_deepseek" # convention: <version_of_prompt>_<data>_<model_name>
 
 # Batch processing settings
 use_batch: false # Set to true to use OpenAI's Batch API for cost-efficient processing (50% cheaper)
