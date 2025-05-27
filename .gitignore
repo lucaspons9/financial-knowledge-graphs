@@ -5,7 +5,6 @@ __pycache__/
 *.py[cod]
 *.pyc
 *$py.class
-uv.lock
 .DS_Store
 
 data/
