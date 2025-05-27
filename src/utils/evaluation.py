@@ -245,6 +245,11 @@ class Evaluator:
     
     def evaluate(self, prediction: Dict[str, Any], ground_truth: Dict[str, Any]) -> Dict[str, Any]:
         """Evaluate a prediction against ground truth."""
+        # Handle case where prediction is a string
+        if isinstance(prediction, str):
+            logger.warning("Prediction is a string, treating as empty prediction")
+            prediction = {"entities": [], "relationships": []}
+            
         entity_results = self.evaluate_entities(
             prediction.get('entities', []),
             ground_truth.get('entities', [])
