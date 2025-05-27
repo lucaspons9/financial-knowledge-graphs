@@ -41,9 +41,13 @@ Financial Knowledge Graphs leverages Large Language Models (LLMs) to extract str
    ```
 
 4. Start Neo4j (using Docker):
+
    ```bash
    docker run -d --name neo4j -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH=neo4j/password neo4j
    ```
+
+5. Set up your data directory:
+   Create a `data` directory in the project root and place your input data files there. Note that this project works with privately held data that cannot be disclosed.
 
 ## Usage
 
@@ -69,11 +73,6 @@ The application is configured through YAML files in the `configs` directory. For
 
 ```
 ├── configs/                   # Configuration files
-├── data/                      # Data directory
-│   ├── batch_processing/      # Batch processing files
-│   ├── ground_truth/          # Ground truth data
-│   ├── processed/             # Processed data
-│   └── raw/                   # Raw input data
 ├── docs/                      # Documentation
 ├── src/                       # Source code
 │   ├── db/                    # Database handlers
@@ -82,3 +81,5 @@ The application is configured through YAML files in the `configs` directory. For
 │   ├── utils/                 # Utility functions
 │   └── main.py                # Main entry point
 ```
+
+> **Note**: To evaluate extracted triplets, you must provide ground truth labels in the `data/ground_truth/` directory. These labels are used to assess the accuracy of the extraction process.
